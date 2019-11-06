@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import { routersAuth } from '../../config/routers/index'

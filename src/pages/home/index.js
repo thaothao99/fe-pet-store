@@ -1,4 +1,5 @@
 // import { routersNotAuth } from '@configs'
+import React from 'react'
 
 function index() {
   // const { history } = props
