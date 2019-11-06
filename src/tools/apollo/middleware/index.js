@@ -1,4 +1,3 @@
-
 import { onError } from 'apollo-link-error'
 
 const errorMiddleware = onError(({

@@ -9,24 +9,27 @@ import { getMainDefinition } from 'apollo-utilities'
 
 import { errorMiddleware } from './middleware'
 
-const domain = window.location.host
-const endPoint = `${process.env.END_POINT}`
+const domain = `petsoredemo.azurewebsites.net`
+const endPoint = `graphql`
 
-const urn = process.env.GRAPHQL_URN || `${domain}/${endPoint}`
+const urn = `${domain}/${endPoint}`
 
 const httpLink = new HttpLink({
-  uri: `${process.env.SSL === 'true' ? 'https' : 'http'}://${urn}`
+  uri: `http://${urn}`
 })
 
 const wsLink = new WebSocketLink({
-  uri: `${process.env.SSL === 'true' ? 'wss' : 'ws'}://${urn}`,
+  uri: `wss://${urn}`,
   options: {
-    reconnect: true,
+    // timeout: 6000,
+    // reconnect: true,
     connectionParams: () => ({
-      token: window.localStorage.getItem('access-token') || ''
+      token: window.localStorage.getItem('token') || '',
+      currentsite: window.localStorage.getItem('currentsite') || ''
     })
   }
 })
+
 
 // const httpLink = new HttpLink({
 //   uri:
@@ -54,7 +57,7 @@ const wsLink = new WebSocketLink({
 const authLink = setContext((_, { headers }) => ({
   headers: {
     ...headers,
-    token: localStorage.getItem('access-token') || ''
+    token: localStorage.getItem('token') || ''
   }
 }))
 

@@ -1,5 +1,6 @@
+/* eslint-disable */
 import React, { useState } from 'react'
-import { Form, Icon, Input, Checkbox, Button, notification } from 'antd'
+import { Form, Icon, Input, Checkbox, notification, Button } from 'antd'
 import { AlertTriangle } from 'react-feather'
 import { inject, observer } from 'mobx-react'
 import { withRouter } from 'react-router-dom'
@@ -18,7 +19,8 @@ function NormalLoginForm(props) {
   const [checked, setChecked] = useState(false)
   const [login] = useMutation(LOGIN_USER)
 
-  const hasErrors = fieldsError => Object.keys(fieldsError).some(field => fieldsError[field])
+  const hasErrors = fieldsError =>
+    Object.keys(fieldsError).some(field => fieldsError[field])
 
   const handleSubmit = e => {
     e.preventDefault()
@@ -36,16 +38,19 @@ function NormalLoginForm(props) {
           }
         })
           .then(res => {
+            console.log(res)
             const { token } = res.data.login
             props.store.Auth.authenticate(token)
-            props.history.push('/')
+            props.history.push('/home')
             notification.open({
               message: 'Đăng nhập thành công',
             })
           })
-          .catch(() => notification.open({
-            message: 'Tên đăng nhập hoặc mật khẩu sai',
-          }))
+          .catch(() =>
+            notification.open({
+              message: 'Tên đăng nhập hoặc mật khẩu sai',
+            })
+          )
       }
     })
   }
@@ -109,13 +114,8 @@ function NormalLoginForm(props) {
         </Form.Item>
         <Form.Item>
           <Button
-            // type="primary"
-            size="large"
-            // htmlType="submit"
-            block
-            // onClick={() => handle(getFieldsValue(["username", "password"]))}
-            // onClick={() => console.log("ok")}
-            disabled={hasErrors(getFieldsError())}
+            type="primary"
+            onClick={(e) => handleSubmit(e)}
             className="submitLogin"
             style={{ height: 46, width: '100%' }}
           >
