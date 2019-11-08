@@ -1,8 +1,8 @@
 import { hot } from 'react-hot-loader'
 import React from 'react'
 
-import { AppProvider } from '@utils'
-import { AppRouters } from '@pages'
+import { AppProvider } from './utils/provider'
+import { AppRouters } from './pages/index'
 
 const App = () => (
   <AppProvider>
