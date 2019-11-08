@@ -1,10 +1,11 @@
+/* eslint linebreak-style: ["error", "windows"] */
 import React from 'react'
 import LoginForm from './login-form'
+import './index.scss'
 
 const Login = () => {
   return (
-    <div className="wrapper">
-      <div className="logo" />
+    <div className="wrapper-login">
       <LoginForm />
     </div>
   )

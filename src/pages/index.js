@@ -19,7 +19,7 @@ const Routers = props => {
             const Component = React.lazy(() => import(`./${route.component}`))
             return (
               <React.Suspense fallback={null}>
-                {isAuth ? <Redirect to="/" /> : <Component />}
+                {isAuth ? <Redirect to="/home" /> : <Component />}
               </React.Suspense>
             )
           }}

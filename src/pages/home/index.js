@@ -1,26 +1,15 @@
 import React from 'react'
-// import { routersAuth } from '../../config/routers/index'
+import './index.scss'
+import HeaderPage from '../../components/headerPage'
+import HeaderTopBar from '../../components/headerTopBar'
+import MainMenu from '../../components/mainMenu'
 
-function index(props) {
-  const { history, datauser } = props
-  console.log(datauser, history, props)
-  // const menuData = [
-  //   {
-  //     title: ' ',
-  //     type: 'navigation',
-  //     childs: routersAuth
-  //       .filter(router => !router.root)
-  //       .filter(router => router.name !== undefined)
-  //       .map(router => ({
-  //         name: router.name,
-  //         dest: router.path,
-  //         icon: router.icon
-  //       }))
-  //   }
-  // ]
+function index() {
   return (
-    <div style={{ height: '100%' }}>
-      <span>aaaaaaaaaaa</span>
+    <div className='wrapper-home' style={{ height: '100%' }}>
+      <HeaderTopBar />
+      <HeaderPage />
+      <MainMenu />
     </div>
   )
 }

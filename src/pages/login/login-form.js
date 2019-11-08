@@ -1,11 +1,11 @@
 /* eslint-disable */
 import React, { useState } from 'react'
-import { Form, Icon, Input, Checkbox, notification, Button } from 'antd'
-import { AlertTriangle } from 'react-feather'
+import { Form, Input, notification, Button, Icon } from 'antd'
 import { inject, observer } from 'mobx-react'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
+
 
 const LOGIN_USER = gql`
   mutation login($input: LoginUserInput!) {
@@ -44,11 +44,16 @@ function NormalLoginForm(props) {
             props.history.push('/home')
             notification.open({
               message: 'Đăng nhập thành công',
+              placement: 'bottomRight',
+              icon: <Icon type="check-circle" style={{ color: '#108ee9' }} />
+
             })
           })
           .catch(() =>
             notification.open({
               message: 'Tên đăng nhập hoặc mật khẩu sai',
+              placement: 'bottomRight',
+              icon: <Icon type="close-circle" style={{ color: 'red' }} />
             })
           )
       }
@@ -69,8 +74,12 @@ function NormalLoginForm(props) {
   } = props
 
   return (
-    <>
+    <div className='wrapper-form-login'>
       <Form onSubmit={handleSubmit} className="login-form">
+        <div className="logo" />
+        <div className="title">
+          <h1>Đăng nhập</h1>
+        </div>
         <Form.Item>
           {getFieldDecorator('username', {
             initialValue: 'admin',
@@ -105,16 +114,8 @@ function NormalLoginForm(props) {
           )}
         </Form.Item>
         <Form.Item>
-          {getFieldDecorator('staySignedIn')(
-            <Checkbox checked={checked} onClick={() => setChecked(!checked)}>
-              Ghi nhớ tôi
-            </Checkbox>
-          )}
-          <div className="forgot-btn">Quên mật khẩu?</div>
-        </Form.Item>
-        <Form.Item>
           <Button
-            type="primary"
+            type='default'
             onClick={(e) => handleSubmit(e)}
             className="submitLogin"
             style={{ height: 46, width: '100%' }}
@@ -122,17 +123,16 @@ function NormalLoginForm(props) {
             Đăng nhập
           </Button>
         </Form.Item>
+        <Form.Item>
+          <Link to="/login">Tạo tài khoản</Link>
+        </Form.Item>
       </Form>
       <div
         className="error-wrapper"
         style={{ opacity: hasErrors(getFieldsError()) ? '1' : '0' }}
       >
-        <Icon component={AlertTriangle} />
-        <span className="text">
-          Sai tên đăng nhập hoặc mật khẩu, vui lòng nhập lại{' '}
-        </span>
       </div>
-    </>
+    </div>
   )
 }
 
