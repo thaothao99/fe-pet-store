@@ -3,6 +3,7 @@ import './index.scss'
 import HeaderPage from '../../components/headerPage'
 import HeaderTopBar from '../../components/headerTopBar'
 import MainMenu from '../../components/mainMenu'
+import SlideShow from '../../components/slideShow'
 
 function index() {
   return (
@@ -10,6 +11,7 @@ function index() {
       <HeaderTopBar />
       <HeaderPage />
       <MainMenu />
+      <SlideShow />
     </div>
   )
 }
