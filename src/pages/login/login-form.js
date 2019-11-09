@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useState } from 'react'
+import React from 'react'
 import { Form, Input, notification, Button, Icon } from 'antd'
 import { inject, observer } from 'mobx-react'
 import { withRouter, Link } from 'react-router-dom'
@@ -16,9 +16,8 @@ const LOGIN_USER = gql`
 `
 
 function NormalLoginForm(props) {
-  const [checked, setChecked] = useState(false)
   const [login] = useMutation(LOGIN_USER)
-
+  // console.log(props)
   const hasErrors = fieldsError =>
     Object.keys(fieldsError).some(field => fieldsError[field])
 
@@ -27,7 +26,6 @@ function NormalLoginForm(props) {
     const { form } = props
     form.validateFields((err, values) => {
       if (!err) {
-        // console.log('Received values of form: ', values)
         const { username, password } = values
         login({
           variables: {
@@ -38,7 +36,6 @@ function NormalLoginForm(props) {
           }
         })
           .then(res => {
-            console.log(res)
             const { token } = res.data.login
             props.store.Auth.authenticate(token)
             props.history.push('/home')

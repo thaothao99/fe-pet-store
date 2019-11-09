@@ -26,10 +26,16 @@
         margin-right: 20px !important
       }
     }
-    a{
+    li > a {
       color: gray;
     }
-    a:hover {
+    li > a:hover {
+      color: orange;
+    }
+    li > span {
+      color: gray;
+    }
+    li > span:hover {
       color: orange;
     }
   }

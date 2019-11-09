@@ -5,10 +5,14 @@ import HeaderTopBar from '../../components/headerTopBar'
 import MainMenu from '../../components/mainMenu'
 import SlideShow from '../../components/slideShow'
 
-function index() {
+const Home = (props) => {
+  const logout = () => {
+    props.store.Auth.logout()
+    props.history.push('/')
+  }
   return (
     <div className='wrapper-home' style={{ height: '100%' }}>
-      <HeaderTopBar />
+      <HeaderTopBar logout={() => logout()} />
       <HeaderPage />
       <MainMenu />
       <SlideShow />
@@ -16,4 +20,4 @@ function index() {
   )
 }
 
-export default index
+export default Home
