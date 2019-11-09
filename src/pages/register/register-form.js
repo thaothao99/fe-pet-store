@@ -7,16 +7,20 @@ import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 
 
-// const LOGIN_USER = gql`
-//   mutation login($input: LoginUserInput!) {
-//     login(input: $input) {
-//       token
-//     }
-//   }
-// `
-
+const REGISTER_USER = gql`
+mutation createUser($input: UserInput!) {
+  createUser(input: $input) {
+    _id
+    username
+    firstName
+    lastName
+    email
+    phone
+  }
+}
+`
 function NormalRegisterForm(props) {
-  // const [login] = useMutation(LOGIN_USER)
+  const [createUser] = useMutation(REGISTER_USER)
   // console.log(props)
   const hasErrors = fieldsError =>
     Object.keys(fieldsError).some(field => fieldsError[field])
@@ -26,7 +30,38 @@ function NormalRegisterForm(props) {
     const { form } = props
     form.validateFields((err, values) => {
       if (!err) {
-        console.log(values)
+        const { address, email, firstName, lastName, password, phone, username } = values
+        createUser({
+          variables: {
+            input: {
+              address,
+              email,
+              firstName,
+              lastName,
+              password,
+              phone,
+              username
+            }
+          }
+        })
+          .then(res => {
+            console.log(res)
+            props.history.push('/login')
+            notification.open({
+              message: 'Đăng ký thành công',
+              placement: 'bottomRight',
+              icon: <Icon type="check-circle" style={{ color: '#108ee9' }} />
+
+            })
+          })
+          .catch((err) => {
+            const errors = err.graphQLErrors.map(error => error.message)
+            notification.open({
+              message: errors,
+              placement: 'bottomRight',
+              icon: <Icon type="close-circle" style={{ color: 'red' }} />
+            })
+          })
       }
     })
   }
@@ -84,7 +119,7 @@ function NormalRegisterForm(props) {
         </Form.Item>
 
         <Form.Item>
-          {getFieldDecorator('lastname', {
+          {getFieldDecorator('lastName', {
             rules: [
               { required: true, message: 'Vui lòng nhập tên' },
               {

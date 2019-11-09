@@ -46,13 +46,14 @@ function NormalLoginForm(props) {
 
             })
           })
-          .catch(() =>
+          .catch((err) => {
+            const errors = err.graphQLErrors.map(error => error.message)
             notification.open({
-              message: 'Tên đăng nhập hoặc mật khẩu sai',
+              message: errors,
               placement: 'bottomRight',
               icon: <Icon type="close-circle" style={{ color: 'red' }} />
             })
-          )
+          })
       }
     })
   }
