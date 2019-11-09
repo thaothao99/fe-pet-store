@@ -121,7 +121,7 @@ function NormalLoginForm(props) {
           </Button>
         </Form.Item>
         <Form.Item>
-          <Link to="/login">Tạo tài khoản</Link>
+          <Link to="/register">Tạo tài khoản</Link>
         </Form.Item>
       </Form>
       <div

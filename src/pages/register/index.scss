@@ -1,0 +1,69 @@
+.wrapper-register {
+  width: 100%;  
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  background: #9053c7;
+  background: -webkit-linear-gradient(-135deg, #c850c0, #FF8C00);
+  background: -o-linear-gradient(-135deg, #c850c0, #FF8C00);
+  background: -moz-linear-gradient(-135deg, #c850c0, #FF8C00);
+  background: linear-gradient(-135deg, #c850c0, #FF8C00);
+  .wrapper-form-register {
+    width: 500px;
+    height: 950px;
+    border-radius: 10px;
+    overflow: hidden;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 30px 70px;
+    background-color: aliceblue;
+    .ant-form {
+      justify-content: space-between;
+      text-align: center;
+      width: 340px;
+      .logo {
+        background: url('../../assets/images/petstore.png') no-repeat;
+        background-size: contain;
+        width: 250px;
+        height: 100px;
+      }  
+      .title{
+        margin-top: 15px;
+      }
+      .ant-input {
+        border-radius: 1px;
+        height: 46px;
+        padding: 14px 20px;
+        border: none;
+        background-color: #FFFAFA;
+        &::placeholder {
+          font-size: 13px;
+          color: gray;
+        }
+        &:focus {color: black;}
+      }  
+      .ant-btn {
+        height: 46px;
+      }
+    }
+    a{
+      color: black;
+    }
+    a:hover {
+      color: black;
+      font-weight: 600;
+    }
+  }
+}

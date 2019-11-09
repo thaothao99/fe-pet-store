@@ -1,9 +1,9 @@
 export const routersNotAuth = [
-  // {
-  //   exact: true,
-  //   path: '/home',
-  //   component: 'home'
-  // },
+  {
+    exact: true,
+    path: '/register',
+    component: 'register'
+  },
   {
     exact: true,
     path: '/login',
