@@ -35,7 +35,7 @@ function HeaderTopBar(props) {
             </Link>
           </li>
           <li>
-            <Link to='/home'>
+            <Link to='/account'>
               <Icon type='user' />&#9; Tài khoản
             </Link>
           </li>

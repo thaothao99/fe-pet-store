@@ -1,11 +1,12 @@
+/* eslint-disable linebreak-style */
 import React from 'react'
-import './index.scss'
+import '../home/index.scss'
 import HeaderPage from '../../components/headerPage'
 import HeaderTopBar from '../../components/headerTopBar'
 import MainMenu from '../../components/mainMenu'
-import SlideShow from '../../components/slideShow'
+import MenuProfile from '../../components/menuProfile'
 
-const Home = (props) => {
+const Account = (props) => {
   const logout = () => {
     props.store.Auth.logout()
     props.history.push('/')
@@ -15,9 +16,9 @@ const Home = (props) => {
       <HeaderTopBar logout={() => logout()} />
       <HeaderPage />
       <MainMenu />
-      <SlideShow />
+      <MenuProfile />
     </div>
   )
 }
 
-export default Home
+export default Account

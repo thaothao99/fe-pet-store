@@ -16,6 +16,11 @@ export const routersAuth = [
     exact: true,
     path: '/home',
     component: 'home'
+  },
+  {
+    exact: true,
+    path: '/account',
+    component: 'account'
   }
   // {
   //   exact: true,
