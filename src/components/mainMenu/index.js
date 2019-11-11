@@ -9,8 +9,8 @@ function MainMenu() {
     <div className='main-menu'>
       <ul>
         <li id='menu-item-1'><Link to='/home'>TRANG CHỦ</Link></li>
-        <li id='menu-item-2'><Link to='/home'>PET</Link></li>
-        <li id='menu-item-3'><Link to='/home'>SẢN PHẨM </Link></li>
+        <li id='menu-item-2'><Link to='/pet'>PET</Link></li>
+        <li id='menu-item-3'><Link to='/product'>SẢN PHẨM </Link></li>
         <li id='menu-item-4'><Link to='/home'>DỊCH VỤ</Link></li>
         <li id='menu-item-5'><Link to='/home'>TIN TỨC</Link></li>
         <li id='menu-item-6'><Link to='/home'>LIÊN HỆ</Link></li>
