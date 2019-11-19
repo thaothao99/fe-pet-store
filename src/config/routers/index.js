@@ -24,6 +24,11 @@ export const routersAuth = [
   },
   {
     exact: true,
+    path: '/account/security',
+    component: 'security'
+  },
+  {
+    exact: true,
     path: '/pet',
     component: 'pet'
   },

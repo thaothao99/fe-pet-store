@@ -95,7 +95,7 @@ function ListProduct() {
         </span>
       </div>
       <br />
-      {view === 'grid'
+      {view === 'list'
         ? (
           <div>
             <List
@@ -115,6 +115,7 @@ function ListProduct() {
         )
         : (
           <div>
+            <h1>SẢN PHẨM</h1>
             <Row>{listData}</Row>
           </div>
         )}

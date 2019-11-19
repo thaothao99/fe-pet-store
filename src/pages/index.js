@@ -1,7 +1,6 @@
 import React from 'react'
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
-
 import { routersNotAuth, routersAuth } from '../config/routers/index'
 
 const Routers = props => {

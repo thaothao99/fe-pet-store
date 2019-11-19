@@ -47,6 +47,7 @@ function NormalLoginForm(props) {
             })
           })
           .catch((err) => {
+            console.log(err)
             const errors = err.graphQLErrors.map(error => error.message)
             notification.open({
               message: errors,

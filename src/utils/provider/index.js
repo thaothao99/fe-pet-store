@@ -3,7 +3,8 @@ import { ApolloProvider } from 'react-apollo'
 import { BrowserRouter } from 'react-router-dom'
 import { Provider as MobxProvider } from 'mobx-react'
 
-import { Client, Store } from '../../tools'
+import { Client } from '../../tools/apollo/index'
+import { Store } from '../../tools/mobX'
 
 const store = new Store()
 

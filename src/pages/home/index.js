@@ -1,22 +1,15 @@
 import React from 'react'
-import './index.scss'
-import HeaderPage from '../../components/headerPage'
-import HeaderTopBar from '../../components/headerTopBar'
-import MainMenu from '../../components/mainMenu'
 import SlideShow from '../../components/slideShow'
+import Layout from '../layout'
 
 const Home = (props) => {
-  const logout = () => {
-    props.store.Auth.logout()
-    props.history.push('/')
-  }
+  const { history, store } = props
   return (
-    <div className='wrapper' style={{ height: '100%' }}>
-      <HeaderTopBar logout={() => logout()} />
-      <HeaderPage />
-      <MainMenu />
+    <div>
+      <Layout history={history} store={store} />
       <SlideShow />
     </div>
+
   )
 }
 
