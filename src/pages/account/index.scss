@@ -1,7 +1,12 @@
 .acc-inf-container {
   padding: 10px;
   display: grid;
-  grid-template-columns: 255px 500px 300px;
-  grid-gap: 50px 25px;
-
+  grid-template-columns: 255px 600px 300px;
+  grid-gap: 50px 30px;
+  .avt-form{
+    text-align: center;
+    input{
+      padding: 10px;
+    }
+  }
 }

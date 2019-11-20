@@ -1,4 +1,8 @@
-node_modules/
-*.json
-dist/
-config/
+/node_modules
+yarn.lock
+/dist
+.env.development.local
+.env.development
+/.vscode
+
+
