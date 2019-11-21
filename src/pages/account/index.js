@@ -1,29 +1,15 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useState, useEffect } from 'react'
 import gql from "graphql-tag"
-import { useQuery, useMutation } from '@apollo/react-hooks'
+import { useMutation } from '@apollo/react-hooks'
 import { Button, Avatar, notification, Icon } from 'antd'
 import axios from 'axios'
 import MenuProfile from '../../components/menuProfile'
 import AccForm from './acc-form'
+import Layout from '../layout'
+
 import './index.scss'
 
-const ME = gql`
-{
-  me{
-    _id
-    username
-    firstName
-    lastName
-    email
-    phone
-    address
-    gender
-    urlImg
-    birthDay
-  }
-}
-`
 const UPDATE_AVT = gql`
 mutation updateUrlImg($_id: String!, $urlImg: String!){
   updateUrlImg(_id:$_id, urlImg: $urlImg)
@@ -32,23 +18,19 @@ mutation updateUrlImg($_id: String!, $urlImg: String!){
 const config = {
   headers: { 'content-type': 'multipart/form-data', token: localStorage.getItem('token') }
 }
-const Account = () => {
+const Account = (props) => {
+  const { history, store, myAcc, refetch, loading } = props
+
   const formData = new FormData()
-  // eslint-disable-next-line no-unused-vars
   const [updateAvt] = useMutation(UPDATE_AVT)
 
-  const { loading, data, refetch } = useQuery(ME)
   const [img, setImg] = useState()
-  const [myAcc, setMyAcc] = useState([])
-  const [imagePreviewUrl, setImagePreviewUrl] = useState()
+  const [imagePreviewUrl, setImagePreviewUrl] = useState(myAcc && myAcc.urlImg)
   useEffect(() => {
-    if (!loading) {
-      if (data && data.me) {
-        setMyAcc(data.me)
-      }
+    if (loading) {
+      refetch()
     }
   })
-  console.log(myAcc)
   const upFile = () => {
     formData.append('image', img)
     try {
@@ -63,8 +45,6 @@ const Account = () => {
             refetchQueries: refetch
           })
             .then(() => {
-              setImagePreviewUrl(null)
-              setImg(null)
               notification.open({
                 message: 'Cập nhật thành công',
                 placement: 'bottomRight',
@@ -85,24 +65,19 @@ const Account = () => {
       setImagePreviewUrl(reader.result)
     }
     reader.readAsDataURL(file)
-    console.log(imagePreviewUrl)
   }
   return (
     <div>
+      <Layout history={history} store={store} />
       <div className="acc-inf-container">
         <MenuProfile sltKey="1" class="acc-infor-left" />
         <AccForm myAcc={myAcc} refetchQueries={refetch} />
         <div className="avt-form">
+          {!loading && <Avatar size={200} src={imagePreviewUrl} />}
+          {loading && <Avatar size={200} icon="user" />}
+          <input id="myFile" type="file" name="myImage" accept="image/x-png,image/gif,image/jpeg" onChange={e => handleChange(e)} />
           {
-            !imagePreviewUrl && myAcc.urlImg === null
-              ? (
-                <Avatar size={200} icon="user" />
-              )
-              : <Avatar size={200} src={imagePreviewUrl || myAcc.urlImg} />
-          }
-          <input type="file" name="myImage" accept="image/x-png,image/gif,image/jpeg" onChange={e => handleChange(e)} />
-          {
-            imagePreviewUrl ? <Button onClick={() => upFile()} type="default">Đặt làm ảnh đại diện</Button> : ""
+            (img) && (<Button onClick={() => upFile()} type="default">Đặt làm ảnh đại diện</Button>)
           }
         </div>
       </div>

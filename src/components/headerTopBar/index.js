@@ -17,19 +17,19 @@ function HeaderTopBar(props) {
     <div className='header-top-bar'>
       <div id='top-menu'>
         <ul>
-          <li><Link to='/home'>TRANG CHỦ</Link></li>
-          <li><Link to='/home'>LIÊN HỆ</Link></li>
+          <li><Link to='/'>TRANG CHỦ</Link></li>
+          <li><Link to='/'>LIÊN HỆ</Link></li>
         </ul>
       </div>
       <div className='header-top-bar-right'>
         <ul>
           <li>
-            <Link to='/home'>
+            <Link to='/'>
               <Icon type="facebook" />
             </Link>
           </li>
           <li>
-            <Link to='/home'>
+            <Link to='/'>
               <Icon type="instagram" />
             </Link>
           </li>
@@ -45,7 +45,7 @@ function HeaderTopBar(props) {
           </li>
           <li />
           <li>
-            <Link to='/home'>
+            <Link to='/'>
               <Icon type="shopping-cart" />&#9; Giỏ hàng
             </Link>
           </li>

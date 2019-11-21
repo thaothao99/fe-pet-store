@@ -61,7 +61,7 @@ function NormalAccForm(props) {
           <Col span={12}>
             <Form.Item label="Họ">
               {getFieldDecorator('firstName', {
-                initialValue: myAcc.firstName
+                initialValue: myAcc && myAcc.firstName
               })(
                 <Input
                   size="default"
@@ -73,7 +73,7 @@ function NormalAccForm(props) {
           <Col span={12}>
             <Form.Item label="Tên">
               {getFieldDecorator('lastName', {
-                initialValue: myAcc.lastName
+                initialValue: myAcc && myAcc.lastName
               })(
                 <Input
                   size="default"
@@ -85,7 +85,7 @@ function NormalAccForm(props) {
         </Row>
         <Form.Item label="Email">
           {getFieldDecorator('email', {
-            initialValue: myAcc.email
+            initialValue: myAcc && myAcc.email
           })(
             <Input
               type="email"
@@ -97,7 +97,7 @@ function NormalAccForm(props) {
 
         <Form.Item label="Số điện thoại">
           {getFieldDecorator('phone', {
-            initialValue: myAcc.phone,
+            initialValue: myAcc && myAcc.phone,
             rules: [
               {
                 pattern: '[0-9]{3}[0-9]{3}[0-9]{4}',
@@ -118,7 +118,7 @@ function NormalAccForm(props) {
 
         <Form.Item label="Địa chỉ">
           {getFieldDecorator('address', {
-            initialValue: myAcc.address,
+            initialValue: myAcc && myAcc.address,
             rules: [
               { required: true, message: 'Vui lòng nhập địa chỉ' },
               {
@@ -138,7 +138,7 @@ function NormalAccForm(props) {
           <Col span={12}>
             <Form.Item label="Giới tính">
               {getFieldDecorator('gender', {
-                initialValue: myAcc.gender
+                initialValue: myAcc && myAcc.gender
               })(
                 <Select>
                   <Option value="Nam">Nam</Option>
@@ -151,7 +151,7 @@ function NormalAccForm(props) {
           <Col span={12}>
             <Form.Item label="Ngày sinh">
               {getFieldDecorator('birthDay', {
-                initialValue: !myAcc.birthDay ? moment(new Date(), 'DD/MM/YYYY') : moment(myAcc.birthDay, 'DD/MM/YYYY')
+                initialValue: myAcc && myAcc.birthDay ? moment(myAcc.birthDay, 'DD/MM/YYYY') : moment(new Date(), 'DD/MM/YYYY')
               })(
                 <DatePicker placeholder="Nhập ngày sinh" format="DD/MM/YYYY" />
               )}

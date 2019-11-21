@@ -18,7 +18,7 @@ const App = (props) => {
             }}
           />
         ))}
-        <Redirect to='/home' />
+        <Redirect to='/' />
       </Switch>
     </React.Suspense>
   )

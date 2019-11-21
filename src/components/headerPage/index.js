@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 function HeaderPage() {
   return (
     <div className='header-page'>
-      <Link to='/home' className='logo-home' />
+      <Link to='/' className='logo-home' />
       <div className='contact-inf'>
         <span>Hotline 24/24</span>
         <br />

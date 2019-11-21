@@ -38,7 +38,7 @@ function NormalLoginForm(props) {
           .then(res => {
             const { token } = res.data.login
             props.store.Auth.authenticate(token)
-            props.history.push('/home')
+            props.history.push('/')
             notification.open({
               message: 'Đăng nhập thành công',
               placement: 'bottomRight',
