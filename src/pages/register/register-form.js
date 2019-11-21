@@ -1,11 +1,12 @@
-/* eslint-disable */
-import React, { useState } from 'react';
+/* eslint-disable linebreak-style */
+import React, { useState } from 'react'
 import { Form, Input, notification, Button, Icon } from 'antd'
 import { inject, observer } from 'mobx-react'
 import { withRouter, Link } from 'react-router-dom'
 import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 
+const { TextArea } = Input
 
 const REGISTER_USER = gql`
 mutation createUser($input: UserInput!) {
@@ -22,8 +23,7 @@ mutation createUser($input: UserInput!) {
 function NormalRegisterForm(props) {
   const [createUser] = useMutation(REGISTER_USER)
   // console.log(props)
-  const hasErrors = fieldsError =>
-    Object.keys(fieldsError).some(field => fieldsError[field])
+  const hasErrors = fieldsError => Object.keys(fieldsError).some(field => fieldsError[field])
 
   const handleSubmit = e => {
     e.preventDefault()
@@ -54,8 +54,8 @@ function NormalRegisterForm(props) {
 
             })
           })
-          .catch((err) => {
-            const errors = err.graphQLErrors.map(error => error.message)
+          .catch((er) => {
+            const errors = er.graphQLErrors.map(error => error.message)
             notification.open({
               message: errors,
               placement: 'bottomRight',
@@ -74,18 +74,18 @@ function NormalRegisterForm(props) {
       form.validateFields()
     }
   }
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState('')
 
-  const firstPass = (rule, value, callback) => {
+  const firstPass = (rule, value) => {
     setPassword(value)
     console.log(value)
     return true
   }
   const confirmPass = (rule, value, callback) => {
     if (value !== password) {
-      callback('Mật khẩu không khớp');
+      callback('Mật khẩu không khớp')
     } else {
-      callback();
+      callback()
     }
   }
   const {
@@ -180,17 +180,16 @@ function NormalRegisterForm(props) {
         <Form.Item>
           {getFieldDecorator('address', {
             rules: [
-              { required: true, message: 'Vui lòng nhập Tỉnh/Thành phố' },
+              { required: true, message: 'Vui lòng nhập địa chỉ' },
               {
                 pattern: /^[^\s]/,
                 message: 'Không được có dấu cách đầu dòng'
               }
             ]
           })(
-            <Input
-              size="large"
-              placeholder="Tỉnh/Thành phố"
-              spellCheck={false}
+            <TextArea
+              rows={4}
+              placeholder="Địa chỉ"
               onKeyDown={handleEnter}
             />
           )}
@@ -229,7 +228,8 @@ function NormalRegisterForm(props) {
             <Input.Password
               size="large"
               placeholder='Mật khẩu'
-            />)}
+            />
+          )}
         </Form.Item>
         <Form.Item hasFeedback>
           {getFieldDecorator('confirm', {
@@ -246,7 +246,8 @@ function NormalRegisterForm(props) {
             <Input.Password
               size="large"
               placeholder='Xác nhận mật khẩu'
-            />)}
+            />
+          )}
         </Form.Item>
         <Form.Item>
           <Button
@@ -265,8 +266,7 @@ function NormalRegisterForm(props) {
       <div
         className="error-wrapper"
         style={{ opacity: hasErrors(getFieldsError()) ? '1' : '0' }}
-      >
-      </div>
+      />
     </div>
   )
 }

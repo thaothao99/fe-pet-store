@@ -7,6 +7,8 @@ import moment from 'moment'
 import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 
+const { TextArea } = Input
+
 const { Option } = Select
 const UPDATE_USER = gql`
   mutation updateUser($_id: String!, $input: UpdateUserInput!){
@@ -127,10 +129,9 @@ function NormalAccForm(props) {
               }
             ]
           })(
-            <Input
-              size="default"
+            <TextArea
+              rows={4}
               placeholder="Địa chỉ"
-              spellCheck={false}
             />
           )}
         </Form.Item>

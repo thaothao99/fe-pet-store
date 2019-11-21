@@ -2,10 +2,14 @@
 
 /* eslint-disable max-len */
 import React from 'react'
-import { Descriptions, List, Avatar, Button, Icon } from 'antd'
+import { Descriptions, List, Avatar, Button, Icon, Input } from 'antd'
 
 
-function ListPet() {
+const { Search } = Input
+
+
+function ListPet(props) {
+  const { onShow } = props
   const data = [
     {
       name: "Ngáo",
@@ -46,6 +50,10 @@ function ListPet() {
 
     }
   ]
+  const handleClick = (pet) => {
+    props.setPetIf(pet)
+    onShow()
+  }
   const arrData = data.map(i => {
     return (
       <Descriptions title={`Tên: ${i.name}`}>
@@ -57,7 +65,7 @@ function ListPet() {
         <Descriptions.Item label="Tình trạng sức khỏe">{i.health}</Descriptions.Item>
         <Descriptions.Item>
           <div>
-            <Button type="default" size="small">
+            <Button type="default" size="small" onClick={() => handleClick(i)}>
               Chỉnh sửa thông tin
               <Icon type="edit" />
             </Button>
@@ -76,7 +84,22 @@ function ListPet() {
     <div className='list-pet'>
       <List
         size="large"
-        header={<div><h2> MY PET</h2></div>}
+        header={(
+          <div>
+            <h2> MY PET</h2>
+            <div>
+              <Button type="default" size="small" onClick={() => onShow()}>
+                Thêm PET
+                <Icon type="plus-circle" />
+              </Button>&nbsp;
+              <Search
+                placeholder="input search text"
+                onSearch={value => console.log(value)}
+                style={{ width: 200 }}
+              />
+            </div>
+          </div>
+        )}
         bordered
         dataSource={arrData}
         renderItem={item => (
