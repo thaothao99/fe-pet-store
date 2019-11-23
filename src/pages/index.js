@@ -32,7 +32,7 @@ const Routers = props => {
     if (token) {
       refetch()
     }
-  }, [data])
+  })
   return (
     <Switch>
       {routersNotAuth.map((route, idx) => (
