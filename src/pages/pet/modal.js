@@ -164,7 +164,7 @@ function NormalPetForm(props) {
                 })
               })
           }
-        } else if (imagePreviewUrl) {
+        } else if (imagePreviewUrl !== pet.urlImg) {
           formData.append('image', img)
           axios.post('http://localhost:3000/', formData, config).then(res => {
             console.log(res)

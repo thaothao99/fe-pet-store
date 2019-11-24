@@ -3,7 +3,7 @@ import React from 'react'
 import MenuProfile from '../../components/menuProfile'
 import Layout from '../layout'
 import PassForm from './pass-form'
-import '../account/index.scss'
+import './index.scss'
 
 const Security = (props) => {
   const { history, store, myAcc, refetch } = props

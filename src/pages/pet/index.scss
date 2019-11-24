@@ -1,3 +1,36 @@
 .pet-modal{
   width: 800px !important;
 }
+.ant-input {
+  border-radius: 1px;
+  padding: 14px 20px;
+  border: solid 1px gray;
+  &::placeholder {
+    font-size: 13px;
+    color: gray;
+  }
+  &:focus {color: black;}
+  &:hover{border: solid 1px gray;}
+}  
+.ant-select-selection{
+  border: solid 1px gray;
+  &:hover{border: solid 1px gray;}
+}
+.ant-col-12{
+  padding: 0 10px;
+}
+.ant-btn {
+  height: 35px;
+  border: solid 1px gray;
+  background: grey;
+  color: cornsilk;
+  &:hover  {
+  border: solid 1.5px gray ;
+  color: cornsilk ;
+  background: grey;
+  }
+  &::after {
+    color: cornsilk ;
+    background: grey;
+  }
+}

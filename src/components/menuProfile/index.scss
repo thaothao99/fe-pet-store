@@ -1,0 +1,35 @@
+.ant-menu-submenu-selected{
+  .ant-menu-submenu-title  {
+    color: grey;
+    font-weight: 600;
+  }
+}
+.ant-menu-item-selected {
+  color: honeydew !important;
+  font-weight: 600;
+  background-color: gray !important;
+  &::after {
+    border-right: 3px solid #282828 !important;
+  }
+}
+
+.ant-menu-submenu{
+  color: grey;
+  .ant-menu-submenu-title:hover  {
+    color: grey;
+    font-weight: 600;
+  }
+}
+.ant-menu-item {
+  color: grey;
+  &:hover{
+    color: grey;
+    font-weight: 600;
+  }
+}
+.ant-menu-submenu-arrow{
+  color: grey;
+  &::after{
+    color: grey !important;
+  }
+}

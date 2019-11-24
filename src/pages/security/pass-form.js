@@ -129,7 +129,6 @@ function NormalPassForm(props) {
             type='default'
             onClick={(e) => handleSubmit(e)}
             className="submitpass"
-            style={{ height: 46, width: '100%' }}
           >
             Cập nhật
           </Button>

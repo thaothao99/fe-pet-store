@@ -1,0 +1,58 @@
+.acc-inf-container {
+  padding: 10px;
+  display: grid;
+  grid-template-columns: 255px 600px 300px;
+  grid-gap: 50px 30px;
+  .ant-form{
+    justify-content: space-between;
+    .ant-col-12{
+      padding: 0 10px;
+    }
+  }
+}
+#normal_pass_oldPassword {
+  border-radius: 1px;
+  padding: 14px 20px;
+  border: solid 1px gray;
+  &::placeholder {
+    font-size: 13px;
+    color: gray;
+  }
+  &:focus {color: black; border: solid 1px gray;}
+  &:hover{border: solid 1px gray;}
+} 
+#normal_pass_password {
+  border-radius: 1px;
+  padding: 14px 20px;
+  border: solid 1px gray;
+  &::placeholder {
+    font-size: 13px;
+    color: gray;
+  }
+  &:focus {color: black; border: solid 1px gray;}
+  &:hover{border: solid 1px gray;}
+} 
+#normal_pass_confirm {
+  border-radius: 1px;
+  padding: 14px 20px;
+  border: solid 1px gray;
+  &::placeholder {
+    font-size: 13px;
+    color: gray;
+  }
+  &:focus {color: black; border: solid 1px gray;}
+  &:hover{border: solid 1px gray;}
+} 
+
+.ant-btn {
+  height: 35px;
+  width: 150px;
+  border: solid 1px gray;
+  background: grey;
+  color: cornsilk;
+}
+.ant-btn:hover  {
+  border: solid 1.5px gray;
+  color: cornsilk;
+}
+
