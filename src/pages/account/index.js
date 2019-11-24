@@ -77,7 +77,7 @@ const Account = (props) => {
           {loading && <Avatar size={200} icon="user" />}
           <input id="myFile" type="file" name="myImage" accept="image/x-png,image/gif,image/jpeg" onChange={e => handleChange(e)} />
           {
-            (img) && (<Button onClick={() => upFile()} type="default">Đặt làm ảnh đại diện</Button>)
+            (img) && (<Button onClick={() => upFile()} style={{ width: '180px', marginTop: '10px' }} type="default">Đặt làm ảnh đại diện</Button>)
           }
         </div>
       </div>

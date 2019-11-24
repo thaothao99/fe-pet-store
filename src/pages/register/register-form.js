@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
 import React, { useState } from 'react'
-import { Form, Input, notification, Button, Icon } from 'antd'
+import { Form, Input, notification, Button, Icon, Row, Col } from 'antd'
 import { inject, observer } from 'mobx-react'
 import { withRouter, Link } from 'react-router-dom'
 import { useMutation } from '@apollo/react-hooks'
@@ -95,173 +95,181 @@ function NormalRegisterForm(props) {
   return (
     <div className='wrapper-form-register'>
       <Form onSubmit={handleSubmit} className="register-form">
-        <div className="logo" />
-        <div className="title">
-          <h1>Đăng ký tài khoản</h1>
-        </div>
-        <Form.Item>
-          {getFieldDecorator('firstName', {
-            rules: [
-              { required: true, message: 'Vui lòng nhập họ' },
-              {
-                pattern: /^[^\s]/,
-                message: 'Không được có dấu cách đầu dòng'
-              }
-            ]
-          })(
-            <Input
-              size="large"
-              placeholder="Họ"
-              spellCheck={false}
-              onKeyDown={handleEnter}
-            />
-          )}
-        </Form.Item>
+        <Row>
+          <div className="logo" />
+          <div className="title">
+            <h1><b>Đăng ký tài khoản</b></h1>
+          </div>
+        </Row>
+        <Row>
+          <Col span={12}>
+            <Form.Item>
+              {getFieldDecorator('firstName', {
+                rules: [
+                  { required: true, message: 'Vui lòng nhập họ' },
+                  {
+                    pattern: /^[^\s]/,
+                    message: 'Không được có dấu cách đầu dòng'
+                  }
+                ]
+              })(
+                <Input
+                  size="small"
+                  placeholder="Họ"
+                  spellCheck={false}
+                  onKeyDown={handleEnter}
+                />
+              )}
+            </Form.Item>
 
-        <Form.Item>
-          {getFieldDecorator('lastName', {
-            rules: [
-              { required: true, message: 'Vui lòng nhập tên' },
-              {
-                pattern: /^[^\s]/,
-                message: 'Không được có dấu cách đầu dòng'
-              }
-            ]
-          })(
-            <Input
-              size="large"
-              placeholder="Tên"
-              spellCheck={false}
-              onKeyDown={handleEnter}
-            />
-          )}
-        </Form.Item>
-        <Form.Item>
-          {getFieldDecorator('email', {
-            rules: [
-              {
-                type: 'email',
-                message: 'Vui lòng nhập đúng địa chỉ email',
-              },
-              { required: true, message: 'Vui lòng nhập email' }
-            ]
-          })(
-            <Input
-              type="email"
-              size="large"
-              placeholder="Email"
-              spellCheck={false}
-              onKeyDown={handleEnter}
-            />
-          )}
-        </Form.Item>
+            <Form.Item>
+              {getFieldDecorator('lastName', {
+                rules: [
+                  { required: true, message: 'Vui lòng nhập tên' },
+                  {
+                    pattern: /^[^\s]/,
+                    message: 'Không được có dấu cách đầu dòng'
+                  }
+                ]
+              })(
+                <Input
+                  size="small"
+                  placeholder="Tên"
+                  spellCheck={false}
+                  onKeyDown={handleEnter}
+                />
+              )}
+            </Form.Item>
+            <Form.Item>
+              {getFieldDecorator('email', {
+                rules: [
+                  {
+                    type: 'email',
+                    message: 'Vui lòng nhập đúng địa chỉ email',
+                  },
+                  { required: true, message: 'Vui lòng nhập email' }
+                ]
+              })(
+                <Input
+                  type="email"
+                  size="small"
+                  placeholder="Email"
+                  spellCheck={false}
+                  onKeyDown={handleEnter}
+                />
+              )}
+            </Form.Item>
 
-        <Form.Item>
-          {getFieldDecorator('phone', {
-            rules: [
-              {
-                pattern: '[0-9]{3}[0-9]{3}[0-9]{4}',
-                message: 'Vui lòng nhập đúng số điện thoại',
-              },
-              { required: true, message: 'Vui lòng nhập số điện thoại' }
-            ]
-          })(
-            <Input
-              addonBefore="+84"
-              type="text"
-              size="large"
-              placeholder="Số điện thoại"
-              spellCheck={false}
-              onKeyDown={handleEnter}
-            />
-          )}
-        </Form.Item>
+            <Form.Item>
+              {getFieldDecorator('phone', {
+                rules: [
+                  {
+                    pattern: '[0-9]{3}[0-9]{3}[0-9]{4}',
+                    message: 'Vui lòng nhập đúng số điện thoại',
+                  },
+                  { required: true, message: 'Vui lòng nhập số điện thoại' }
+                ]
+              })(
+                <Input
+                  addonBefore="+84"
+                  type="text"
+                  size="small"
+                  placeholder="Số điện thoại"
+                  spellCheck={false}
+                  onKeyDown={handleEnter}
+                />
+              )}
+            </Form.Item>
 
-        <Form.Item>
-          {getFieldDecorator('address', {
-            rules: [
-              { required: true, message: 'Vui lòng nhập địa chỉ' },
-              {
-                pattern: /^[^\s]/,
-                message: 'Không được có dấu cách đầu dòng'
-              }
-            ]
-          })(
-            <TextArea
-              rows={4}
-              placeholder="Địa chỉ"
-              onKeyDown={handleEnter}
-            />
-          )}
-        </Form.Item>
-        <Form.Item>
-          {getFieldDecorator('username', {
-            rules: [
-              { required: true, message: 'Vui lòng nhập tên đăng nhập' },
-              {
-                pattern: /^[^\s]/,
-                message: 'Không được có dấu cách đầu dòng'
-              }
-            ]
-          })(
-            <Input
-              size="large"
-              placeholder="Tên đăng nhập"
-              spellCheck={false}
-              onKeyDown={handleEnter}
-            />
-          )}
-        </Form.Item>
+            <Form.Item>
+              {getFieldDecorator('address', {
+                rules: [
+                  { required: true, message: 'Vui lòng nhập địa chỉ' },
+                  {
+                    pattern: /^[^\s]/,
+                    message: 'Không được có dấu cách đầu dòng'
+                  }
+                ]
+              })(
+                <TextArea
+                  rows={4}
+                  placeholder="Địa chỉ"
+                  onKeyDown={handleEnter}
+                />
+              )}
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item>
+              {getFieldDecorator('username', {
+                rules: [
+                  { required: true, message: 'Vui lòng nhập tên đăng nhập' },
+                  {
+                    pattern: /^[^\s]/,
+                    message: 'Không được có dấu cách đầu dòng'
+                  }
+                ]
+              })(
+                <Input
+                  size="small"
+                  placeholder="Tên đăng nhập"
+                  spellCheck={false}
+                  onKeyDown={handleEnter}
+                />
+              )}
+            </Form.Item>
 
-        <Form.Item hasFeedback>
-          {getFieldDecorator('password', {
-            rules: [
-              {
-                required: true,
-                message: 'Vui lòng nhập mật khẩu',
-              },
-              {
-                validator: firstPass
-              }
-            ],
-          })(
-            <Input.Password
-              size="large"
-              placeholder='Mật khẩu'
-            />
-          )}
-        </Form.Item>
-        <Form.Item hasFeedback>
-          {getFieldDecorator('confirm', {
-            rules: [
-              {
-                required: true,
-                message: 'Vui lòng xác nhận mật khẩu',
-              },
-              {
-                validator: confirmPass
-              }
-            ],
-          })(
-            <Input.Password
-              size="large"
-              placeholder='Xác nhận mật khẩu'
-            />
-          )}
-        </Form.Item>
-        <Form.Item>
-          <Button
-            type='default'
-            onClick={(e) => handleSubmit(e)}
-            className="submitregister"
-            style={{ height: 46, width: '100%' }}
-          >
-            Đăng ký
-          </Button>
-        </Form.Item>
-        <Form.Item>
-          <Link to="/login">Đăng nhập</Link>
-        </Form.Item>
+            <Form.Item hasFeedback>
+              {getFieldDecorator('password', {
+                rules: [
+                  {
+                    required: true,
+                    message: 'Vui lòng nhập mật khẩu',
+                  },
+                  {
+                    validator: firstPass
+                  }
+                ],
+              })(
+                <Input.Password
+                  size="small"
+                  placeholder='Mật khẩu'
+                />
+              )}
+            </Form.Item>
+            <Form.Item hasFeedback>
+              {getFieldDecorator('confirm', {
+                rules: [
+                  {
+                    required: true,
+                    message: 'Vui lòng xác nhận mật khẩu',
+                  },
+                  {
+                    validator: confirmPass
+                  }
+                ],
+              })(
+                <Input.Password
+                  size="small"
+                  placeholder='Xác nhận mật khẩu'
+                />
+              )}
+            </Form.Item>
+
+            <Form.Item>
+              <Button
+                type='default'
+                onClick={(e) => handleSubmit(e)}
+                className="submitregister"
+              >
+                Đăng ký
+              </Button>
+            </Form.Item>
+            <Form.Item>
+              <Link to="/login">Đã có tài khoản</Link>
+            </Form.Item>
+          </Col>
+        </Row>
       </Form>
       <div
         className="error-wrapper"

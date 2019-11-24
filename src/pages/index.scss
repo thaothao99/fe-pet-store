@@ -1,0 +1,31 @@
+.ant-input {
+  border-radius: 1px;
+  width: 300px;
+  padding: 14px 20px;
+  border: solid 1px gray;
+  &::placeholder {
+    font-size: 13px;
+    color: gray;
+  }
+  &:focus {color: black;}
+}  
+.ant-btn {
+  height: 30px;
+  width: 150px;
+  border: solid 1px gray;
+  background: honeydew;
+
+}
+.ant-btn:hover  {
+  border: solid 1.5px gray;
+  font-weight: 600;
+  color: grey;
+}
+
+a{
+color: gray;
+}
+a:hover {
+font-weight: 600;
+color: grey;
+}

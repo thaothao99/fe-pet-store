@@ -5,8 +5,38 @@
   grid-gap: 50px 30px;
   .avt-form{
     text-align: center;
-    input{
-      padding: 10px;
+  }
+  .ant-form{
+    justify-content: space-between;
+    .ant-col-12{
+      padding: 0 10px;
     }
   }
-}
+    .ant-input {
+      border-radius: 1px;
+      padding: 14px 20px;
+      border: solid 1px gray;
+      &::placeholder {
+        font-size: 13px;
+        color: gray;
+      }
+      &:focus {color: black;}
+      &:hover{border: solid 1px gray;}
+    }  
+    .ant-select-selection{
+      border: solid 1px gray;
+      &:hover{border: solid 1px gray;}
+    }
+    .ant-btn {
+      height: 35px;
+      width: 150px;
+      border: solid 1px gray;
+      background: grey;
+      color: cornsilk;
+    }
+    .ant-btn:hover  {
+      border: solid 1.5px gray;
+      font-weight: 600;
+      color: cornsilk;
+    }
+  }

@@ -1,28 +1,51 @@
 /* eslint-disable linebreak-style */
-import React, { useState } from 'react'
+/* eslint-disable no-underscore-dangle */
+import React, { useState, useEffect } from 'react'
 import { inject, observer } from 'mobx-react'
+import axios from 'axios'
 import { withRouter } from 'react-router-dom'
-import { Modal, Form, Input, Select, Col, Row, Avatar } from "antd"
+import gql from "graphql-tag"
+import { useMutation } from '@apollo/react-hooks'
+import { Modal, Form, Input, Select, Col, Row, Avatar, notification, Icon } from "antd"
 import './index.scss'
 
+const CREAT_PET = gql`
+mutation createPet($input: PetInput!){
+  createPet(input:$input){
+    _id
+    name
+    age
+    gender
+    species
+    breed
+    owner
+    health
+    urlImg
+  }
+}
+`
+const UPDATE_PET = gql`
+mutation updatePet($_id: String!, $input: UpdatePetInput!){
+  updatePet(_id:$_id, input: $input)
+}
+`
 const { Option } = Select
 const { TextArea } = Input
-
+const config = {
+  headers: { 'content-type': 'multipart/form-data', token: localStorage.getItem('token') }
+}
 function NormalPetForm(props) {
-  const { visible, onHide, form, pet } = props
+  const [createPet] = useMutation(CREAT_PET)
+  const [updatePet] = useMutation(UPDATE_PET)
+  const { visible, onHide, form, pet, refetch, myAcc, loading } = props
   const { getFieldDecorator } = form
   const [img, setImg] = useState()
   const [imagePreviewUrl, setImagePreviewUrl] = useState(pet && pet.urlImg)
-  console.log(img, imagePreviewUrl)
-  const onOK = e => {
-    onHide()
-    e.preventDefault()
-    form.validateFields((err, values) => {
-      if (!err) {
-        console.log(values)
-      }
-    })
-  }
+  useEffect(() => {
+    if (!loading && !img) {
+      setImagePreviewUrl(pet && pet.urlImg)
+    }
+  })
   const handleChange = e => {
     const reader = new FileReader()
     const file = e.target.files[0]
@@ -33,6 +56,188 @@ function NormalPetForm(props) {
     }
     reader.readAsDataURL(file)
   }
+  const formData = new FormData()
+  // eslint-disable-next-line no-unused-vars
+  // const upFile = async () => {
+  //   formData.append('image', img)
+  //   const res = await axios.post('http://localhost:3000/', formData, config)
+  //   return res
+  //   // .then(res => {
+  //   //   updateAvt({
+  //   //     variables: {
+  //   //       // eslint-disable-next-line no-underscore-dangle
+  //   //       _id: myAcc._id,
+  //   //       urlImg: res.data.filename
+  //   //     },
+  //   //     refetchQueries: refetch
+  //   //   })
+  //   //     .then(() => {
+  //   //       notification.open({
+  //   //         message: 'Cập nhật thành công',
+  //   //         placement: 'bottomRight',
+  //   //         icon: <Icon type="check-circle" style={{ color: '#108ee9' }} />
+  //   //       })
+  //   //     })
+  //   // })
+  // }
+  const onOk = async (e) => {
+    e.preventDefault()
+    form.validateFields((err, values) => {
+      console.log(values)
+      const { age, name, breed, gender, health, species } = values
+      if (!err) {
+        // Thêm mới
+        if (!pet) {
+          if (imagePreviewUrl) {
+            formData.append('image', img)
+            axios.post('http://localhost:3000/', formData, config).then(res => {
+              console.log(res)
+              createPet({
+                variables: {
+                  input: {
+                    name,
+                    age: Number(age),
+                    breed,
+                    gender,
+                    health,
+                    species,
+                    urlImg: res.data.filename,
+                    // eslint-disable-next-line no-underscore-dangle
+                    owner: myAcc._id
+                  }
+                },
+                refetchQueries: refetch
+              })
+                .then(() => {
+                  notification.open({
+                    message: 'Cập nhật thành công',
+                    placement: 'bottomRight',
+                    icon: <Icon type="check-circle" style={{ color: '#108ee9' }} />
+                  })
+                  onHide()
+                  setImg(null)
+                  setImagePreviewUrl(null)
+                })
+                .catch((er) => {
+                  console.log(er)
+                  const errors = er.graphQLErrors.map(error => error.message)
+                  notification.open({
+                    message: errors,
+                    placement: 'bottomRight',
+                    icon: <Icon type="close-circle" style={{ color: 'red' }} />
+                  })
+                })
+            })
+          } else {
+            createPet({
+              variables: {
+                input: {
+                  name,
+                  age: Number(age),
+                  breed,
+                  gender,
+                  health,
+                  species,
+                  // eslint-disable-next-line no-underscore-dangle
+                  owner: myAcc._id
+                }
+              },
+              refetchQueries: refetch
+            })
+              .then(() => {
+                notification.open({
+                  message: 'Cập nhật thành công',
+                  placement: 'bottomRight',
+                  icon: <Icon type="check-circle" style={{ color: '#108ee9' }} />
+                })
+                onHide()
+                setImg(null)
+                setImagePreviewUrl(null)
+              })
+              .catch((er) => {
+                console.log(er)
+                const errors = er.graphQLErrors.map(error => error.message)
+                notification.open({
+                  message: errors,
+                  placement: 'bottomRight',
+                  icon: <Icon type="close-circle" style={{ color: 'red' }} />
+                })
+              })
+          }
+        } else if (imagePreviewUrl) {
+          formData.append('image', img)
+          axios.post('http://localhost:3000/', formData, config).then(res => {
+            console.log(res)
+            updatePet({
+              variables: {
+                _id: pet._id,
+                input: {
+                  age: Number(age),
+                  health,
+                  urlImg: res.data.filename,
+                }
+              },
+              refetchQueries: refetch
+            })
+              .then(() => {
+                notification.open({
+                  message: 'Cập nhật thành công',
+                  placement: 'bottomRight',
+                  icon: <Icon type="check-circle" style={{ color: '#108ee9' }} />
+                })
+                setImg(null)
+                setImagePreviewUrl(null)
+                onHide()
+              })
+              .catch((er) => {
+                console.log(er)
+                const errors = er.graphQLErrors.map(error => error.message)
+                notification.open({
+                  message: errors,
+                  placement: 'bottomRight',
+                  icon: <Icon type="close-circle" style={{ color: 'red' }} />
+                })
+              })
+          })
+        } else {
+          updatePet({
+            variables: {
+              _id: pet._id,
+              input: {
+                age: Number(age),
+                health
+              }
+            },
+            refetchQueries: refetch
+          })
+            .then(() => {
+              notification.open({
+                message: 'Cập nhật thành công',
+                placement: 'bottomRight',
+                icon: <Icon type="check-circle" style={{ color: '#108ee9' }} />
+              })
+              setImg(null)
+              setImagePreviewUrl(null)
+              onHide()
+            })
+            .catch((er) => {
+              console.log(er)
+              const errors = er.graphQLErrors.map(error => error.message)
+              notification.open({
+                message: errors,
+                placement: 'bottomRight',
+                icon: <Icon type="close-circle" style={{ color: 'red' }} />
+              })
+            })
+        }
+      }
+    })
+  }
+  const onCancel = () => {
+    setImagePreviewUrl(null)
+    setImg(null)
+    onHide()
+  }
   if (!visible) return false
   return (
     <Modal
@@ -40,17 +245,17 @@ function NormalPetForm(props) {
       className='pet-modal'
       visible={visible}
       title={pet ? <b>Cập nhật thông tin PET</b> : <b>Thêm PET</b>}
-      okText="Lưu"
+      okText={pet ? "Cập nhật" : "Lưu"}
       cancelText="Hủy"
-      onCancel={() => onHide()}
-      onOk={(e) => onOK(e)}
+      onCancel={() => onCancel()}
+      onOk={(e) => onOk(e)}
     >
       <Form>
         <Col span={12}>
           <Row>
             <Form.Item label="Tên">
-              {getFieldDecorator("title", {
-                initialValue: (pet && pet.name) || "",
+              {getFieldDecorator("name", {
+                initialValue: (pet && pet.name),
                 rules: [{ required: true, message: "Vui lòng nhập tên PET" }]
               })(<Input disabled={!!pet} placeholder="Tên Pet" />)}
             </Form.Item>
@@ -58,10 +263,10 @@ function NormalPetForm(props) {
           <Row>
             <Form.Item>
               {getFieldDecorator("urlImg", {
-                initialValue: (pet && pet.urlImg) || ""
+                initialValue: (pet && pet.urlImg)
               })(
                 <div>
-                  {pet && pet.urlImg ? <Avatar size={200} src={pet.urlImg} />
+                  {imagePreviewUrl ? <Avatar size={200} src={imagePreviewUrl} />
                     : <Avatar size={200} icon="plus-square" />}
                   <input id="myFile" type="file" name="myImage" accept="image/x-png,image/gif,image/jpeg" onChange={e => handleChange(e)} />
 
@@ -75,8 +280,8 @@ function NormalPetForm(props) {
             <Col span={12}>
               <Form.Item label="Tuổi (tháng)">
                 {getFieldDecorator("age", {
-                  rules: [{ required: true }],
-                  initialValue: (pet && pet.age) || 0
+                  rules: [{ required: true, message: "Vui lòng nhập tuổi" }],
+                  initialValue: (pet && pet.age)
                 })(
                   <Input
                     style={{ width: "50%" }}
@@ -89,8 +294,8 @@ function NormalPetForm(props) {
             <Col span={12}>
               <Form.Item label="Giới tính">
                 {getFieldDecorator("gender", {
-                  rules: [{ required: true }],
-                  initialValue: (pet && pet.gender) || ""
+                  rules: [{ required: true, message: "Vui lòng chọn giới tính" }],
+                  initialValue: (pet && pet.gender)
                 })(
                   <Select disabled={!!pet}>
                     <Option value="Đực">Đực</Option>
@@ -102,21 +307,21 @@ function NormalPetForm(props) {
           </Row>
 
           <Form.Item label="Loài">
-            {getFieldDecorator("breed", {
+            {getFieldDecorator("species", {
               rules: [{ required: true, message: "Vui lòng nhập loài" }],
-              initialValue: (pet && pet.breed) || ""
+              initialValue: (pet && pet.species)
             })(<Input disabled={!!pet} placeholder="VD: Chó" />)}
           </Form.Item>
           <Form.Item label="Giống">
-            {getFieldDecorator("species ", {
+            {getFieldDecorator("breed", {
               rules: [{ required: true, message: "Vui lòng nhập giống" }],
-              initialValue: (pet && pet.species) || ""
+              initialValue: (pet && pet.breed)
             })(<Input disabled={!!pet} placeholder="VD: Husky" />)}
           </Form.Item>
           <Form.Item label="Tình trạng sức khỏe">
-            {getFieldDecorator("health ", {
+            {getFieldDecorator("health", {
               rules: [{ required: true, message: "Vui lòng nhập tình trạng sức khỏe" }],
-              initialValue: (pet && pet.health) || ""
+              initialValue: (pet && pet.health)
             })(<TextArea rows={4} placeholder="VD: Bệnh rối loạn đường ruột" />)}
           </Form.Item>
         </Col>

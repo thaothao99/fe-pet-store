@@ -2,14 +2,36 @@
 
 /* eslint-disable max-len */
 import React from 'react'
-import { Descriptions, List, Avatar, Button, Icon, Input } from 'antd'
+import { Descriptions, List, Avatar, Button, Icon, notification } from 'antd'
+import gql from 'graphql-tag'
+import { useMutation } from '@apollo/react-hooks'
 
 
-const { Search } = Input
-
+const DELETE_PET = gql`
+mutation deletePet($_id: String!){
+  deletePet(_id:$_id)
+}
+`
 
 function ListPet(props) {
-  const { onShow, data } = props
+  const { onShow, data, refetch } = props
+  const [deletePet] = useMutation(DELETE_PET)
+  const delPet = pet => {
+    deletePet({
+      variables: {
+        // eslint-disable-next-line no-underscore-dangle
+        _id: pet._id
+      },
+      refetchQueries: refetch
+    })
+      .then(() => {
+        notification.open({
+          message: 'Xóa thành công',
+          placement: 'bottomRight',
+          icon: <Icon type="check-circle" style={{ color: '#108ee9' }} />
+        })
+      })
+  }
   // const data = [
   //   {
   //     name: "Ngáo",
@@ -70,13 +92,12 @@ function ListPet(props) {
               <Icon type="edit" />
             </Button>
             &nbsp;
-            <Button type="default" size="small">
+            <Button type="default" size="small" onClick={() => delPet(i)}>
               Xóa
               <Icon type="delete" />
             </Button>
           </div>
         </Descriptions.Item>
-
       </Descriptions>
     )
   })
@@ -91,12 +112,7 @@ function ListPet(props) {
               <Button type="default" size="small" onClick={() => onShow()}>
                 Thêm PET
                 <Icon type="plus-circle" />
-              </Button>&nbsp;
-              <Search
-                placeholder="input search text"
-                onSearch={value => console.log(value)}
-                style={{ width: 200 }}
-              />
+              </Button>
             </div>
           </div>
         )}

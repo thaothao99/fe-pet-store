@@ -77,7 +77,7 @@ function NormalLoginForm(props) {
       <Form onSubmit={handleSubmit} className="login-form">
         <div className="logo" />
         <div className="title">
-          <h1>Đăng nhập</h1>
+          <h1><b>Đăng nhập</b></h1>
         </div>
         <Form.Item>
           {getFieldDecorator('username', {
@@ -117,7 +117,6 @@ function NormalLoginForm(props) {
             type='default'
             onClick={(e) => handleSubmit(e)}
             className="submitLogin"
-            style={{ height: 46, width: '100%' }}
           >
             Đăng nhập
           </Button>

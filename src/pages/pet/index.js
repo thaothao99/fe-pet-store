@@ -18,29 +18,29 @@ const MY_PET = gql`
     breed
     owner
     health
+    urlImg
   }
 }
 `
 const Pet = (props) => {
-  const { history, store } = props
+  const { history, store, myAcc } = props
   const [visible, setVisible] = useState(false)
   const [petInf, setPetIf] = useState(null)
   const onHide = () => {
     setVisible(false)
     setPetIf(null)
   }
-  const { loading, data, refetch } = useQuery(MY_PET)
+  const { data, refetch, loading } = useQuery(MY_PET)
   const onShow = () => setVisible(true)
   useEffect(() => {
-    if (!loading) {
-      refetch()
-    }
+    refetch()
   }, [data])
+  console.log(data)
   return (
     <div>
       <Layout history={history} store={store} />
-      <ListPet onShow={onShow} setPetIf={setPetIf} data={(data && data.petByOwner) || []} />
-      <PetModal visible={visible} onHide={onHide} pet={petInf} />
+      <ListPet onShow={onShow} setPetIf={setPetIf} data={(data && data.petByOwner) || []} refetch={refetch} />
+      <PetModal visible={visible} onHide={onHide} pet={petInf} refetch={refetch} myAcc={myAcc} loading={loading} />
     </div>
   )
 }

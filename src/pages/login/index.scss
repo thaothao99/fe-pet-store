@@ -2,20 +2,15 @@
 .wrapper-login {
   width: 100%;  
   min-height: 100vh;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   padding: 15px;
-  background: #9053c7;
-  background: -webkit-linear-gradient(-135deg, #c850c0, #FF8C00);
-  background: -o-linear-gradient(-135deg, #c850c0, #FF8C00);
-  background: -moz-linear-gradient(-135deg, #c850c0, #FF8C00);
-  background: linear-gradient(-135deg, #c850c0, #FF8C00);
+  // background: #9053c7;
+  // background: -webkit-linear-gradient(-135deg, #c850c0, #FF8C00);
+  // background: -o-linear-gradient(-135deg, #c850c0, #FF8C00);
+  // background: -moz-linear-gradient(-135deg, #c850c0, #FF8C00);
+  // background: linear-gradient(-135deg, #c850c0, #FF8C00);
+  background: url("https://previews.123rf.com/images/9dreamstudio/9dreamstudio1709/9dreamstudio170900003/85096310-large-plastic-bowl-of-pet-dog-food-with-toys-on-white-table-background-top-view-mockup.jpg");
   .wrapper-form-login {
     width: 500px;
     height: 600px;
@@ -28,43 +23,51 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    padding: 100px;
-    background-color: aliceblue;
+    padding: 50px;
     .ant-form {
       justify-content: space-between;
       text-align: center;
-      width: 340px;
+      width: 500px;
+      opacity: 0.95;
       .logo {
         background: url('../../assets/images/petstore.png') no-repeat;
         background-size: contain;
         width: 250px;
         height: 100px;
+        float: left;
       }  
       .title{
-        margin-top: 15px;
+        margin-top: 20px;
       }
       .ant-input {
         border-radius: 1px;
-        height: 46px;
         padding: 14px 20px;
-        border: none;
-        background-color: #FFFAFA;
+        border: solid 1px gray;
         &::placeholder {
           font-size: 13px;
-          color: black;
+          color: gray;
         }
         &:focus {color: black;}
       }  
       .ant-btn {
-        height: 46px;
+        height: 35px;
+        width: 150px;
+        border: solid 1px gray;
+        background: grey;
+        color: cornsilk;
+      }
+      .ant-btn:hover  {
+        border: solid 1.5px gray;
+        font-weight: 600;
+        color: cornsilk;
       }
     }
     a{
-      color: black;
+      color: gray;
     }
     a:hover {
-      color: black;
       font-weight: 600;
-    }
+      color: grey;
+  }
   }
 }

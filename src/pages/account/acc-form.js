@@ -164,7 +164,6 @@ function NormalAccForm(props) {
             type='default'
             className="submit-update-acc"
             onClick={(e) => handleSubmit(e)}
-            style={{ height: 46, width: '100%' }}
           >
             Cập nhật
           </Button>
