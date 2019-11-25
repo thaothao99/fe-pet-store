@@ -48,7 +48,7 @@ const Account = (props) => {
               notification.open({
                 message: 'Cập nhật thành công',
                 placement: 'bottomRight',
-                icon: <Icon type="check-circle" style={{ color: '#108ee9' }} />
+                icon: <Icon type="check-circle" style={{ color: 'grey' }} />
               })
             })
         })

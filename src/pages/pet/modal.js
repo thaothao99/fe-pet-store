@@ -75,7 +75,7 @@ function NormalPetForm(props) {
   //   //       notification.open({
   //   //         message: 'Cập nhật thành công',
   //   //         placement: 'bottomRight',
-  //   //         icon: <Icon type="check-circle" style={{ color: '#108ee9' }} />
+  //   //         icon: <Icon type="check-circle" style={{ color: 'grey' }} />
   //   //       })
   //   //     })
   //   // })
@@ -112,7 +112,7 @@ function NormalPetForm(props) {
                   notification.open({
                     message: 'Cập nhật thành công',
                     placement: 'bottomRight',
-                    icon: <Icon type="check-circle" style={{ color: '#108ee9' }} />
+                    icon: <Icon type="check-circle" style={{ color: 'grey' }} />
                   })
                   onHide()
                   setImg(null)
@@ -124,7 +124,7 @@ function NormalPetForm(props) {
                   notification.open({
                     message: errors,
                     placement: 'bottomRight',
-                    icon: <Icon type="close-circle" style={{ color: 'red' }} />
+                    icon: <Icon type="close-circle" style={{ color: 'grey' }} />
                   })
                 })
             })
@@ -148,7 +148,7 @@ function NormalPetForm(props) {
                 notification.open({
                   message: 'Cập nhật thành công',
                   placement: 'bottomRight',
-                  icon: <Icon type="check-circle" style={{ color: '#108ee9' }} />
+                  icon: <Icon type="check-circle" style={{ color: 'grey' }} />
                 })
                 onHide()
                 setImg(null)
@@ -160,7 +160,7 @@ function NormalPetForm(props) {
                 notification.open({
                   message: errors,
                   placement: 'bottomRight',
-                  icon: <Icon type="close-circle" style={{ color: 'red' }} />
+                  icon: <Icon type="close-circle" style={{ color: 'grey' }} />
                 })
               })
           }
@@ -183,7 +183,7 @@ function NormalPetForm(props) {
                 notification.open({
                   message: 'Cập nhật thành công',
                   placement: 'bottomRight',
-                  icon: <Icon type="check-circle" style={{ color: '#108ee9' }} />
+                  icon: <Icon type="check-circle" style={{ color: 'grey' }} />
                 })
                 setImg(null)
                 setImagePreviewUrl(null)
@@ -195,7 +195,7 @@ function NormalPetForm(props) {
                 notification.open({
                   message: errors,
                   placement: 'bottomRight',
-                  icon: <Icon type="close-circle" style={{ color: 'red' }} />
+                  icon: <Icon type="close-circle" style={{ color: 'grey' }} />
                 })
               })
           })
@@ -214,7 +214,7 @@ function NormalPetForm(props) {
               notification.open({
                 message: 'Cập nhật thành công',
                 placement: 'bottomRight',
-                icon: <Icon type="check-circle" style={{ color: '#108ee9' }} />
+                icon: <Icon type="check-circle" style={{ color: 'grey' }} />
               })
               setImg(null)
               setImagePreviewUrl(null)
@@ -226,7 +226,7 @@ function NormalPetForm(props) {
               notification.open({
                 message: errors,
                 placement: 'bottomRight',
-                icon: <Icon type="close-circle" style={{ color: 'red' }} />
+                icon: <Icon type="close-circle" style={{ color: 'grey' }} />
               })
             })
         }
