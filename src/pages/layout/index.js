@@ -6,7 +6,7 @@ import MainMenu from '../../components/mainMenu'
 import './index.scss'
 
 const Layout = (props) => {
-  const { history, store } = props
+  const { history, store, myAcc } = props
   const onLogout = () => {
     store.Auth.logout()
     history.push('/login')
@@ -15,7 +15,7 @@ const Layout = (props) => {
     <div className='wrapper' style={{ height: '100%' }}>
       <HeaderTopBar logout={onLogout} />
       <HeaderPage />
-      <MainMenu />
+      <MainMenu myAcc={myAcc} />
     </div>
   )
 }

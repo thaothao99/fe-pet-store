@@ -38,7 +38,7 @@ const Pet = (props) => {
   console.log(data)
   return (
     <div>
-      <Layout history={history} store={store} />
+      <Layout history={history} store={store} myAcc={myAcc} />
       <ListPet onShow={onShow} setPetIf={setPetIf} data={(data && data.petByOwner) || []} refetch={refetch} />
       <PetModal visible={visible} onHide={onHide} pet={petInf} refetch={refetch} myAcc={myAcc} loading={loading} />
     </div>

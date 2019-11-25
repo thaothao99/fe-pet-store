@@ -68,7 +68,7 @@ const Account = (props) => {
   }
   return (
     <div>
-      <Layout history={history} store={store} />
+      <Layout history={history} store={store} myAcc={myAcc} />
       <div className="acc-inf-container">
         <MenuProfile sltKey="1" class="acc-infor-left" />
         <AccForm myAcc={myAcc} refetchQueries={refetch} />

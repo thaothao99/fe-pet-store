@@ -10,7 +10,7 @@ const Security = (props) => {
   console.log(myAcc)
   return (
     <div>
-      <Layout history={history} store={store} />
+      <Layout history={history} store={store} myAcc={myAcc} />
       <div className="acc-inf-container">
         <MenuProfile sltKey="2" class="acc-infor-left" />
         <PassForm myAcc={myAcc} refetchQueries={refetch} />

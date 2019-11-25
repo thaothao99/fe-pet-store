@@ -19,6 +19,11 @@ const ME = gql`
     gender
     urlImg
     birthDay
+    role{
+      _id
+      code
+      name
+    }
   }
 }
 `
@@ -61,9 +66,8 @@ const Routers = props => {
               <React.Suspense fallback={null}>
                 {isAuth ? (
                   <Component history={history} store={store} route={route} myAcc={data && data.me} refetch={refetch} loading={loading} />
-                ) : (
-                  <Redirect to="/login" />
-                )}
+                )
+                  : <Redirect to="/login" />}
               </React.Suspense>
             )
           }}
