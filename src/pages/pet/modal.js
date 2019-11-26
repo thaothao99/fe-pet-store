@@ -4,9 +4,9 @@ import React, { useState, useEffect } from 'react'
 import { inject, observer } from 'mobx-react'
 import axios from 'axios'
 import { withRouter } from 'react-router-dom'
-import gql from "graphql-tag"
+import gql from 'graphql-tag'
 import { useMutation } from '@apollo/react-hooks'
-import { Modal, Form, Input, Select, Col, Row, Avatar, notification, Icon } from "antd"
+import { Modal, Form, Input, Select, Col, Row, Avatar, notification, Icon } from 'antd'
 import './index.scss'
 
 const CREAT_PET = gql`
@@ -80,7 +80,7 @@ function NormalPetForm(props) {
   //   //     })
   //   // })
   // }
-  const onOk = async (e) => {
+  const onOk = async(e) => {
     e.preventDefault()
     form.validateFields((err, values) => {
       console.log(values)
@@ -244,8 +244,8 @@ function NormalPetForm(props) {
       style={{ top: 30 }}
       className='pet-modal'
       visible={visible}
-      title={pet ? <b>Cập nhật thông tin PET</b> : <b>Thêm PET</b>}
-      okText={pet ? "Cập nhật" : "Lưu"}
+      title={pet ? <b>Cập nhật thông tin thú cưng</b> : <b>Thêm thú cưng</b>}
+      okText={pet ? 'Cập nhật' : 'Lưu'}
       cancelText="Hủy"
       onCancel={() => onCancel()}
       onOk={(e) => onOk(e)}
@@ -254,15 +254,15 @@ function NormalPetForm(props) {
         <Col span={12}>
           <Row>
             <Form.Item label="Tên">
-              {getFieldDecorator("name", {
+              {getFieldDecorator('name', {
                 initialValue: (pet && pet.name),
-                rules: [{ required: true, message: "Vui lòng nhập tên PET" }]
+                rules: [{ required: true, message: 'Vui lòng nhập tên thú cưng' }]
               })(<Input disabled={!!pet} placeholder="Tên Pet" />)}
             </Form.Item>
           </Row>
           <Row>
             <Form.Item>
-              {getFieldDecorator("urlImg", {
+              {getFieldDecorator('urlImg', {
                 initialValue: (pet && pet.urlImg)
               })(
                 <div>
@@ -279,12 +279,12 @@ function NormalPetForm(props) {
           <Row>
             <Col span={12}>
               <Form.Item label="Tuổi (tháng)">
-                {getFieldDecorator("age", {
-                  rules: [{ required: true, message: "Vui lòng nhập tuổi" }],
+                {getFieldDecorator('age', {
+                  rules: [{ required: true, message: 'Vui lòng nhập tuổi' }],
                   initialValue: (pet && pet.age)
                 })(
                   <Input
-                    style={{ width: "50%" }}
+                    style={{ width: '50%' }}
                     type="number"
                   />
 
@@ -293,8 +293,8 @@ function NormalPetForm(props) {
             </Col>
             <Col span={12}>
               <Form.Item label="Giới tính">
-                {getFieldDecorator("gender", {
-                  rules: [{ required: true, message: "Vui lòng chọn giới tính" }],
+                {getFieldDecorator('gender', {
+                  rules: [{ required: true, message: 'Vui lòng chọn giới tính' }],
                   initialValue: (pet && pet.gender)
                 })(
                   <Select disabled={!!pet}>
@@ -307,20 +307,20 @@ function NormalPetForm(props) {
           </Row>
 
           <Form.Item label="Loài">
-            {getFieldDecorator("species", {
-              rules: [{ required: true, message: "Vui lòng nhập loài" }],
+            {getFieldDecorator('species', {
+              rules: [{ required: true, message: 'Vui lòng nhập loài' }],
               initialValue: (pet && pet.species)
             })(<Input disabled={!!pet} placeholder="VD: Chó" />)}
           </Form.Item>
           <Form.Item label="Giống">
-            {getFieldDecorator("breed", {
-              rules: [{ required: true, message: "Vui lòng nhập giống" }],
+            {getFieldDecorator('breed', {
+              rules: [{ required: true, message: 'Vui lòng nhập giống' }],
               initialValue: (pet && pet.breed)
             })(<Input disabled={!!pet} placeholder="VD: Husky" />)}
           </Form.Item>
           <Form.Item label="Tình trạng sức khỏe">
-            {getFieldDecorator("health", {
-              rules: [{ required: true, message: "Vui lòng nhập tình trạng sức khỏe" }],
+            {getFieldDecorator('health', {
+              rules: [{ required: true, message: 'Vui lòng nhập tình trạng sức khỏe' }],
               initialValue: (pet && pet.health)
             })(<TextArea rows={4} placeholder="VD: Bệnh rối loạn đường ruột" />)}
           </Form.Item>

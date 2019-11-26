@@ -21,16 +21,17 @@
 }
 .ant-btn {
   height: 35px;
-  border: solid 1px gray  !important;
-  background: grey  !important;
-  color: cornsilk  !important;
-  &:hover  {
-    border: solid 1.25px gray;
-    color: cornsilk;
-    background: #595959
+  width: 150px;
+  border: solid 1px gray;
+  background: grey;
+  color: cornsilk;
 }
-  &::after {
-    color: cornsilk !important;
-    background: grey !important;
-  }
+.ant-btn:hover  {
+  border: solid 1.25px gray;
+  color: cornsilk;
+  background: #595959
+}
+.ant-btn::after {
+  color: cornsilk !important;
+  background: grey !important;
 }

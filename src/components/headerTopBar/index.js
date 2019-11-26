@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 
 
 function HeaderTopBar(props) {
+  const { myAcc } = props
   const onClick = () => {
     props.logout()
     notification.open({
@@ -44,11 +45,13 @@ function HeaderTopBar(props) {
             </Link>
           </li>
           <li />
-          <li>
-            <Link to='/'>
-              <Icon type="shopping-cart" />&#9; Giỏ hàng
-            </Link>
-          </li>
+          {(myAcc && myAcc.role && myAcc.role.code === 'USER') && (
+            <li>
+              <Link to='/'>
+                <Icon type="shopping-cart" />&#9; Giỏ hàng
+              </Link>
+            </li>
+          )}
         </ul>
       </div>
     </div>

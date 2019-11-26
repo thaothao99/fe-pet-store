@@ -5,72 +5,72 @@ import { Link } from 'react-router-dom'
 
 const USER_MENU = [
   {
-    name: "TRANG CHỦ",
-    path: "/"
+    name: 'TRANG CHỦ',
+    path: '/'
   },
   {
-    name: "THÚ CƯNG",
-    path: "/pet"
+    name: 'THÚ CƯNG',
+    path: '/pet'
   },
   {
-    name: "SẢN PHẨM",
-    path: "/product"
+    name: 'SẢN PHẨM',
+    path: '/product'
   },
   {
-    name: "DỊCH VỤ",
-    path: "/"
+    name: 'DỊCH VỤ',
+    path: '/'
   },
   {
-    name: "LIÊN HỆ",
-    path: "/"
+    name: 'LIÊN HỆ',
+    path: '/'
   }
 ]
 const ADMIN_MENU = [
   {
-    name: "TRANG CHỦ",
-    path: "/"
+    name: 'TRANG CHỦ',
+    path: '/'
   },
   {
-    name: "NHÂN VIÊN",
-    path: "/"
+    name: 'NHÂN VIÊN',
+    path: '/employee'
   },
   {
-    name: "KHÁCH HÀNG",
-    path: "/product"
+    name: 'KHÁCH HÀNG',
+    path: '/customer'
   },
   {
-    name: "SẢN PHẨM",
-    path: "/"
+    name: 'SẢN PHẨM',
+    path: '/'
   },
   {
-    name: "DỊCH VỤ",
-    path: "/"
+    name: 'DỊCH VỤ',
+    path: '/'
   },
   {
-    name: "ĐƠN HÀNG",
-    path: "/"
+    name: 'ĐƠN HÀNG',
+    path: '/'
   }
 ]
 const EMPLOYEE_MENU = [
   {
-    name: "TRANG CHỦ",
-    path: "/"
+    name: 'TRANG CHỦ',
+    path: '/'
   },
   {
-    name: "KHÁCH HÀNG",
-    path: "/product"
+    name: 'KHÁCH HÀNG',
+    path: '/customer'
   },
   {
-    name: "SẢN PHẨM",
-    path: "/"
+    name: 'SẢN PHẨM',
+    path: '/'
   },
   {
-    name: "DỊCH VỤ",
-    path: "/"
+    name: 'DỊCH VỤ',
+    path: '/'
   },
   {
-    name: "ĐƠN HÀNG",
-    path: "/"
+    name: 'ĐƠN HÀNG',
+    path: '/'
   }
 ]
 function MainMenu(props) {
@@ -81,21 +81,21 @@ function MainMenu(props) {
         {(myAcc && myAcc.role && myAcc.role.code === 'USER')
           && (USER_MENU.map((val, index) => {
             return (
-              <li id={`menu-item-${index + 1}`}><Link to={val.path}>{val.name}</Link></li>
+              <li id={`menu-item-${index + 1}`} key={index}><Link to={val.path}>{val.name}</Link></li>
             )
           })
           )}
         {(myAcc && myAcc.role && myAcc.role.code === 'ADMIN')
           && (ADMIN_MENU.map((val, index) => {
             return (
-              <li id={`menu-item-${index + 1}`}><Link to={val.path}>{val.name}</Link></li>
+              <li id={`menu-item-${index + 1}`} key={index}><Link to={val.path}>{val.name}</Link></li>
             )
           })
           )}
         {(myAcc && myAcc.role && myAcc.role.code === 'EMPLOYEE')
           && (EMPLOYEE_MENU.map((val, index) => {
             return (
-              <li id={`menu-item-${index + 1}`}><Link to={val.path}>{val.name}</Link></li>
+              <li id={`menu-item-${index + 1}`} key={index}><Link to={val.path}>{val.name}</Link></li>
             )
           })
           )}

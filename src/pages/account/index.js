@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useState, useEffect } from 'react'
-import gql from "graphql-tag"
+import gql from 'graphql-tag'
 import { useMutation } from '@apollo/react-hooks'
 import { Button, Avatar, notification, Icon } from 'antd'
 import axios from 'axios'
@@ -66,15 +66,16 @@ const Account = (props) => {
     }
     reader.readAsDataURL(file)
   }
+  console.log(imagePreviewUrl)
   return (
     <div>
       <Layout history={history} store={store} myAcc={myAcc} />
       <div className="acc-inf-container">
-        <MenuProfile sltKey="1" class="acc-infor-left" />
+        <MenuProfile sltKey="1" class="acc-infor-left" myAcc={myAcc} />
         <AccForm myAcc={myAcc} refetchQueries={refetch} />
         <div className="avt-form">
-          {!loading && <Avatar size={200} src={imagePreviewUrl} />}
-          {loading && <Avatar size={200} icon="user" />}
+          {(imagePreviewUrl !== null) && <Avatar size={200} src={imagePreviewUrl} />}
+          {(loading || imagePreviewUrl === null) && <Avatar size={200} icon="user" />}
           <input id="myFile" type="file" name="myImage" accept="image/x-png,image/gif,image/jpeg" onChange={e => handleChange(e)} />
           {
             (img) && (<Button onClick={() => upFile()} style={{ width: '180px', marginTop: '10px' }} type="default">Đặt làm ảnh đại diện</Button>)

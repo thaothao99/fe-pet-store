@@ -8,8 +8,8 @@ import '../layout/index.scss'
 import PetModal from './modal'
 
 const MY_PET = gql`
-{
-  petByOwner(owner:"0b000070-0bbf-11ea-88b0-5bccd40849a4"){
+query petByOwner($owner:String!){
+  petByOwner(owner:$owner){
     _id
     name
     age
@@ -30,7 +30,10 @@ const Pet = (props) => {
     setVisible(false)
     setPetIf(null)
   }
-  const { data, refetch, loading } = useQuery(MY_PET)
+  const { data, refetch, loading } = useQuery(MY_PET, {
+    // eslint-disable-next-line no-underscore-dangle
+    variables: { owner: myAcc._id },
+  })
   const onShow = () => setVisible(true)
   useEffect(() => {
     refetch()

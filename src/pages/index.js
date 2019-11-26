@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import gql from "graphql-tag"
+import gql from 'graphql-tag'
 import { useQuery } from '@apollo/react-hooks'
 
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom'

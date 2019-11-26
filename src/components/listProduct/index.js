@@ -9,45 +9,45 @@ function ListProduct() {
 
   const data = [
     {
-      name: "Sp ABC",
-      description: "Chăn (mền) Pet Shop thiết kế trẻ trung, sinh động, tạo điểm nhấn riêng cho phòng ngủ.",
-      price: "250000",
+      name: 'Sp ABC',
+      description: 'Chăn (mền) Pet Shop thiết kế trẻ trung, sinh động, tạo điểm nhấn riêng cho phòng ngủ.',
+      price: '250000',
       amount: 15
     },
     {
-      name: "Sp ABC",
-      description: "Chăn (mền) Pet Shop thiết kế trẻ trung, sinh động, tạo điểm nhấn riêng cho phòng ngủ.",
-      price: "250000",
+      name: 'Sp ABC',
+      description: 'Chăn (mền) Pet Shop thiết kế trẻ trung, sinh động, tạo điểm nhấn riêng cho phòng ngủ.',
+      price: '250000',
       amount: 15
     },
     {
-      name: "Sp ABC",
-      description: "Chăn (mền) Pet Shop thiết kế trẻ trung, sinh động, tạo điểm nhấn riêng cho phòng ngủ.",
-      price: "250000",
+      name: 'Sp ABC',
+      description: 'Chăn (mền) Pet Shop thiết kế trẻ trung, sinh động, tạo điểm nhấn riêng cho phòng ngủ.',
+      price: '250000',
       amount: 0
     },
     {
-      name: "Sp ABC",
-      description: "Chăn (mền) Pet Shop thiết kế trẻ trung, sinh động, tạo điểm nhấn riêng cho phòng ngủ.",
-      price: "250000",
+      name: 'Sp ABC',
+      description: 'Chăn (mền) Pet Shop thiết kế trẻ trung, sinh động, tạo điểm nhấn riêng cho phòng ngủ.',
+      price: '250000',
       amount: 10
     },
     {
-      name: "Sp ABC",
-      description: "Chăn (mền) Pet Shop thiết kế trẻ trung, sinh động, tạo điểm nhấn riêng cho phòng ngủ.",
-      price: "250000",
+      name: 'Sp ABC',
+      description: 'Chăn (mền) Pet Shop thiết kế trẻ trung, sinh động, tạo điểm nhấn riêng cho phòng ngủ.',
+      price: '250000',
       amount: 0
     },
     {
-      name: "Sp ABC",
-      description: "Chăn (mền) Pet Shop thiết kế trẻ trung, sinh động, tạo điểm nhấn riêng cho phòng ngủ.",
-      price: "250000",
+      name: 'Sp ABC',
+      description: 'Chăn (mền) Pet Shop thiết kế trẻ trung, sinh động, tạo điểm nhấn riêng cho phòng ngủ.',
+      price: '250000',
       amount: 100
     },
     {
-      name: "Sp ABC",
-      description: "Chăn (mền) Pet Shop thiết kế trẻ trung, sinh động, tạo điểm nhấn riêng cho phòng ngủ.",
-      price: "250000",
+      name: 'Sp ABC',
+      description: 'Chăn (mền) Pet Shop thiết kế trẻ trung, sinh động, tạo điểm nhấn riêng cho phòng ngủ.',
+      price: '250000',
       amount: 12
     }
   ]

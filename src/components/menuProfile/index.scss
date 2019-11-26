@@ -28,8 +28,14 @@
   }
 }
 .ant-menu-submenu-arrow{
-  color: grey;
+  color: grey !important;
   &::after{
+    color: grey !important;
+  }
+  &:hover{
+    color: #595959 !important;
+  }
+  &::selection{
     color: grey !important;
   }
 }

@@ -1,7 +1,7 @@
 import { Auth } from './auth'
 
 class Store {
-  constructor () {
+  constructor() {
     this.Auth = new Auth(this)
   }
 }
