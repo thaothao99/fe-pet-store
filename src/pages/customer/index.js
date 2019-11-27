@@ -31,12 +31,11 @@ const CUSTOMER = gql`
 const Customer = props => {
   const { history, store, myAcc } = props
   const { data, refetch } = useQuery(CUSTOMER)
-  console.log(data)
   return (
     <div>
       <Layout history={history} store={store} myAcc={myAcc} />
       <ListUser
-        data={(data && data.customers) || []}
+        listuser={(data && data.customers) || []}
         nameList='KHÁCH HÀNG'
         refetch={refetch}
       />

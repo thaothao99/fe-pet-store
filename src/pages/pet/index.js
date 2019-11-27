@@ -23,7 +23,8 @@ query petByOwner($owner:String!){
 }
 `
 const Pet = (props) => {
-  const { history, store, myAcc } = props
+  const { history, store, myAcc, match } = props
+  console.log(match.params)
   const [visible, setVisible] = useState(false)
   const [petInf, setPetIf] = useState(null)
   const onHide = () => {

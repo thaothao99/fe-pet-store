@@ -1,11 +1,11 @@
-/* eslint no-underscore-dangle: 0 */
-
-import React from 'react'
-import { List, Avatar, Descriptions, Button, Icon, notification } from 'antd'
+/* eslint-disable no-underscore-dangle */
+import React, { useState } from 'react'
+import { List, Avatar, Descriptions, Button, Icon, notification, Modal, Select } from 'antd'
 import './index.scss'
-import { useMutation } from '@apollo/react-hooks'
+import { useMutation, useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 
+const { Option } = Select
 const LOCK_USER = gql`
   mutation lockUser($_id: String!) {
     lockUSer(_id: $_id)
@@ -16,19 +16,58 @@ mutation deleteUser($_id: String!){
   deleteUser(_id:$_id)
 }
 `
+const ROLE = gql`
+{
+  roles{
+    _id
+    code
+    name
+  }
+}
+`
+const SET_ROLE = gql`
+mutation setRole($_id: String!, $code: String!){
+  setRole(_id:$_id, code: $code)
+}
+`
 function ListUser(props) {
   const [lockUSer] = useMutation(LOCK_USER)
   const [deleteUser] = useMutation(DELETE_USER)
+  const { data, loading } = useQuery(ROLE)
+  const [setRole] = useMutation(SET_ROLE)
+  const [visible, setVisible] = useState(false)
+  const [userId, setUserId] = useState()
+  const [roleCode, setRoleCode] = useState()
+  const onClick = (user) => {
+    setUserId(user._id)
+    setRoleCode(user.role.code)
+    setVisible(true)
+  }
+  const setRoleUser = () => {
+    setRole({
+      variables: {
+        _id: userId,
+        code: roleCode
+      },
+      refetchQueries: props.refetch
+    })
+      .then(() => {
+        notification.open({
+          message: `Cập nhật thành công`,
+          placement: 'bottomRight',
+          icon: <Icon type="check-circle" style={{ color: 'grey' }} />
+        })
+      })
+      .catch(err => console.log(err))
+  }
   const lockUserAcc = i => {
-    console.log(i)
     lockUSer({
       variables: {
         _id: i._id
       },
       refetchQueries: props.refetch
     })
-      .then((res) => {
-        console.log(res)
+      .then(() => {
         notification.open({
           message: `${i.isLock ? 'Mở khóa' : 'Khóa'} tài khoản thành công`,
           placement: 'bottomRight',
@@ -53,17 +92,23 @@ function ListUser(props) {
       })
       .catch(err => console.log(err))
   }
-  const { data, nameList } = props
-  const arrData = data.map(i => {
+  const onCancel = () => {
+    setRoleCode(null)
+    setUserId(null)
+    setVisible(false)
+  }
+  console.log(userId, roleCode)
+  const { listuser, nameList } = props
+  const arrData = listuser.map(i => {
     return (
       <Descriptions title={`Tên tài khoản: ${i.username}`}>
         <Descriptions.Item>
           {' '}
           {i.urlImg ? (
-            <Avatar src={i.urlImg} size={50} />
+            <Avatar src={i.urlImg} size={100} />
           )
             : (
-              <Avatar size={50} icon='user' />
+              <Avatar size={100} icon='user' />
             )}
         </Descriptions.Item>
         <Descriptions.Item label='Email'>{i.email}</Descriptions.Item>
@@ -74,7 +119,7 @@ function ListUser(props) {
         <Descriptions.Item label='Địa chỉ'>{i.address}</Descriptions.Item>
         <Descriptions.Item>
           <div>
-            <Button type='default' size='small' style={{ width: '200px' }}>
+            <Button type='default' size='small' style={{ width: '200px' }} onClick={() => onClick(i)}>
               Chỉnh sửa quyền truy cập
               <Icon type='edit' />
             </Button>
@@ -103,15 +148,6 @@ function ListUser(props) {
           </div>
         </Descriptions.Item>
       </Descriptions>
-      // eslint-disable-next-line no-underscore-dangle
-      // <List.Item key={i._id}>
-      //   <List.Item.Meta
-      //     avatar={i.urlImg ? <Avatar src={i.urlImg} size={70} /> : <Avatar size={70} icon="user" />}
-      //     title={<Link to="/customer">{`${i.firstName} ${i.lastName}`}</Link>}
-      //     description={i.email}
-      //   />
-      //   <div>Content</div>
-      // </List.Item>
     )
   })
   return (
@@ -128,6 +164,31 @@ function ListUser(props) {
         dataSource={arrData}
         renderItem={item => <List.Item>{item}</List.Item>}
       />
+      <Modal
+        title={(
+          <b>Chỉnh sửa quyền truy cập &nbsp;
+            <Icon type='edit' />
+          </b>
+        )}
+        visible={visible}
+        onOk={() => setRoleUser()}
+        onCancel={() => onCancel()}
+      >
+        <Select
+          placeholder="Chọn quyền truy cập"
+          style={{ width: '180px' }}
+          value={roleCode}
+          onChange={(val) => setRoleCode(val)}
+        >
+          {
+            !loading && data.roles.map(i => {
+              return (
+                <Option value={i.code} key={i._id} disabled={(i.code === 'ADMIN')}>{i.name}</Option>
+              )
+            })
+          }
+        </Select>
+      </Modal>
     </div>
   )
 }

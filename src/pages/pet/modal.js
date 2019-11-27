@@ -80,7 +80,7 @@ function NormalPetForm(props) {
   //   //     })
   //   // })
   // }
-  const onOk = async(e) => {
+  const onOk = async (e) => {
     e.preventDefault()
     form.validateFields((err, values) => {
       console.log(values)
@@ -297,7 +297,7 @@ function NormalPetForm(props) {
                   rules: [{ required: true, message: 'Vui lòng chọn giới tính' }],
                   initialValue: (pet && pet.gender)
                 })(
-                  <Select disabled={!!pet}>
+                  <Select disabled={!!pet} placeholder="Chọn giới tính">
                     <Option value="Đực">Đực</Option>
                     <Option value="Cái">Cái</Option>
                   </Select>

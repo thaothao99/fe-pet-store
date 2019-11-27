@@ -14,3 +14,13 @@
   color: cornsilk !important;
   background: grey !important;
 }
+.ant-select-selection{
+  border: solid 1px gray !important;
+  &:hover{border: solid 1px gray;}
+}
+.ant-modal-content {
+  width: 450px;
+  .ant-btn{
+    width: 100px;
+  }
+}

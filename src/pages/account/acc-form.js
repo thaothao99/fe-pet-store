@@ -141,7 +141,7 @@ function NormalAccForm(props) {
               {getFieldDecorator('gender', {
                 initialValue: myAcc && myAcc.gender
               })(
-                <Select>
+                <Select placeholder="Chọn giới tính">
                   <Option value="Nam">Nam</Option>
                   <Option value="Nữ">Nữ</Option>
                   <Option value="Khác">Khác</Option>
