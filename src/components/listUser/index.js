@@ -30,14 +30,22 @@ mutation setRole($_id: String!, $code: String!){
   setRole(_id:$_id, code: $code)
 }
 `
+const LOCK_USER_ACC = gql`
+  mutation lockUserAcc($_id: String!) {
+    lockUSerAcc(_id: $_id)
+  }
+`
 function ListUser(props) {
   const [lockUSer] = useMutation(LOCK_USER)
+  const [lockUserAcc] = useMutation(LOCK_USER_ACC)
   const [deleteUser] = useMutation(DELETE_USER)
   const { data, loading } = useQuery(ROLE)
   const [setRole] = useMutation(SET_ROLE)
   const [visible, setVisible] = useState(false)
   const [userId, setUserId] = useState()
   const [roleCode, setRoleCode] = useState()
+  const { listuser, nameList, myAcc } = props
+
   const onClick = (user) => {
     setUserId(user._id)
     setRoleCode(user.role.code)
@@ -52,6 +60,7 @@ function ListUser(props) {
       refetchQueries: props.refetch
     })
       .then(() => {
+        setVisible(false)
         notification.open({
           message: `Cập nhật thành công`,
           placement: 'bottomRight',
@@ -60,7 +69,23 @@ function ListUser(props) {
       })
       .catch(err => console.log(err))
   }
-  const lockUserAcc = i => {
+  const lockUserAccount = i => {
+    lockUserAcc({
+      variables: {
+        _id: i._id
+      },
+      refetchQueries: props.refetch
+    })
+      .then(() => {
+        notification.open({
+          message: `${i.isLock ? 'Mở khóa' : 'Khóa'} tài khoản thành công`,
+          placement: 'bottomRight',
+          icon: <Icon type="check-circle" style={{ color: 'grey' }} />
+        })
+      })
+      .catch(err => console.log(err))
+  }
+  const lockUserAny = i => {
     lockUSer({
       variables: {
         _id: i._id
@@ -75,6 +100,13 @@ function ListUser(props) {
         })
       })
       .catch(err => console.log(err))
+  }
+  const lock = (user) => {
+    if (myAcc && myAcc.role.code === 'ADMIN') {
+      lockUserAny(user)
+    } else if (myAcc && myAcc.role.code === 'EMPLOYEE') {
+      lockUserAccount(user)
+    }
   }
   const deleteUserAcc = i => {
     deleteUser({
@@ -97,8 +129,6 @@ function ListUser(props) {
     setUserId(null)
     setVisible(false)
   }
-  console.log(userId, roleCode)
-  const { listuser, nameList } = props
   const arrData = listuser.map(i => {
     return (
       <Descriptions title={`Tên tài khoản: ${i.username}`}>
@@ -119,16 +149,20 @@ function ListUser(props) {
         <Descriptions.Item label='Địa chỉ'>{i.address}</Descriptions.Item>
         <Descriptions.Item>
           <div>
-            <Button type='default' size='small' style={{ width: '200px' }} onClick={() => onClick(i)}>
-              Chỉnh sửa quyền truy cập
-              <Icon type='edit' />
-            </Button>
+            {
+              (myAcc && myAcc.role.code === 'ADMIN') && (
+                <Button type='default' size='small' style={{ width: '200px' }} onClick={() => onClick(i)}>
+                  Chỉnh sửa quyền truy cập
+                  <Icon type='edit' />
+                </Button>
+              )
+            }
             &nbsp;
             <Button
               type='default'
               size='small'
               style={{ width: '150px' }}
-              onClick={() => lockUserAcc(i)}
+              onClick={() => lock(i)}
             >
               {i.isLock ? 'Mở khóa tài khoản' : 'Khóa tài khoản'}
               <Icon
@@ -136,15 +170,19 @@ function ListUser(props) {
               />
             </Button>
             &nbsp;
-            <Button
-              type='default'
-              size='small'
-              style={{ width: '70px' }}
-              onClick={() => deleteUserAcc(i)}
-            >
-              Xóa
-              <Icon type='delete' />
-            </Button>
+            {
+              (myAcc && myAcc.role.code === 'ADMIN') && (
+                <Button
+                  type='default'
+                  size='small'
+                  style={{ width: '70px' }}
+                  onClick={() => deleteUserAcc(i)}
+                >
+                  Xóa
+                  <Icon type='delete' />
+                </Button>
+              )
+            }
           </div>
         </Descriptions.Item>
       </Descriptions>
@@ -154,7 +192,8 @@ function ListUser(props) {
     <div className='list-user'>
       <List
         size='large'
-        locale={{ emptyText: 'Chưa có thông tin tài khoản nào' }}
+        // eslint-disable-next-line react/destructuring-assignment
+        locale={{ emptyText: props.loading ? 'Đang tải thông tin' : 'Chưa có thông tin tài khoản nào' }}
         header={(
           <div>
             <h2>DANH SÁCH TÀI KHOẢN {nameList}</h2>

@@ -39,6 +39,11 @@ export const routersAuth = [
   },
   {
     exact: true,
+    path: '/product/:ID',
+    component: 'detailProduct'
+  },
+  {
+    exact: true,
     path: '/customer',
     component: 'customer'
   },

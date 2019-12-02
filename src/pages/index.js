@@ -28,7 +28,7 @@ const ME = gql`
 }
 `
 const Routers = props => {
-  const { store, history } = props
+  const { store, history, match } = props
   const { Auth } = store
   const { isAuth } = Auth
   const { data, refetch, loading } = useQuery(ME)
@@ -65,7 +65,15 @@ const Routers = props => {
             return (
               <React.Suspense fallback={null}>
                 {isAuth ? (
-                  <Component history={history} store={store} route={route} myAcc={data && data.me} refetch={refetch} loading={loading} />
+                  <Component
+                    history={history}
+                    store={store}
+                    route={route}
+                    myAcc={data && data.me}
+                    refetch={refetch}
+                    loading={loading}
+                    match={match}
+                  />
                 )
                   : <Redirect to="/login" />}
               </React.Suspense>
@@ -73,7 +81,7 @@ const Routers = props => {
           }}
         />
       ))}
-      <Redirect to="/" />
+      <Redirect to="/login" />
     </Switch>
   )
 }

@@ -1,0 +1,18 @@
+.ant-btn {
+  height: 35px;
+  border: solid 1px gray !important;
+  background: grey !important;
+  color: cornsilk !important;
+}
+.ant-btn:hover  {
+  border: solid 1.25px gray !important;
+  color: cornsilk !important;
+  background: #595959 !important
+}
+.ant-btn::after {
+  color: cornsilk !important;
+  background: grey !important;
+}
+.ant-card-cover {
+  padding: 10px 50px;
+}

@@ -6,7 +6,7 @@ import axios from 'axios'
 import { withRouter } from 'react-router-dom'
 import gql from 'graphql-tag'
 import { useMutation } from '@apollo/react-hooks'
-import { Modal, Form, Input, Select, Col, Row, Avatar, notification, Icon } from 'antd'
+import { Modal, Form, Input, Select, Col, Row, Avatar, notification, Icon, InputNumber } from 'antd'
 import './index.scss'
 
 const CREAT_PET = gql`
@@ -268,7 +268,14 @@ function NormalPetForm(props) {
                 <div>
                   {imagePreviewUrl ? <Avatar size={200} src={imagePreviewUrl} />
                     : <Avatar size={200} icon="plus-square" />}
-                  <input id="myFile" type="file" name="myImage" accept="image/x-png,image/gif,image/jpeg" onChange={e => handleChange(e)} />
+                  <input
+                    style={{ height: '27px', lineHeight: 1.5 }}
+                    id="myFile"
+                    type="file"
+                    name="myImage"
+                    accept="image/x-png,image/gif,image/jpeg"
+                    onChange={e => handleChange(e)}
+                  />
 
                 </div>
               )}
@@ -283,9 +290,9 @@ function NormalPetForm(props) {
                   rules: [{ required: true, message: 'Vui lòng nhập tuổi' }],
                   initialValue: (pet && pet.age)
                 })(
-                  <Input
+                  <InputNumber
                     style={{ width: '50%' }}
-                    type="number"
+                    min={0}
                   />
 
                 )}

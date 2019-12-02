@@ -40,7 +40,7 @@ const ADMIN_MENU = [
   },
   {
     name: 'SẢN PHẨM',
-    path: '/'
+    path: '/product'
   },
   {
     name: 'DỊCH VỤ',
@@ -62,7 +62,7 @@ const EMPLOYEE_MENU = [
   },
   {
     name: 'SẢN PHẨM',
-    path: '/'
+    path: '/product'
   },
   {
     name: 'DỊCH VỤ',

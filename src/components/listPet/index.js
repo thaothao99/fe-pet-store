@@ -47,12 +47,12 @@ function ListPet(props) {
         <Descriptions.Item label="Tình trạng sức khỏe">{i.health}</Descriptions.Item>
         <Descriptions.Item>
           <div>
-            <Button type="default" size="small" style={{ width: '180px' }} onClick={() => handleClick(i)}>
+            <Button type="default" size="small" style={{ width: '160px' }} onClick={() => handleClick(i)}>
               Chỉnh sửa thông tin
               <Icon type="edit" />
             </Button>
             &nbsp;
-            <Button type="default" size="small" style={{ width: '100px' }} onClick={() => delPet(i)}>
+            <Button type="default" size="small" style={{ width: '70px' }} onClick={() => delPet(i)}>
               Xóa
               <Icon type="delete" />
             </Button>

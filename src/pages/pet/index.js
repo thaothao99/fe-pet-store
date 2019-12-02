@@ -23,8 +23,7 @@ query petByOwner($owner:String!){
 }
 `
 const Pet = (props) => {
-  const { history, store, myAcc, match } = props
-  console.log(match.params)
+  const { history, store, myAcc } = props
   const [visible, setVisible] = useState(false)
   const [petInf, setPetIf] = useState(null)
   const onHide = () => {
@@ -33,7 +32,7 @@ const Pet = (props) => {
   }
   const { data, refetch, loading } = useQuery(MY_PET, {
     // eslint-disable-next-line no-underscore-dangle
-    variables: { owner: myAcc._id },
+    variables: { owner: (myAcc && myAcc._id) || '' },
   })
   const onShow = () => setVisible(true)
   useEffect(() => {
