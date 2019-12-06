@@ -81,7 +81,6 @@ function NormalLoginForm(props) {
         </div>
         <Form.Item>
           {getFieldDecorator('username', {
-            initialValue: 'admin',
             rules: [
               { required: true, message: 'Vui lòng nhâp tên đăng nhập' },
               {
@@ -100,7 +99,6 @@ function NormalLoginForm(props) {
         </Form.Item>
         <Form.Item>
           {getFieldDecorator('password', {
-            initialValue: '12345678',
             rules: [{ required: true, message: 'Vui lòng nhập mật khẩu' }]
           })(
             <Input.Password

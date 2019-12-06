@@ -13,9 +13,9 @@ const Layout = (props) => {
   }
   return (
     <div className='wrapper' style={{ height: '100%' }}>
-      <HeaderTopBar logout={onLogout} myAcc={myAcc} />
+      {myAcc && <HeaderTopBar logout={onLogout} myAcc={myAcc} />}
       <HeaderPage />
-      <MainMenu myAcc={myAcc} />
+      {myAcc && <MainMenu myAcc={myAcc} />}
     </div>
   )
 }
