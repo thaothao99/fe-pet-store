@@ -6,7 +6,7 @@ import axios from 'axios'
 import { withRouter } from 'react-router-dom'
 import gql from 'graphql-tag'
 import { useMutation } from '@apollo/react-hooks'
-import { Modal, Form, Input, Select, Col, Row, Avatar, notification, Icon, InputNumber } from 'antd'
+import { Modal, Form, Input, Select, Col, Row, Avatar, notification, Icon } from 'antd'
 import './index.scss'
 
 const CREAT_PET = gql`
@@ -290,7 +290,9 @@ function NormalPetForm(props) {
                   rules: [{ required: true, message: 'Vui lòng nhập tuổi' }],
                   initialValue: (pet && pet.age)
                 })(
-                  <InputNumber
+                  <Input
+                    type="number"
+                    max={500}
                     style={{ width: '50%' }}
                     min={0}
                   />

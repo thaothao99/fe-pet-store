@@ -1,0 +1,33 @@
+.ant-input {
+  border-radius: 1px;
+  padding: 14px 20px;
+  border: solid 1px gray;
+  &::placeholder {
+    font-size: 13px;
+    color: gray;
+  }
+  &:focus {color: black;}
+  &:hover{border: solid 1px gray;}
+}  
+.ant-btn {
+  height: 35px;
+  width: 135px;
+  border: solid 1px gray !important;
+  background: grey !important;
+  color: cornsilk !important;
+}
+.ant-btn:hover  {
+  border: solid 1.25px gray !important;
+  color: cornsilk !important;
+  background: #595959 !important
+}
+.ant-btn::after {
+  color: cornsilk !important;
+  background: grey !important;
+}
+.ant-descriptions{
+  padding: 40px;
+  .ant-descriptions-title{
+    font-size: 20px;
+  }
+}

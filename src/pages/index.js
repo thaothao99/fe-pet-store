@@ -69,7 +69,7 @@ const Routers = props => {
                     history={history}
                     store={store}
                     route={route}
-                    myAcc={data && data.me}
+                    myAcc={(data && data.me)}
                     refetch={refetch}
                     loading={loading}
                     match={match}
@@ -81,7 +81,7 @@ const Routers = props => {
           }}
         />
       ))}
-      <Redirect to="/login" />
+      <Redirect to="/" />
     </Switch>
   )
 }

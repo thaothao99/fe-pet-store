@@ -22,27 +22,28 @@ function ListProduct(props) {
     return (
       <Col className="gutter-row" span={6} key={index}>
         <div className="gutter-box">
-          <Link to={`/product/${item._id}`}>
-            <Card
-              hoverable
-              style={{ textAlign: 'center' }}
-              cover={<Avatar shape="square" size={250} src="https://cf.shopee.vn/file/9e2b0247727e0987e4b19f50ee1879fe_tn" />}
-              actions={
-                (myAcc && myAcc.role.code === 'USER')
-                  ? [<Button style={{ width: '115px' }} disabled={item.amount === 0}>Chọn mua <Icon type="shopping-cart" key="shopping" /></Button>]
-                  : [<Button style={{ width: '180px' }}>Chỉnh sửa thông tin<Icon type="edit" key="edit" /></Button>]
+          <Card
+            style={{ textAlign: 'center' }}
+            cover={(
+              <Link to={`/product/${item._id}`}>
+                <Avatar shape="square" size={250} src={item.urlImg} />
+              </Link>
+            )}
+            actions={
+              (myAcc && myAcc.role.code === 'USER')
+                ? [<Button style={{ width: '115px' }} disabled={item.amount === 0}>Chọn mua <Icon type="shopping-cart" key="shopping" /></Button>]
+                : [<Button style={{ width: '180px' }}>Chỉnh sửa thông tin<Icon type="edit" key="edit" /></Button>]
+            }
+          >
+            <Meta
+              title={item.name}
+              description={
+                (item.amount === 0 && myAcc && myAcc.role.code === 'USER')
+                  ? 'Hết hàng'
+                  : `Giá: ${item.price}`
               }
-            >
-              <Meta
-                title={item.name}
-                description={
-                  (item.amount === 0 && myAcc && myAcc.role.code === 'USER')
-                    ? 'Hết hàng'
-                    : `Giá: ${item.price}`
-                }
-              />
-            </Card>
-          </Link>
+            />
+          </Card>
         </div>
       </Col>
     )
@@ -88,14 +89,14 @@ function ListProduct(props) {
             </Button>
             &nbsp;
             {
-            (myAcc && myAcc.role.code === 'ADMIN')
-            && (
-              <Button type="default" size="small" style={{ width: '70px' }} onClick={() => delProduct(i)}>
-                Xóa
-                <Icon type="delete" />
-              </Button>
-            )
-          }
+              (myAcc && myAcc.role.code === 'ADMIN')
+              && (
+                <Button type="default" size="small" style={{ width: '70px' }} onClick={() => delProduct(i)}>
+                  Xóa
+                  <Icon type="delete" />
+                </Button>
+              )
+            }
           </div>
         </Descriptions.Item>
       </Descriptions>
@@ -117,14 +118,14 @@ function ListProduct(props) {
                     {
                       (myAcc && myAcc.role.code === 'ADMIN')
                       && (
-                      <Button
-                        type="default"
-                        size="small"
-                        onClick={() => onShow()}
-                      >
-                      Thêm sản phẩm
-                        <Icon type="plus-circle" />
-                      </Button>
+                        <Button
+                          type="default"
+                          size="small"
+                          onClick={() => onShow()}
+                        >
+                          Thêm sản phẩm
+                          <Icon type="plus-circle" />
+                        </Button>
                       )
                     }
                   </div>

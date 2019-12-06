@@ -38,7 +38,7 @@ function ListPet(props) {
   }
   const arrData = data.map(i => {
     return (
-      <Descriptions title={`Tên thú cưng: ${i.name}`}>
+      <Descriptions column={5} title={`Tên thú cưng: ${i.name}`}>
         <Descriptions.Item> {i.urlImg ? <Avatar shape="square" src={i.urlImg} size={200} /> : <Avatar size={200} icon="plus-square" />}</Descriptions.Item>
         <Descriptions.Item label="Tuổi (tháng)">{i.age}</Descriptions.Item>
         <Descriptions.Item label="Giới tính">{i.gender}</Descriptions.Item>
