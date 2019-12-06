@@ -1,7 +1,7 @@
 .ant-input {
   border-radius: 1px;
   padding: 14px 20px;
-  border: solid 1px gray;
+  border: solid 1px gray !important;
   &::placeholder {
     font-size: 13px;
     color: gray;
@@ -30,4 +30,8 @@
   .ant-descriptions-title{
     font-size: 20px;
   }
+}
+.modal-img-product{
+  width: 750px !important;
+  
 }

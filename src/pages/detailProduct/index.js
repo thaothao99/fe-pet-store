@@ -1,9 +1,9 @@
 /* eslint-disable linebreak-style */
-import React from 'react'
+import React, { useState } from 'react'
 import { withRouter } from 'react-router'
 import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
-import { Avatar, Descriptions, Button, Input, Icon } from 'antd'
+import { Avatar, Descriptions, Button, Input, Icon, Modal } from 'antd'
 import Layout from '../layout'
 import './index.scss'
 
@@ -22,6 +22,7 @@ query product($_id: String!){
 `
 const DetailProduct = (props) => {
   const { history, store, myAcc, match } = props
+  const [visible, setVisible] = useState(false)
   const { data, loading } = useQuery(PRODUCT, {
     variables: {
       _id: match.params.ID || ''
@@ -34,7 +35,7 @@ const DetailProduct = (props) => {
       {(!loading && data) && (
         <div style={{ display: "flex", padding: '20px' }}>
           <div>
-            <Avatar shape="square" size={500} src={data.product.urlImg} />
+            <Avatar shape="square" size={400} src={data.product.urlImg} onClick={() => setVisible(true)} />
           </div>
           <Descriptions column={1} title={data.product.name}>
             <Descriptions.Item label="Giá">{data.product.price}</Descriptions.Item>
@@ -58,9 +59,19 @@ const DetailProduct = (props) => {
 
             <Descriptions.Item label="Mô tả">{data.product.description}</Descriptions.Item>
           </Descriptions>
+          <Modal
+            footer={null}
+            style={{ top: 10 }}
+            visible={visible}
+            className="modal-img-product"
+            onCancel={() => setVisible(false)}
+          >
+            <Avatar shape="square" size={600} src={data.product.urlImg} />
+          </Modal>
 
         </div>
       )}
+
     </div>
   )
 }
