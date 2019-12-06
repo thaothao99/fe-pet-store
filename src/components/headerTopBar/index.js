@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
 import React from 'react'
-import { Icon, notification } from 'antd'
+import { Icon, notification, Avatar } from 'antd'
 import { Link } from 'react-router-dom'
 
 
@@ -35,9 +35,19 @@ function HeaderTopBar(props) {
             </Link>
           </li>
           <li>
-            <Link to='/account'>
-              <Icon type='user' />&#9; Tài khoản
-            </Link>
+            {(!myAcc || (myAcc && !myAcc.urlImg)) && (
+              <Link to='/account'>
+                <Icon type='user' />&#9; Tài khoản
+              </Link>
+
+            )}
+            {(!myAcc || (myAcc && myAcc.urlImg)) && (
+              <Link to='/account'>
+                <Avatar size={25} src={myAcc.urlImg} style={{ marginRight: '5px' }} />
+                &#9; Tài khoản
+              </Link>
+
+            )}
           </li>
           <li>
             <Link to='/' onClick={onClick}>
