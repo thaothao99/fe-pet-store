@@ -1,22 +1,20 @@
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable linebreak-style */
 import React from 'react'
 import { Link } from "react-router-dom"
-import { Descriptions, List, Icon, Card, Col, Row, Avatar, Button, notification } from 'antd'
+import { Descriptions, List, Icon, Card, Col, Row, Avatar, Button, notification, Select, Input } from 'antd'
 import gql from 'graphql-tag'
 import { useMutation } from '@apollo/react-hooks'
 import './index.scss'
 
 const { Meta } = Card
+const { Option } = Select
 const DELETE_PRODUCT = gql`
 mutation deleteProduct($_id: String!){
   deleteProduct(_id:$_id)
 }
 `
 function ListProduct(props) {
-  const { myAcc, data, onShow, refetch } = props
+  const { myAcc, data, onShow, refetch, setType, setTextSearch } = props
   const [deleteProduct] = useMutation(DELETE_PRODUCT)
-
   const view = myAcc && myAcc.role.code === 'USER' ? 'grid' : 'list'
   const listData = data.map((item, index) => {
     return (
@@ -25,6 +23,7 @@ function ListProduct(props) {
           <Card
             style={{ textAlign: 'center' }}
             cover={(
+              // eslint-disable-next-line no-underscore-dangle
               <Link to={`/product/${item._id}`}>
                 <Avatar shape="square" size={250} src={item.urlImg} />
               </Link>
@@ -102,8 +101,29 @@ function ListProduct(props) {
       </Descriptions>
     )
   })
-  // eslint-disable-next-line react/destructuring-assignment
+  const handleChange = (val) => {
+    switch (val) {
+      case 'Tất cả sản phẩm':
+        setType(null)
+        break
+      case 'Thức ăn':
+        setType('Thức ăn')
+        break
+      case 'Đồ dùng':
+        setType('Đồ dùng')
+        break
+      case 'Đồ chơi':
+        setType('Đồ chơi')
+        break
+      case 'Phụ kiện':
+        setType('Phụ kiện')
+        break
 
+      default:
+        setType(null)
+        break
+    }
+  }
   return (
     <div className='list-pet'>
       {(view === 'list')
@@ -128,6 +148,19 @@ function ListProduct(props) {
                         </Button>
                       )
                     }
+                    <Input
+                      onChange={e => setTextSearch(e.target.value)}
+                      style={{ width: '250px', marginRight: '5px' }}
+                      placeholder="Nhập tên sản phẩm"
+                      allowClear
+                    />
+                    <Select onChange={val => handleChange(val)} style={{ width: '200px' }} defaultValue="Tất cả sản phẩm">
+                      <Option value="Tất cả sản phẩm">Tất cả sản phẩm</Option>
+                      <Option value="Thức ăn">Thức ăn</Option>
+                      <Option value="Đồ dùng">Đồ dùng</Option>
+                      <Option value="Đồ chơi">Đồ chơi</Option>
+                      <Option value="Phụ kiện">Phụ kiện</Option>
+                    </Select>
                   </div>
                 </div>
               )}
@@ -144,6 +177,30 @@ function ListProduct(props) {
       {(view === 'grid')
         && (
           <div>
+            <div className="title-product-grid" style={{ padding: '20px' }}>
+              <div>
+                <h2>DANH SÁCH SẢN PHẨM</h2>
+              </div>
+              <div className="search-product">
+                <Input
+                  onChange={e => setTextSearch(e.target.value)}
+                  style={{ width: '250px', marginRight: '5px' }}
+                  placeholder="Nhập tên sản phẩm"
+                  allowClear
+                />
+                <Select
+                  onChange={val => handleChange(val)}
+                  style={{ width: '200px' }}
+                  defaultValue="Tất cả sản phẩm"
+                >
+                  <Option value="Tất cả sản phẩm">Tất cả sản phẩm</Option>
+                  <Option value="Thức ăn">Thức ăn</Option>
+                  <Option value="Đồ dùng">Đồ dùng</Option>
+                  <Option value="Đồ chơi">Đồ chơi</Option>
+                  <Option value="Phụ kiện">Phụ kiện</Option>
+                </Select>
+              </div>
+            </div>
             <Row>{listData}</Row>
           </div>
         )}

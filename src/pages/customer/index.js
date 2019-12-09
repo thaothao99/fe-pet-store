@@ -1,5 +1,5 @@
 /* eslint-disable linebreak-style */
-import React from 'react'
+import React, { useEffect } from 'react'
 import gql from 'graphql-tag'
 import { useQuery } from '@apollo/react-hooks'
 import Layout from '../layout'
@@ -31,6 +31,9 @@ const CUSTOMER = gql`
 const Customer = props => {
   const { history, store, myAcc } = props
   const { data, refetch, loading } = useQuery(CUSTOMER)
+  useEffect(() => {
+    refetch()
+  }, [data])
   return (
     <div>
       <Layout history={history} store={store} myAcc={myAcc} />
