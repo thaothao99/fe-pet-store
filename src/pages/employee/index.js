@@ -1,13 +1,13 @@
 /* eslint-disable linebreak-style */
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import gql from 'graphql-tag'
 import { useQuery } from '@apollo/react-hooks'
 import Layout from '../layout'
 import ListUser from '../../components/listUser'
 
 const EMPLOYEE = gql`
-{
-  employees{
+  query employees($inputSearch: String){
+    employees(inputSearch: $inputSearch){
     _id
     username
     firstName
@@ -30,7 +30,8 @@ const EMPLOYEE = gql`
 `
 const Employee = (props) => {
   const { history, store, myAcc } = props
-  const { data, refetch, loading } = useQuery(EMPLOYEE)
+  const [textSearch, setTextSearch] = useState(null)
+  const { data, refetch, loading } = useQuery(EMPLOYEE, { variables: { inputSearch: textSearch } })
   useEffect(() => {
     refetch()
   }, [data])
@@ -43,6 +44,8 @@ const Employee = (props) => {
         refetch={refetch}
         myAcc={myAcc}
         loading={loading}
+        setTextSearch={setTextSearch}
+
       />
     </div>
   )

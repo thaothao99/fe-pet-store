@@ -13,7 +13,7 @@
   &:hover{border: solid 1px gray;}
 }  
 .ant-select-selection{
-  border: solid 1px gray;
+  border: solid 1px gray !important;
   &:hover{border: solid 1px gray;}
 }
 .ant-col-12{
@@ -39,4 +39,7 @@
   .ant-btn{
     width: 100px;
   }
+}
+.product-modal{
+  width: 800px !important;
 }

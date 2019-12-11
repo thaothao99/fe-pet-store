@@ -2,10 +2,11 @@
 
 /* eslint-disable max-len */
 import React from 'react'
-import { Descriptions, List, Avatar, Button, Icon, notification } from 'antd'
+import { Descriptions, List, Avatar, Button, Icon, notification, Input, Select } from 'antd'
 import gql from 'graphql-tag'
 import { useMutation } from '@apollo/react-hooks'
 
+const { Option } = Select
 
 const DELETE_PET = gql`
 mutation deletePet($_id: String!){
@@ -14,7 +15,7 @@ mutation deletePet($_id: String!){
 `
 
 function ListPet(props) {
-  const { onShow, data, refetch } = props
+  const { onShow, data, refetch, setInputSearch, setSpecies } = props
   const [deletePet] = useMutation(DELETE_PET)
   const delPet = pet => {
     deletePet({
@@ -61,10 +62,30 @@ function ListPet(props) {
       </Descriptions>
     )
   })
+  const handleChange = (val) => {
+    switch (val) {
+      case 'Tất cả loài':
+        setSpecies(null)
+        break
+      case 'Chó':
+        setSpecies('Chó')
+        break
+      case 'Mèo':
+        setSpecies('Mèo')
+        break
+      default:
+        setSpecies(null)
+        break
+    }
+  }
+
   return (
     <div className='list-pet'>
       <List
         size="large"
+        pagination={{
+          pageSize: 5,
+        }}
         locale={{ emptyText: 'Chưa có thông tin thú cưng nào' }}
         header={(
           <div>
@@ -74,6 +95,21 @@ function ListPet(props) {
                 Thêm thú cưng
                 <Icon type="plus-circle" />
               </Button>
+              <Input
+                onChange={e => setInputSearch(e.target.value)}
+                style={{ width: '250px', margin: '0 5px' }}
+                placeholder="Nhập tên sản phẩm"
+                allowClear
+              />
+              <Select
+                onChange={val => handleChange(val)}
+                style={{ width: '200px' }}
+                defaultValue="Tất cả loài"
+              >
+                <Option value="Tất cả loài">Tất cả thú cưng</Option>
+                <Option value="Chó">Chó</Option>
+                <Option value="Mèo">Mèo</Option>
+              </Select>
             </div>
           </div>
         )}

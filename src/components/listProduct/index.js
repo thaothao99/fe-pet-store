@@ -131,6 +131,9 @@ function ListProduct(props) {
           <div>
             <List
               size="large"
+              pagination={{
+                pageSize: 5,
+              }}
               header={(
                 <div>
                   <h2>DANH SÁCH SẢN PHẨM</h2>
@@ -150,7 +153,7 @@ function ListProduct(props) {
                     }
                     <Input
                       onChange={e => setTextSearch(e.target.value)}
-                      style={{ width: '250px', marginRight: '5px' }}
+                      style={{ width: '250px', margin: ' 0 5px' }}
                       placeholder="Nhập tên sản phẩm"
                       allowClear
                     />

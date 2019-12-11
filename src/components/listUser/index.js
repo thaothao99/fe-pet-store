@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useState } from 'react'
-import { List, Avatar, Descriptions, Button, Icon, notification, Modal, Select } from 'antd'
+import { List, Avatar, Descriptions, Button, Icon, notification, Modal, Select, Input } from 'antd'
 import './index.scss'
 import { useMutation, useQuery } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
@@ -44,7 +44,7 @@ function ListUser(props) {
   const [visible, setVisible] = useState(false)
   const [userId, setUserId] = useState()
   const [roleCode, setRoleCode] = useState()
-  const { listuser, nameList, myAcc } = props
+  const { listuser, nameList, myAcc, setTextSearch } = props
 
   const onClick = (user) => {
     setUserId(user._id)
@@ -197,6 +197,13 @@ function ListUser(props) {
         header={(
           <div>
             <h2>DANH SÁCH TÀI KHOẢN {nameList}</h2>
+            <Input
+              onChange={e => setTextSearch(e.target.value)}
+              style={{ width: '250px', marginRight: '5px' }}
+              placeholder="Nhập tên tài khoản"
+              allowClear
+            />
+
           </div>
         )}
         bordered
