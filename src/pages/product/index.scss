@@ -4,3 +4,21 @@
 .ant-col-12{
   padding: 0 10px;
 }
+.ant-input {
+  border-radius: 1px;
+  padding: 14px 20px;
+  border: solid 1px gray !important;
+  &::placeholder {
+    font-size: 13px;
+    color: gray;
+  }
+  &:focus {color: black;}
+  &:hover{border: solid 1px gray;}
+}  
+.ant-btn {
+  height: 35px;
+  width: 135px;
+  border: solid 1px gray !important;
+  background: grey !important;
+  color: cornsilk !important;
+}

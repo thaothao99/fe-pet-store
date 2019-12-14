@@ -57,7 +57,7 @@ function HeaderTopBar(props) {
           <li />
           {(myAcc && myAcc.role && myAcc.role.code === 'USER') && (
             <li>
-              <Link to='/'>
+              <Link to='/cart'>
                 <Icon type="shopping-cart" />&#9; Giỏ hàng
               </Link>
             </li>
