@@ -51,5 +51,10 @@ export const routersAuth = [
     exact: true,
     path: '/employee',
     component: 'employee'
+  },
+  {
+    exact: true,
+    path: '/cart',
+    component: 'cart'
   }
 ]

@@ -319,7 +319,12 @@ function NormalPetForm(props) {
             {getFieldDecorator('species', {
               rules: [{ required: true, message: 'Vui lòng nhập loài' }],
               initialValue: (pet && pet.species)
-            })(<Input disabled={!!pet} placeholder="VD: Chó" />)}
+            })(
+              <Select disabled={!!pet} placeholder="Chọn loài">
+                <Option value="Chó">Chó</Option>
+                <Option value="Mèo">Mèo</Option>
+              </Select>
+            )}
           </Form.Item>
           <Form.Item label="Giống">
             {getFieldDecorator('breed', {

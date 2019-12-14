@@ -14,5 +14,51 @@
   background: grey !important;
 }
 .ant-card-cover {
-  padding: 10px 50px;
+  padding: 10px 40px;
+}
+.modal-img-product{
+  width: 750px !important;
+  
+}
+.ant-select-selection{
+  border: solid 1px gray !important;
+  &:hover{border: solid 1px gray;}
+}
+.ant-input {
+  border-radius: 1px;
+  padding: 14px 20px;
+  border: solid 1px gray !important;
+  &::placeholder {
+    font-size: 13px;
+    color: gray;
+  }
+  &:focus {color: black;}
+  &:hover{border: solid 1px gray;}
+}  
+.ant-pagination{
+  .ant-pagination-item-link{
+    border-radius: 1px;
+    border: solid 1px gray !important;
+    &:focus {color: black;}
+    &:hover{border: solid 1px gray;}
+  }
+  .ant-pagination-item {
+    border-radius: 1px;
+    border: solid 1px gray !important;
+    &:focus {color: black;}
+    &:hover{border: solid 1px gray;}
+    a{
+      color: grey !important;
+
+    }
+  }
+
+  .ant-pagination-item-active{
+    border-radius: 1px;
+    border: solid 2px #333333 !important;
+    a{
+      color: grey !important;
+      font-weight: 500;
+    }
+  }
 }

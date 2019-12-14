@@ -1,12 +1,14 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable linebreak-style */
 
 /* eslint-disable max-len */
 import React from 'react'
-import { Descriptions, List, Avatar, Button, Icon, notification } from 'antd'
+import { Descriptions, List, Avatar, Button, Icon, notification, Input, Select, Col, Card, Row } from 'antd'
 import gql from 'graphql-tag'
 import { useMutation } from '@apollo/react-hooks'
 
-
+const { Option } = Select
+const { Meta } = Card
 const DELETE_PET = gql`
 mutation deletePet($_id: String!){
   deletePet(_id:$_id)
@@ -14,7 +16,7 @@ mutation deletePet($_id: String!){
 `
 
 function ListPet(props) {
-  const { onShow, data, refetch } = props
+  const { onShow, data, refetch, setInputSearch, setSpecies } = props
   const [deletePet] = useMutation(DELETE_PET)
   const delPet = pet => {
     deletePet({
@@ -36,6 +38,33 @@ function ListPet(props) {
     props.setPetIf(pet)
     onShow()
   }
+  const gridData = data.map((item, index) => {
+    return (
+      <Col className="gutter-row" span={6} key={index}>
+        <div className="gutter-box">
+          <Card
+            style={{ textAlign: 'center' }}
+            cover={item.urlImg ? <Avatar shape="square" src={item.urlImg} size={200} /> : <Avatar size={200} icon="plus-square" shape="square" />}
+            actions={
+              [
+                <Button
+                  style={{ width: '200px' }}
+                  disabled={item.amount === 0}
+                >Xem thông tin chi tiết
+                </Button>
+              ]
+            }
+          >
+            <Meta
+              title={item.name}
+              description={`Tháng tuổi: ${item.age}`}
+            />
+          </Card>
+        </div>
+      </Col>
+    )
+  })
+
   const arrData = data.map(i => {
     return (
       <Descriptions column={5} title={`Tên thú cưng: ${i.name}`}>
@@ -61,10 +90,30 @@ function ListPet(props) {
       </Descriptions>
     )
   })
+  const handleChange = (val) => {
+    switch (val) {
+      case 'Tất cả loài':
+        setSpecies(null)
+        break
+      case 'Chó':
+        setSpecies('Chó')
+        break
+      case 'Mèo':
+        setSpecies('Mèo')
+        break
+      default:
+        setSpecies(null)
+        break
+    }
+  }
+
   return (
     <div className='list-pet'>
-      <List
+      {/* <List
         size="large"
+        pagination={{
+          pageSize: 5,
+        }}
         locale={{ emptyText: 'Chưa có thông tin thú cưng nào' }}
         header={(
           <div>
@@ -74,6 +123,21 @@ function ListPet(props) {
                 Thêm thú cưng
                 <Icon type="plus-circle" />
               </Button>
+              <Input
+                onChange={e => setInputSearch(e.target.value)}
+                style={{ width: '250px', margin: '0 5px' }}
+                placeholder="Nhập tên thú cưng"
+                allowClear
+              />
+              <Select
+                onChange={val => handleChange(val)}
+                style={{ width: '200px' }}
+                defaultValue="Tất cả loài"
+              >
+                <Option value="Tất cả loài">Tất cả thú cưng</Option>
+                <Option value="Chó">Chó</Option>
+                <Option value="Mèo">Mèo</Option>
+              </Select>
             </div>
           </div>
         )}
@@ -84,7 +148,32 @@ function ListPet(props) {
             {item}
           </List.Item>
         )}
-      />
+      /> */}
+      <div>
+        <div className="title-pet-grid" style={{ padding: '20px' }}>
+          <div>
+            <h2>DANH SÁCH SẢN PHẨM</h2>
+          </div>
+          <div className="search-pet">
+            <Input
+              onChange={e => setInputSearch(e.target.value)}
+              style={{ width: '250px', margin: '0 5px' }}
+              placeholder="Nhập tên thú cưng"
+              allowClear
+            />
+            <Select
+              onChange={val => handleChange(val)}
+              style={{ width: '200px' }}
+              defaultValue="Tất cả loài"
+            >
+              <Option value="Tất cả loài">Tất cả thú cưng</Option>
+              <Option value="Chó">Chó</Option>
+              <Option value="Mèo">Mèo</Option>
+            </Select>
+          </div>
+        </div>
+        <Row>{gridData}</Row>
+      </div>
     </div>
   )
 }

@@ -8,8 +8,8 @@ import Layout from '../layout'
 import './index.scss'
 
 const LIST_PRODUCT = gql`
-{
-  products{
+query products($type: String, $inputSearch: String){
+  products(type: $type, inputSearch: $inputSearch){
     _id
     description
     name
@@ -24,7 +24,16 @@ const Product = (props) => {
   const { history, store, myAcc } = props
   const [visible, setVisible] = useState(false)
   const [productInf, setProductInf] = useState(null)
-  const { data, refetch, loading } = useQuery(LIST_PRODUCT)
+  const [type, setType] = useState(null)
+  const [textSearch, setTextSearch] = useState(null)
+
+  console.log(textSearch, type)
+  const { data, refetch, loading } = useQuery(LIST_PRODUCT, {
+    variables: {
+      type,
+      inputSearch: textSearch
+    }
+  })
   useEffect(() => {
     refetch()
   }, [data])
@@ -43,7 +52,9 @@ const Product = (props) => {
         myAcc={myAcc}
         loading={loading}
         onShow={onShow}
+        setType={setType}
         setProductInf={setProductInf}
+        setTextSearch={setTextSearch}
       />
       <ProductModal
         product={productInf}

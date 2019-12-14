@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /* eslint linebreak-style: ["error", "windows"] */
 
 const isDev = process.env.NODE_ENV === 'development'

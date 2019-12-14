@@ -1,13 +1,13 @@
 /* eslint-disable linebreak-style */
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import gql from 'graphql-tag'
 import { useQuery } from '@apollo/react-hooks'
 import Layout from '../layout'
 import ListUser from '../../components/listUser'
 
 const CUSTOMER = gql`
-  {
-    customers {
+  query customers($inputSearch: String){
+    customers(inputSearch: $inputSearch){
       _id
       username
       firstName
@@ -30,7 +30,12 @@ const CUSTOMER = gql`
 `
 const Customer = props => {
   const { history, store, myAcc } = props
-  const { data, refetch, loading } = useQuery(CUSTOMER)
+  const [textSearch, setTextSearch] = useState(null)
+  const { data, refetch, loading } = useQuery(CUSTOMER, { variables: { inputSearch: textSearch } })
+
+  useEffect(() => {
+    refetch()
+  }, [data])
   return (
     <div>
       <Layout history={history} store={store} myAcc={myAcc} />
@@ -40,6 +45,7 @@ const Customer = props => {
         refetch={refetch}
         myAcc={myAcc}
         loading={loading}
+        setTextSearch={setTextSearch}
       />
     </div>
   )
