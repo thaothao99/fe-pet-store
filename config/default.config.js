@@ -1,3 +1,4 @@
+/* eslint-disable*/
 const path = require('path')
 const webpack = require('webpack')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
@@ -7,12 +8,16 @@ const TerserPlugin = require('terser-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const cssnano = require('cssnano')
 const AutoDllPlugin = require('autodll-webpack-plugin')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const WebpackBar = require('webpackbar')
 const Dotenv = require('dotenv-webpack')
 
 const _default = (isDev, env) => {
-  const staticPath = isDev ? 'static' : (env.SERVICE ? `${env.SERVICE}/static` : 'static')
+  const staticPath = isDev
+    ? 'static'
+    : env.SERVICE
+      ? `${env.SERVICE}/static`
+      : 'static'
 
   const alias = {
     '@components': path.resolve(__dirname, '../src/components'),
@@ -23,11 +28,7 @@ const _default = (isDev, env) => {
     '@utils': path.resolve(__dirname, '../src/utils')
   }
 
-  const packageVendor = [
-    'react',
-    'react-dom',
-    'react-router-dom'
-  ]
+  const packageVendor = ['react', 'react-dom', 'react-router-dom']
 
   const threadLoader = {
     loader: 'thread-loader',
@@ -41,9 +42,7 @@ const _default = (isDev, env) => {
     loader: 'postcss-loader',
     options: {
       ident: 'postcss',
-      plugins: [
-        require('autoprefixer')
-      ]
+      plugins: [require('autoprefixer')]
     }
   }
 
@@ -74,9 +73,9 @@ const _default = (isDev, env) => {
         })
       ]
     }),
-    ...(process.env.NODE_TYPE === 'analyzer' ? [
-      new BundleAnalyzerPlugin()
-    ] : [])
+    ...(process.env.NODE_TYPE === 'analyzer'
+      ? [new BundleAnalyzerPlugin()]
+      : [])
   ]
   return {
     resolve: {
@@ -92,9 +91,7 @@ const _default = (isDev, env) => {
     },
     cache: true,
     mode: isDev ? 'development' : 'production',
-    entry: [
-      path.resolve(__dirname, '../src/index.js')
-    ],
+    entry: [path.resolve(__dirname, '../src/index.js')],
     output: {
       path: path.resolve(__dirname, '../dist'),
       filename: `${staticPath}/js/[hash].js`,
@@ -155,34 +152,22 @@ const _default = (isDev, env) => {
         },
         {
           test: /\.(js|jsx)$/,
-          exclude: /(node_modules)/,
+          exclude: /(node_modules|__tests__)/,
           use: [
             { ...threadLoader },
             {
               loader: 'babel-loader',
               options: {
                 cacheDirectory: true,
-                presets: [
-                  '@babel/preset-env',
-                  '@babel/preset-react'
-                ],
+                presets: ['@babel/preset-env', '@babel/preset-react'],
                 plugins: [
                   'react-hot-loader/babel',
-                  [
-                    '@babel/plugin-proposal-decorators',
-                    { legacy: true }
-                  ],
-                  [
-                    '@babel/plugin-proposal-class-properties',
-                    { loose: true }
-                  ],
+                  ['@babel/plugin-proposal-decorators', { legacy: true }],
+                  ['@babel/plugin-proposal-class-properties', { loose: true }],
                   '@babel/plugin-transform-runtime',
                   '@babel/plugin-proposal-optional-chaining',
-                  [
-                    '@babel/plugin-proposal-private-methods',
-                    { loose: true }
-                  ],
-                  ...(isDev ? [] : ['transform-remove-console']),
+                  ['@babel/plugin-proposal-private-methods', { loose: true }],
+                  // ...(isDev ? [] : ['transform-remove-console']),
                   [
                     'import',
                     {
@@ -201,29 +186,33 @@ const _default = (isDev, env) => {
                     },
                     'react-use'
                   ],
-                  [
-                    'import',
-                    {
-                      libraryName: '@digihcs/innos-ui3',
-                      libraryDirectory: 'es',
-                      style: true
-                    },
-                    '@digihcs/innos-ui3'
-                  ]
+
                 ]
               }
-            },
-            {
-              loader: 'eslint-loader',
-              options: {
-                failOnWarning: true,
-                failOnError: true
-              }
             }
+            // {
+            //   loader: 'eslint-loader',
+            //   options: {
+            //     failOnWarning: true,
+            //     failOnError: true
+            //   }
+            // }
           ]
         },
         {
-          test: /\.(svg|png|jpe?g|gif)$/,
+          // test: /\.(svg|png|jpe?g|gif)$/,
+          // use: [
+          // {
+          //   loader: 'file-loader',
+          //   options: {
+          //     outputPath: `${staticPath}/assets/images`,
+          //     name: '[hash].[ext]'
+          //   }
+          // },
+          //   { loader: 'image-webpack-loader' },
+          //   { ...threadLoader }
+          // ]
+          test: /\.(gif|png|jpe?g|svg)$/i,
           use: [
             {
               loader: 'file-loader',
@@ -232,7 +221,32 @@ const _default = (isDev, env) => {
                 name: '[hash].[ext]'
               }
             },
-            { loader: 'image-webpack-loader' },
+            {
+              loader: 'image-webpack-loader',
+              options: {
+                mozjpeg: {
+                  progressive: true,
+                  quality: 65
+                },
+                // optipng.enabled: false will disable optipng
+                optipng: {
+                  enabled: false
+                },
+                pngquant: {
+                  quality: [0.65, 0.9],
+                  speed: 4
+                },
+                gifsicle: {
+                  interlaced: false
+                },
+                // the webp option will enable WEBP
+                webp: {
+                  quality: 75
+                },
+                bypassOnDebug: true, // webpack@1.x
+                disable: true // webpack@2.x and newer
+              }
+            },
             { ...threadLoader }
           ]
         },
@@ -270,6 +284,14 @@ const _default = (isDev, env) => {
             },
             { ...threadLoader }
           ]
+        },
+        {
+          test: /\.(test|spec)\.js$/,
+          use: [
+            {
+              loader: 'ignore-loader'
+            }
+          ]
         }
       ]
     },
@@ -279,7 +301,9 @@ const _default = (isDev, env) => {
       disableHostCheck: true,
       port: process.env.PORT,
       contentBase: path.resolve(__dirname, 'dist'),
-      historyApiFallback: true,
+      historyApiFallback: {
+        disableDotRule: true
+      },
       hot: true,
       hotOnly: true,
       compress: true,
@@ -297,13 +321,13 @@ const _default = (isDev, env) => {
       new webpack.optimize.MinChunkSizePlugin({
         minChunkSize: 512
       }),
-      ...(isDev ? [
-        new webpack.HotModuleReplacementPlugin()
-      ] : pluginsOfProc),
+      ...(isDev ? [new webpack.HotModuleReplacementPlugin()] : pluginsOfProc),
       new WebpackBar(),
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       new Dotenv({
-        path: isDev ? path.resolve(__dirname, '../.env.development.local') : path.resolve(__dirname, '../.env.production.local'),
+        path: isDev
+          ? path.resolve(__dirname, '../.env.development.local')
+          : path.resolve(__dirname, '../.env.production.local'),
         safe: true,
         systemvars: true,
         silent: true
@@ -321,11 +345,13 @@ const _default = (isDev, env) => {
             chunks: 'all'
           }
         },
-        ...(isDev ? {
-          minSize: 10000,
-          maxAsyncRequests: Infinity,
-          maxInitialRequests: Infinity
-        } : {
+        ...(isDev
+          ? {
+            minSize: 10000,
+            maxAsyncRequests: Infinity,
+            maxInitialRequests: Infinity
+          }
+          : {
             minSize: 30000,
             maxAsyncRequests: 5,
             maxInitialRequests: 3
@@ -360,7 +386,7 @@ const _default = (isDev, env) => {
       http2: 'empty',
       net: 'empty',
       tls: 'empty',
-      child_process: 'empty',
+      child_process: 'empty'
     }
   }
 }
