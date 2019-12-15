@@ -192,6 +192,10 @@ function ListUser(props) {
     <div className='list-user'>
       <List
         size='large'
+        pagination={{
+          position: 'bottom',
+          pageSize: 5,
+        }}
         // eslint-disable-next-line react/destructuring-assignment
         locale={{ emptyText: props.loading ? 'Đang tải thông tin' : 'Chưa có thông tin tài khoản nào' }}
         header={(
