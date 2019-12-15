@@ -60,7 +60,7 @@ function NormalPetForm(props) {
   // eslint-disable-next-line no-unused-vars
   // const upFile = async () => {
   //   formData.append('image', img)
-  //   const res = await axios.post('http://localhost:3000/', formData, config)
+  //   const res = await axios.post('http://40.117.97.121/', formData, config)
   //   return res
   //   // .then(res => {
   //   //   updateAvt({
@@ -90,7 +90,7 @@ function NormalPetForm(props) {
         if (!pet) {
           if (imagePreviewUrl) {
             formData.append('image', img)
-            axios.post('http://localhost:3000/', formData, config).then(res => {
+            axios.post('http://40.117.97.121/', formData, config).then(res => {
               console.log(res)
               createPet({
                 variables: {
@@ -166,7 +166,7 @@ function NormalPetForm(props) {
           }
         } else if (imagePreviewUrl !== pet.urlImg) {
           formData.append('image', img)
-          axios.post('http://localhost:3000/', formData, config).then(res => {
+          axios.post('http://40.117.97.121/', formData, config).then(res => {
             console.log(res)
             updatePet({
               variables: {

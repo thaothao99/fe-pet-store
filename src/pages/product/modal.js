@@ -76,7 +76,7 @@ function NormalProductForm(props) {
       const { name, description, price, amount, type } = values
       if (!product && myAcc && myAcc.role.code === 'ADMIN') {
         formData.append('image', img)
-        axios.post('http://localhost:3000/',
+        axios.post('http://40.117.97.121/',
           formData, config).then(res => {
           createProduct({
             variables: {
@@ -115,7 +115,7 @@ function NormalProductForm(props) {
       if (product && myAcc && myAcc.role.code === 'ADMIN') {
         if (imagePreviewUrl !== product.urlImg) {
           formData.append('image', img)
-          axios.post('http://localhost:3000/',
+          axios.post('http://40.117.97.121/',
             formData, config).then(res => {
             updateProduct({
               variables: {

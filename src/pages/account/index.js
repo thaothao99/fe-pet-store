@@ -34,7 +34,7 @@ const Account = (props) => {
   const upFile = () => {
     formData.append('image', img)
     try {
-      axios.post('http://localhost:3000/', formData, config)
+      axios.post('http://40.117.97.121/', formData, config)
         .then(res => {
           updateAvt({
             variables: {
