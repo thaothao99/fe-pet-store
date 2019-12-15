@@ -5,10 +5,13 @@ import { HttpLink } from 'apollo-link-http'
 import { setContext } from 'apollo-link-context'
 
 
-const urn = process.env.GRAPHQL_URN
+const domain = '40.117.97.121' // 'tms2.digihcs.com'
+const endPoint = `${process.env.END_POINT}`
+
+const urn = process.env.GRAPHQL_URN || `${domain}/${endPoint}`
 
 const httpLink = new HttpLink({
-  uri: `${window.location.protocol}//${urn}`
+  uri: `http://${urn}`
 })
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
