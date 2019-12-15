@@ -11,7 +11,7 @@ const endPoint = `${process.env.END_POINT}`
 const urn = process.env.GRAPHQL_URN || `${domain}/${endPoint}`
 
 const httpLink = new HttpLink({
-  uri: `http://${urn}`
+  uri: `${window.location.protocol}//${urn}`
 })
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
