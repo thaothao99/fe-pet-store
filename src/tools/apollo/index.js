@@ -5,10 +5,10 @@ import { HttpLink } from 'apollo-link-http'
 import { setContext } from 'apollo-link-context'
 
 
-const urn = process.env.GRAPHQL_URN
+const urn = process.env.GRAPHQL_URN // domain
 
 const httpLink = new HttpLink({
-  uri: `${window.location.protocol}//${urn}`
+  uri: `http//${urn}`
 })
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists

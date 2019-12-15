@@ -10,7 +10,6 @@ const cssnano = require('cssnano')
 const AutoDllPlugin = require('autodll-webpack-plugin')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const WebpackBar = require('webpackbar')
-const Dotenv = require('dotenv-webpack')
 
 const _default = (isDev, env) => {
   const staticPath = isDev ? 'static' : (env.SERVICE ? `${env.SERVICE}/static` : 'static')
@@ -303,12 +302,6 @@ const _default = (isDev, env) => {
       ] : pluginsOfProc),
       new WebpackBar(),
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-      new Dotenv({
-        path: isDev ? path.resolve(__dirname, '../.env.development.local') : path.resolve(__dirname, '../.env.production.local'),
-        safe: true,
-        systemvars: true,
-        silent: true
-      })
     ],
     optimization: {
       moduleIds: 'hashed',
