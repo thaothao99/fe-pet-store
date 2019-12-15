@@ -1,10 +1,8 @@
-/* eslint-disable */
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from "react-router-dom"
-import { Descriptions, List, Icon, Card, Col, Row, Avatar, Button, notification, Select, Pagination, Input } from 'antd'
+import { Descriptions, List, Icon, Card, Col, Row, Avatar, Button, notification, Select, Input } from 'antd'
 import gql from 'graphql-tag'
 import { useMutation } from '@apollo/react-hooks'
-import moment from 'moment'
 import './index.scss'
 
 const { Meta } = Card
@@ -14,87 +12,26 @@ mutation deleteProduct($_id: String!){
   deleteProduct(_id:$_id)
 }
 `
-const CREATE_ORDERPRODUCT = gql`
-mutation createOrderProduct($input: OrderProductInput!){
-  createOrderProduct(input:$input){
-    _id
-    idBillPro
-    idUser
-    product{
-      _id
-      name
-      description
-      price
-      amount
-      type
-      urlImg
-      isActive
-    }
-    amount
-    total
-    date
-    inBill
-    isActive
-  }
-}
-`
 function ListProduct(props) {
   const { myAcc, data, onShow, refetch, setType, setTextSearch } = props
-  const [productShow, setProductShow] = useState([])
   const [deleteProduct] = useMutation(DELETE_PRODUCT)
-  const [createOrderProduct] = useMutation(CREATE_ORDERPRODUCT)
-
   const view = myAcc && myAcc.role.code === 'USER' ? 'grid' : 'list'
-  const addBag = item => {
-    createOrderProduct({
-      variables: {
-        input: {
-          idUser: myAcc._id,
-          idProduct: item._id,
-          amount: 1,
-          date: moment(new Date(), 'DD/MM/YYYY')
-        },
-        refetchQueries: refetch
-      }
-    })
-      .then(() => {
-        notification.open({
-          message: 'Thêm vào giỏ hàng thành công',
-          placement: 'bottomRight',
-          icon: <Icon type="check-circle" style={{ color: 'grey' }} />
-        })
-      })
-      .catch((er) => {
-        console.log(er)
-        const errors = er.graphQLErrors.map(error => error.message)
-        notification.open({
-          message: errors,
-          placement: 'bottomRight',
-          icon: <Icon type="close-circle" style={{ color: 'grey' }} />
-        })
-      })
-  }
-  const gridData = data.map((item, index) => {
+  const listData = data.map((item, index) => {
     return (
-      <Col className="gutter-row" span={4} key={index}>
+      <Col className="gutter-row" span={6} key={index}>
         <div className="gutter-box">
           <Card
             style={{ textAlign: 'center' }}
             cover={(
               // eslint-disable-next-line no-underscore-dangle
               <Link to={`/product/${item._id}`}>
-                <Avatar shape="square" size={150} src={item.urlImg} />
+                <Avatar shape="square" size={250} src={item.urlImg} />
               </Link>
             )}
             actions={
-              [
-                <Button
-                  style={{ width: '115px' }}
-                  disabled={item.amount === 0}
-                  onClick={() => addBag(item)}
-                >Chọn mua <Icon type="shopping-cart" key="shopping" />
-                </Button>
-              ]
+              (myAcc && myAcc.role.code === 'USER')
+                ? [<Button style={{ width: '115px' }} disabled={item.amount === 0}>Chọn mua <Icon type="shopping-cart" key="shopping" /></Button>]
+                : [<Button style={{ width: '180px' }}>Chỉnh sửa thông tin<Icon type="edit" key="edit" /></Button>]
             }
           >
             <Meta
@@ -102,7 +39,7 @@ function ListProduct(props) {
               description={
                 (item.amount === 0 && myAcc && myAcc.role.code === 'USER')
                   ? 'Hết hàng'
-                  : `Giá: ${item.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}`
+                  : `Giá: ${item.price}`
               }
             />
           </Card>
@@ -113,9 +50,6 @@ function ListProduct(props) {
   const handleClick = (product) => {
     props.setProductInf(product)
     onShow()
-  }
-  const changdPage = page => {
-    setProductShow(gridData.slice((page - 1) * 30, page * 30))
   }
   const delProduct = product => {
     deleteProduct({
@@ -133,18 +67,19 @@ function ListProduct(props) {
         })
       })
   }
-  const listData = data.map(i => {
+  const gridData = data.map(i => {
     return (
-      <Descriptions column={4} title={i.name}>
+      <Descriptions title={i.name}>
         <Descriptions.Item>
           <Avatar
             shape="square"
-            size={150}
+            size={200}
             src={i.urlImg}
           />
         </Descriptions.Item>
-        <Descriptions.Item label="Giá">{i.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</Descriptions.Item>
-        <Descriptions.Item label="Số lượng còn lại">{i.amount === 0 ? 'Hết hàng' : i.amount.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</Descriptions.Item>
+        <Descriptions.Item label="Giá">{i.price}</Descriptions.Item>
+        <Descriptions.Item label="Số lượng còn lại">{i.amount === 0 ? 'Hết hàng' : i.amount}</Descriptions.Item>
+        <Descriptions.Item label="Mô tả">{i.description}</Descriptions.Item>
         <Descriptions.Item>
           <div>
             <Button type="default" size="small" style={{ width: '160px' }} onClick={() => handleClick(i)}>
@@ -163,8 +98,6 @@ function ListProduct(props) {
             }
           </div>
         </Descriptions.Item>
-        <Descriptions.Item label="Mô tả">{i.description}</Descriptions.Item>
-
       </Descriptions>
     )
   })
@@ -192,14 +125,13 @@ function ListProduct(props) {
     }
   }
   return (
-    <div className='list-product'>
+    <div className='list-pet'>
       {(view === 'list')
         && (
           <div>
             <List
               size="large"
               pagination={{
-                position: 'bottom',
                 pageSize: 5,
               }}
               header={(
@@ -236,7 +168,7 @@ function ListProduct(props) {
                 </div>
               )}
               bordered
-              dataSource={listData}
+              dataSource={gridData}
               renderItem={item => (
                 <List.Item>
                   {item}
@@ -272,19 +204,7 @@ function ListProduct(props) {
                 </Select>
               </div>
             </div>
-            {
-              productShow.length !== 0 && <Row>{productShow}</Row>
-            }
-            {
-              productShow.length === 0 && <Row>{gridData.slice(0, 30)}</Row>
-            }
-            <Pagination
-              style={{ float: 'right' }}
-              total={gridData.length}
-              pageSize={30}
-              defaultCurrent={1}
-              onChange={page => changdPage(page)}
-            />
+            <Row>{listData}</Row>
           </div>
         )}
     </div>

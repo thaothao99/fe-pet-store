@@ -33,31 +33,5 @@
 }
 .modal-img-product{
   width: 750px !important;
-}
-.ant-pagination{
-  .ant-pagination-item-link{
-    border-radius: 1px;
-    border: solid 1px gray !important;
-    &:focus {color: black;}
-    &:hover{border: solid 1px gray;}
-  }
-  .ant-pagination-item {
-    border-radius: 1px;
-    border: solid 1px gray !important;
-    &:focus {color: black;}
-    &:hover{border: solid 1px gray;}
-    a{
-      color: grey !important;
-
-    }
-  }
-
-  .ant-pagination-item-active{
-    border-radius: 1px;
-    border: solid 2px #333333 !important;
-    a{
-      color: grey !important;
-      font-weight: 500;
-    }
-  }
+  
 }

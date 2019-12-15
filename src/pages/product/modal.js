@@ -6,7 +6,7 @@ import axios from 'axios'
 import { withRouter } from 'react-router-dom'
 import gql from 'graphql-tag'
 import { useMutation } from '@apollo/react-hooks'
-import { Modal, Form, Input, Col, Row, Avatar, Select, notification, Icon } from 'antd'
+import { Modal, Form, Input, Col, Row, Avatar, InputNumber, Select, notification, Icon } from 'antd'
 
 const { Option } = Select
 
@@ -272,8 +272,7 @@ function NormalProductForm(props) {
                 ],
                 initialValue: (product && product.price)
               })(
-                <Input
-                  type='number'
+                <InputNumber
                   disabled={product && myAcc && myAcc.role.code !== 'ADMIN'}
                   formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                   style={{ width: '50%' }}
@@ -289,8 +288,7 @@ function NormalProductForm(props) {
                 rules: [{ required: true, message: 'Vui lòng nhập số lượng' }],
                 initialValue: (product && product.amount)
               })(
-                <Input
-                  type='number'
+                <InputNumber
                   style={{ width: '50%' }}
                   min={0}
                 />
