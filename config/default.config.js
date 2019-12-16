@@ -299,7 +299,7 @@ const _default = (isDev, env) => {
     devServer: {
       host: '0.0.0.0',
       disableHostCheck: true,
-      port: process.env.PORT,
+      port: 3030,
       contentBase: path.resolve(__dirname, 'dist'),
       historyApiFallback: {
         disableDotRule: true

@@ -136,48 +136,6 @@ const Cart = (props) => {
       listData.push(a)
       sumOrder += i.total
     })
-    // listData = dataArr.map(i => {
-    //   return (
-    //     <Descriptions column={5} title={i.product.name}>
-    //       <Descriptions.Item>
-    //         <Avatar
-    //           shape="square"
-    //           size={100}
-    //           src={i.product.urlImg}
-    //         />
-    //       </Descriptions.Item>
-    //       <Descriptions.Item label="Giá sản phẩm">{i.product.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</Descriptions.Item>
-    //       <Descriptions.Item label="Số lượng mua">
-    //         <div>
-    //           <Input
-    //             type="number"
-    //             disabled={i.product.amount === 0}
-    //             min={1}
-    //             defaultValue={i.amount}
-    //             max={i.product.amount}
-    //             style={{ width: '100px', textAlign: 'center', marginRight: '20px' }}
-    //             onChange={e => handleChange(e, i)}
-    //           />
-    //         </div>
-    //       </Descriptions.Item>
-    //       <Descriptions.Item label="Thành tiền">{i.total.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</Descriptions.Item>
-    //       <Descriptions.Item>
-    //         <div>
-    //           <Button
-    //             type="default"
-    //             size="small"
-    //             style={{ width: '70px' }}
-    //             onClick={() => delOrder(i)}
-    //           >
-    //             Xóa
-    //             <Icon type="delete" />
-    //           </Button>
-    //         </div>
-    //       </Descriptions.Item>
-
-    //     </Descriptions>
-    //   )
-    // })
   }
 
   return (

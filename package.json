@@ -4,7 +4,7 @@
   "description": "no",
   "main": "index.js",
   "scripts": {
-    "start:webpack": "NODE_ENV=development PORT=3030 webpack-dev-server",
+    "start:webpack": "NODE_ENV=development webpack-dev-server",
     "build:analyzer": "NODE_ENV=production NODE_TYPE=analyzer webpack",
     "build:webpack": "NODE_ENV=production webpack",
     "start": "npm run start:webpack",

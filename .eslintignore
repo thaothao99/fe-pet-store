@@ -4,5 +4,4 @@ yarn.lock
 .env.development.local
 .env.development
 /.vscode
-
-
+*.json
