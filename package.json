@@ -13,9 +13,7 @@
     "test": "jest -i --verbose --colors",
     "eslint-fix": "eslint ./src --fix --quiet",
     "prestart": "npm run eslint-fix",
-    "prebuild": "npm run eslint-fix",
-    "heroku-postbuild": "npm run build",
-    "heroku-prebuild": "npm install --dev"
+    "prebuild": "npm run eslint-fix"
   },
   "devDependencies": {
     "@apollo/react-testing": "^3.1.0",
