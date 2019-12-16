@@ -38,7 +38,6 @@ const CREATE_ORDERPRODUCT = gql`
 mutation createOrderProduct($input: OrderProductInput!){
   createOrderProduct(input:$input){
     _id
-    idBillPro
     idUser
     product{
       _id
@@ -50,10 +49,24 @@ mutation createOrderProduct($input: OrderProductInput!){
       urlImg
       isActive
     }
+    idBillPro
     amount
     total
     date
-    inBill
+    isActive
+  }
+}
+`
+const CREATE_BILL = gql`
+mutation createBillProductDefault($idUser: String!, $date: String!){
+  createBillProductDefault(idUser:$idUser, date: $date){
+    _id
+    idUser
+    total
+    satus
+    address
+    note
+    date
     isActive
   }
 }
@@ -66,11 +79,12 @@ const DetailProduct = (props) => {
   const [productShow, setProductShow] = useState([])
   const [amount, setAmount] = useState(1)
   const [createOrderProduct] = useMutation(CREATE_ORDERPRODUCT)
+  const [createBillProductDefault] = useMutation(CREATE_BILL)
 
   const { data, loading, refetch } = useQuery(PRODUCT, {
     variables: {
       _id: match.params.ID || '',
-      type: ''
+      type
     }
   })
   useEffect(() => {
@@ -79,32 +93,41 @@ const DetailProduct = (props) => {
     refetch()
   }, [data])
   const addBag = item => {
-    createOrderProduct({
+    createBillProductDefault({
       variables: {
-        input: {
-          idUser: myAcc._id,
-          idProduct: item._id,
-          amount,
-          date: moment(new Date(), 'DD/MM/YYYY')
-        }
+        idUser: myAcc._id,
+        date: moment(new Date()).format('DD/MM/YYYY')
       }
+    }).then((res) => {
+      createOrderProduct({
+        variables: {
+          input: {
+            idUser: myAcc._id,
+            idProduct: item._id,
+            amount,
+            date: moment(new Date()).format('DD/MM/YYYY'),
+            idBillPro: res.data.createBillProductDefault._id
+          }
+        },
+        refetchQueries: refetch
+      })
+        .then(() => {
+          notification.open({
+            message: 'Thêm vào giỏ hàng thành công',
+            placement: 'bottomRight',
+            icon: <Icon type="check-circle" style={{ color: 'grey' }} />
+          })
+        })
+        .catch((er) => {
+          console.log(er)
+          const errors = er.graphQLErrors.map(error => error.message)
+          notification.open({
+            message: errors,
+            placement: 'bottomRight',
+            icon: <Icon type="close-circle" style={{ color: 'grey' }} />
+          })
+        })
     })
-      .then(() => {
-        notification.open({
-          message: 'Thêm vào giỏ hàng thành công',
-          placement: 'bottomRight',
-          icon: <Icon type="check-circle" style={{ color: 'grey' }} />
-        })
-      })
-      .catch((er) => {
-        console.log(er)
-        const errors = er.graphQLErrors.map(error => error.message)
-        notification.open({
-          message: errors,
-          placement: 'bottomRight',
-          icon: <Icon type="close-circle" style={{ color: 'grey' }} />
-        })
-      })
   }
   const gridData = productSameType.map((item, index) => {
     return (

@@ -1,7 +1,8 @@
 /* eslint-disable */
 /* eslint-disable no-underscore-dangle */
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import gql from 'graphql-tag'
+import { Link } from "react-router-dom"
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import moment from 'moment'
 import { Descriptions, Icon, Avatar, Button, notification, Input, List, Row, Col } from 'antd'
@@ -11,10 +12,10 @@ import basket from '../../assets/images/basket.png'
 
 
 const MY_CART = gql`
-query orderProductByUser($idUser: String!) {
-  orderProductByUser(idUser:$idUser){
-        _id
-    idBillPro
+query a($idUser: String!, $idBillPro: String!){
+  billProductByUser(idUser: $idUser)
+  orderProducts(idBillPro: $idBillPro){
+  _id
     idUser
     product{
       _id
@@ -26,10 +27,10 @@ query orderProductByUser($idUser: String!) {
       urlImg
       isActive
     }
+    idBillPro
     amount
     total
     date
-    inBill
     isActive
   }
 }
@@ -45,13 +46,25 @@ mutation deleteOrderProduct($_id: String!){
 }
 `
 const Cart = (props) => {
+  const [idBillPro, setIdBillPro] = useState(' ')
   const { history, store, myAcc } = props
-  const { loading, data, refetch } = useQuery(MY_CART, { variables: { idUser: (myAcc && myAcc._id) || '' } })
+  const { loading, data, refetch } = useQuery(MY_CART,
+    {
+      variables: {
+        idUser: (myAcc && myAcc._id) || '',
+        idBillPro
+      }
+    })
   const [updateAmountOrderProduct] = useMutation(UPDATE_AMOUNT)
   const [deleteOrderProduct] = useMutation(DELETE_ORDER)
 
   useEffect(() => {
+    if (data && data.billProductByUser) {
+      setIdBillPro(data.billProductByUser)
+      console.log(data.billProductByUser)
+    }
     refetch()
+
   }, [data])
   const delOrder = i => {
     deleteOrderProduct({
@@ -73,7 +86,7 @@ const Cart = (props) => {
         variables: {
           _id: i._id,
           amount: parseInt(e.target.value, 10),
-          date: moment(new Date(), 'DD/MM/YYYY')
+          date: moment(new Date()).format('DD/MM/YYYY')
         },
         refetchQueries: refetch
       })
@@ -90,7 +103,7 @@ const Cart = (props) => {
   const listData = []
   let sumOrder = 0
   if (!loading) {
-    const dataArr = data.orderProductByUser || []
+    const dataArr = data && data.orderProducts || []
 
     dataArr.forEach(i => {
       const a = (
@@ -174,10 +187,12 @@ const Cart = (props) => {
                       </div>
                     </Descriptions.Item>
                     <Descriptions.Item>
-                      <Button
-                        style={{ width: '180px' }}
-                      >Tiến hành đặt hàng
-                      </Button>
+                      <Link to={`/cart/${idBillPro}`}>
+                        <Button
+                          style={{ width: '180px' }}
+                        >Tiến hành đặt hàng
+                        </Button>
+                      </Link>
                     </Descriptions.Item>
                   </Descriptions>
                 </Col>
