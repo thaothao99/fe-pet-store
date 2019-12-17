@@ -1,20 +1,10 @@
-.ant-input {
-  border-radius: 1px;
-  padding: 14px 20px;
-  border: solid 1px gray !important;
-  &::placeholder {
-    font-size: 13px;
-    color: gray;
+.bill-container {
+  padding: 10px !important;
+  display: flex !important;
+  .ant-table-wrapper{
+    width: 1100px;
+    padding: 0 15px 0 0;
   }
-  &:focus {color: black;}
-  &:hover{border: solid 1px gray;}
-}  
-.ant-btn {
-  height: 35px;
-  width: 135px;
-  border: solid 1px gray !important;
-  background: grey !important;
-  color: cornsilk !important;
 }
 .ant-pagination{
   .ant-pagination-item-link{
@@ -41,11 +31,5 @@
       color: grey !important;
       font-weight: 500;
     }
-  }
-}
-.bill-detail{
-  padding: 20px 10px;
-  .ant-descriptions-item-content {
-    float: right;
   }
 }

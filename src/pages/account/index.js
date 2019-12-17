@@ -66,12 +66,12 @@ const Account = (props) => {
     }
     reader.readAsDataURL(file)
   }
-  console.log(imagePreviewUrl)
+  const [sltKey, setSltKey] = useState("1")
   return (
     <div>
       <Layout history={history} store={store} myAcc={myAcc} />
       <div className="acc-inf-container">
-        <MenuProfile sltKey="1" class="acc-infor-left" myAcc={myAcc} />
+        <MenuProfile subMenu="sub1" sltKey={sltKey} setSltKey={setSltKey} myAcc={myAcc} />
         <AccForm myAcc={myAcc} refetchQueries={refetch} />
         <div className="avt-form">
           {(imagePreviewUrl !== null) && <Avatar size={200} src={imagePreviewUrl} />}

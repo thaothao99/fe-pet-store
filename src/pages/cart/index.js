@@ -76,7 +76,6 @@ const Cart = (props) => {
   useEffect(() => {
     if (data && data.billProductByUser) {
       setIdBillPro(data.billProductByUser)
-      console.log(data.billProductByUser)
     }
     refetch()
 
@@ -185,7 +184,7 @@ const Cart = (props) => {
           placement: 'bottomRight',
           icon: <Icon type="check-circle" style={{ color: 'grey' }} />
         })
-        history.push(`cart/${idBillPro}`)
+        history.push(`bill/${idBillPro}`)
       })
   }
 
@@ -276,7 +275,7 @@ const Cart = (props) => {
                 {
                   show && (
                     <Col span={18} pull={6}>
-                      <div style={{ padding: '20px' }}>
+                      <div style={{ padding: '20px 10px 10px 10px' }}>
                         <div>
                           <h2>THÔNG TIN ĐẶT HÀNG</h2>
                         </div>
@@ -367,9 +366,9 @@ const Cart = (props) => {
                   <div style={{ padding: '20px' }}>
                     <h2>GIỎ HÀNG ({listData.length} sản phẩm)</h2>
                   </div>
-                  <div style={{ textAlign: 'center', opacity: 0.75 }}>
+                  <div style={{ textAlign: 'center', opacity: 0.75, padding: '20px 430px' }}>
                     <Avatar
-                      size={280}
+                      size={150}
                       shape="square"
                       src={basket}
                     />

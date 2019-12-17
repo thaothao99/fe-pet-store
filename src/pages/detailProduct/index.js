@@ -63,7 +63,7 @@ mutation createBillProductDefault($idUser: String!, $date: String!){
     _id
     idUser
     total
-    satus
+    status
     address
     note
     date
