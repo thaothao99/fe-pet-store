@@ -183,8 +183,10 @@ const DetailProduct = (props) => {
               <Avatar shape="square" size={400} src={data.product.urlImg} onClick={() => setVisible(true)} />
             </div>
             <Descriptions column={1} title={data.product.name}>
-              <Descriptions.Item label="Giá">{data.product.price}</Descriptions.Item>
-              <Descriptions.Item label="Số lượng còn lại">{data.product.amount === 0 ? 'Hết hàng' : data.product.amount}</Descriptions.Item>
+              <Descriptions.Item label="Giá">{data.product.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</Descriptions.Item>
+              <Descriptions.Item label="Số lượng còn lại">
+                {data.product.amount === 0 ? 'Hết hàng' : data.product.amount.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}
+              </Descriptions.Item>
               <Descriptions.Item>
                 <div>
                   <Input

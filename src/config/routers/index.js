@@ -60,6 +60,6 @@ export const routersAuth = [
   {
     exact: true,
     path: '/cart/:ID',
-    component: 'pay'
+    component: 'detailBillPro'
   }
 ]

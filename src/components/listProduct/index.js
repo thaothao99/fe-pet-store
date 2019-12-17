@@ -78,7 +78,8 @@ function ListProduct(props) {
           refetchQueries: refetch
         }
       })
-        .then(() => {
+        .then((res) => {
+          console.log(res)
           notification.open({
             message: 'Thêm vào giỏ hàng thành công',
             placement: 'bottomRight',

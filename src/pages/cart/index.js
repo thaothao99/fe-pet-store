@@ -2,13 +2,14 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useEffect, useState } from 'react'
 import gql from 'graphql-tag'
-import { Link } from "react-router-dom"
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import moment from 'moment'
 import { Descriptions, Icon, Avatar, Button, notification, Input, List, Row, Col } from 'antd'
 import Layout from '../layout'
 import './index.scss'
 import basket from '../../assets/images/basket.png'
+
+const { TextArea } = Input
 
 
 const MY_CART = gql`
@@ -40,14 +41,27 @@ mutation updateAmountOrderProduct($_id: String!, $amount: Int!, $date: String!){
   updateAmountOrderProduct(_id: $_id, amount: $amount, date: $date)
 }
 `
+const UPDATE_BILL = gql`
+mutation updateBillProduct($_id: String!, $input: BillProductInput!){
+  updateBillProduct(_id: $_id, input: $input)
+}
+`
 const DELETE_ORDER = gql`
 mutation deleteOrderProduct($_id: String!){
   deleteOrderProduct(_id: $_id)
 }
 `
 const Cart = (props) => {
+  const { history, store, myAcc, } = props
+
   const [idBillPro, setIdBillPro] = useState(' ')
-  const { history, store, myAcc } = props
+  const [show, setShow] = useState(false)
+  const [defaultVal, setDefault] = useState(true)
+  const [visibleInput, setVisibleInput] = useState(false)
+  const [address, setAddress] = useState(myAcc && myAcc.address)
+  const [phone, setPhone] = useState(myAcc && myAcc.phone)
+  const [note, setNote] = useState('')
+
   const { loading, data, refetch } = useQuery(MY_CART,
     {
       variables: {
@@ -57,6 +71,7 @@ const Cart = (props) => {
     })
   const [updateAmountOrderProduct] = useMutation(UPDATE_AMOUNT)
   const [deleteOrderProduct] = useMutation(DELETE_ORDER)
+  const [updateBillProduct] = useMutation(UPDATE_BILL)
 
   useEffect(() => {
     if (data && data.billProductByUser) {
@@ -150,6 +165,29 @@ const Cart = (props) => {
       sumOrder += i.total
     })
   }
+  const doneBill = () => {
+    console.log(address, note, phone)
+    updateBillProduct({
+      variables: {
+        _id: idBillPro,
+        input: {
+          address,
+          note,
+          phone,
+          date: moment(new Date()).format('DD/MM/YYYY'),
+          total: sumOrder > 500000 ? sumOrder : sumOrder + 25000
+        }
+      }
+    })
+      .then(() => {
+        notification.open({
+          message: 'Đặt hàng thành công',
+          placement: 'bottomRight',
+          icon: <Icon type="check-circle" style={{ color: 'grey' }} />
+        })
+        history.push(`cart/${idBillPro}`)
+      })
+  }
 
   return (
     <div>
@@ -186,39 +224,142 @@ const Cart = (props) => {
 
                       </div>
                     </Descriptions.Item>
-                    <Descriptions.Item>
-                      <Link to={`/cart/${idBillPro}`}>
-                        <Button
-                          style={{ width: '180px' }}
-                        >Tiến hành đặt hàng
-                        </Button>
-                      </Link>
-                    </Descriptions.Item>
+                    {
+                      !show && (
+                        <Descriptions.Item>
+                          <Button
+                            style={{ width: '180px' }}
+                            onClick={() => setShow(true)}
+                          >Tiến hành đặt hàng
+                          </Button>
+                        </Descriptions.Item>
+                      )
+                    }
+                    {
+                      show && (
+                        <Descriptions.Item>
+                          <Button
+                            style={{ width: '180px' }}
+                            onClick={() => doneBill()}
+                          >Xác nhận đặt hàng
+                            </Button>
+                        </Descriptions.Item>
+                      )
+                    }
                   </Descriptions>
                 </Col>
-                <Col span={18} pull={6}>
-                  <List
-                    size="large"
-                    pagination={{
-                      position: 'bottom',
-                      pageSize: 5,
-                    }}
-                    header={(
-                      <div>
-                        <h2>GIỎ HÀNG ({listData.length} sản phẩm)</h2>
+                {
+                  show === false && (
+                    <Col span={18} pull={6}>
+                      <List
+                        size="large"
+                        pagination={{
+                          position: 'bottom',
+                          pageSize: 5,
+                        }}
+                        header={(
+                          <div>
+                            <h2>GIỎ HÀNG ({listData.length} sản phẩm)</h2>
+                          </div>
+                        )}
+                        bordered
+                        dataSource={listData}
+                        renderItem={item => (
+                          <List.Item>
+                            {item}
+                          </List.Item>
+                        )}
+                      />
+                    </Col>
+                  )
+                }
+                {
+                  show && (
+                    <Col span={18} pull={6}>
+                      <div style={{ padding: '20px' }}>
+                        <div>
+                          <h2>THÔNG TIN ĐẶT HÀNG</h2>
+                        </div>
+                        <Descriptions column={1} title="Thông tin giao hàng">
+                          <Descriptions.Item label="Họ tên người nhận">{myAcc && `${myAcc.firstName} ${myAcc.lastName}`}</Descriptions.Item>
+                          <Descriptions.Item label="Địa chỉ nhận hàng">{defaultVal ? (myAcc && myAcc.address) : address}</Descriptions.Item>
+                          <Descriptions.Item label="Số điện thoại người nhận">{defaultVal ? (myAcc && myAcc.phone) : phone}</Descriptions.Item>
+                          <Descriptions.Item label="Ghi chú đơn hàng">{defaultVal ? '' : note}</Descriptions.Item>
+                          {
+                            !visibleInput && (
+                              <Descriptions.Item>
+                                <Button
+                                  onClick={() => setVisibleInput(true)}
+                                  style={{ width: '160px' }}
+                                >
+                                  Thay đổi thông tin
+                                </Button>
+                              </Descriptions.Item>
+                            )
+                          }
+                          {
+                            visibleInput && (
+                              <Descriptions.Item>
+                                <Button
+                                  onClick={() => { setDefault(false); setVisibleInput(false) }}
+                                  style={{ width: '160px' }}
+                                >
+                                  Cập nhật thông tin
+                                </Button>
+                              </Descriptions.Item>
+                            )
+                          }
+                          {
+                            visibleInput && (
+                              <Descriptions.Item>
+                                <Input
+                                  addonBefore="+84"
+                                  type="tel"
+                                  size="default"
+                                  placeholder="Số điện thoại"
+                                  spellCheck={false}
+                                  pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
+                                  onChange={(e) => setPhone(e.target.value)}
+                                  defaultValue={phone}
+                                  required
+                                />
+                              </Descriptions.Item>
+                            )
+                          }
+                          {
+                            visibleInput && (
+                              <Descriptions.Item>
+                                <TextArea
+                                  style={{ width: '600px' }}
+                                  rows={4}
+                                  defaultValue={address}
+                                  placeholder="Địa chỉ"
+                                  onChange={(e) => setAddress(e.target.value)}
+                                  required
+                                />
+                              </Descriptions.Item>
+                            )
+                          }
+                          {
+                            visibleInput && (
+                              <Descriptions.Item>
+                                <TextArea
+                                  style={{ width: '600px' }}
+                                  rows={4}
+                                  defaultValue={note}
+                                  placeholder="Ghi chú"
+                                  onChange={(e) => setNote(e.target.value)}
+                                  required
+                                />
+                              </Descriptions.Item>
+                            )
+                          }
+                        </Descriptions>
                       </div>
-                    )}
-                    bordered
-                    dataSource={listData}
-                    renderItem={item => (
-                      <List.Item>
-                        {item}
-                      </List.Item>
-                    )}
-                  />
-                </Col>
+                    </Col>
+                  )
+                }
               </Row>
-
             )}
             {
               listData.length === 0 && (
