@@ -66,5 +66,15 @@ export const routersAuth = [
     exact: true,
     path: '/bill/:ID',
     component: 'detailBillPro'
-  }
+  },
+  {
+    exact: true,
+    path: '/manageBill',
+    component: 'manageBill'
+  },
+  {
+    exact: true,
+    path: '/service',
+    component: 'service'
+  },
 ]

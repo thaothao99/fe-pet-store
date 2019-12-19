@@ -63,7 +63,7 @@ function ListProduct(props) {
     createBillProductDefault({
       variables: {
         idUser: myAcc._id,
-        date: moment(new Date()).format('DD/MM/YYYY')
+        date: moment(new Date()).format('YYYY-MM-DD')
       }
     }).then((res) => {
       createOrderProduct({
@@ -72,7 +72,7 @@ function ListProduct(props) {
             idUser: myAcc._id,
             idProduct: item._id,
             amount: 1,
-            date: moment(new Date()).format('DD/MM/YYYY'),
+            date: moment(new Date()).format('YYYY-MM-DD'),
             idBillPro: res.data.createBillProductDefault._id
           },
           refetchQueries: refetch
@@ -100,37 +100,36 @@ function ListProduct(props) {
   }
   const gridData = data.map((item, index) => {
     return (
-      <Col className="gutter-row" span={4} key={index}>
-        <div className="gutter-box">
-          <Card
-            style={{ textAlign: 'center' }}
-            cover={(
-              // eslint-disable-next-line no-underscore-dangle
-              <Link to={`/product/${item._id}`}>
-                <Avatar shape="square" size={150} src={item.urlImg} />
-              </Link>
-            )}
-            actions={
-              [
-                <Button
-                  style={{ width: '115px' }}
-                  disabled={item.amount === 0}
-                  onClick={() => addBag(item)}
-                >Chọn mua <Icon type="shopping-cart" key="shopping" />
-                </Button>
-              ]
+      <Col className="gutter-row" span={6} key={index}>
+        <Card
+          bordered={false}
+          style={{ textAlign: 'center' }}
+          cover={(
+            // eslint-disable-next-line no-underscore-dangle
+            <Link to={`/product/${item._id}`}>
+              <Avatar shape="square" size={250} src={item.urlImg} />
+            </Link>
+          )}
+          actions={
+            [
+              <Button
+                style={{ width: '115px' }}
+                disabled={item.amount === 0}
+                onClick={() => addBag(item)}
+              >Chọn mua <Icon type="shopping-cart" key="shopping" />
+              </Button>
+            ]
+          }
+        >
+          <Meta
+            title={<b>{item.name}</b>}
+            description={
+              (item.amount === 0 && myAcc && myAcc.role.code === 'USER')
+                ? 'Hết hàng'
+                : `Giá: ${item.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}`
             }
-          >
-            <Meta
-              title={item.name}
-              description={
-                (item.amount === 0 && myAcc && myAcc.role.code === 'USER')
-                  ? 'Hết hàng'
-                  : `Giá: ${item.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}`
-              }
-            />
-          </Card>
-        </div>
+          />
+        </Card>
       </Col>
     )
   })
@@ -139,7 +138,7 @@ function ListProduct(props) {
     onShow()
   }
   const changdPage = page => {
-    setProductShow(gridData.slice((page - 1) * 30, page * 30))
+    setProductShow(gridData.slice((page - 1) * 20, page * 20))
   }
   const delProduct = product => {
     deleteProduct({
@@ -219,16 +218,13 @@ function ListProduct(props) {
     <div className='list-product'>
       {(view === 'list')
         && (
-          <div>
+          <div style={{ padding: '20px 10px' }}>
             <List
               size="large"
-              pagination={{
-                position: 'bottom',
-                pageSize: 5,
-              }}
+
               header={(
-                <div>
-                  <h2>DANH SÁCH SẢN PHẨM</h2>
+                <div style={{ paddingLeft: '30px' }}>
+                  <h2><b>DANH SÁCH SẢN PHẨM</b></h2>
                   <div>
                     {
                       (myAcc && myAcc.role.code === 'ADMIN')
@@ -259,7 +255,7 @@ function ListProduct(props) {
                   </div>
                 </div>
               )}
-              bordered
+
               dataSource={listData}
               renderItem={item => (
                 <List.Item>
@@ -272,9 +268,9 @@ function ListProduct(props) {
       {(view === 'grid')
         && (
           <div>
-            <div className="title-product-grid" style={{ padding: '20px' }}>
+            <div className="title-product-grid" style={{ padding: '20px 0px 20px 45px' }}>
               <div>
-                <h2>DANH SÁCH SẢN PHẨM</h2>
+                <h2><b>SẢN PHẨM CHO THÚ CƯNG</b></h2>
               </div>
               <div className="search-product">
                 <Input
@@ -297,18 +293,22 @@ function ListProduct(props) {
               </div>
             </div>
             {
-              productShow.length !== 0 && <Row>{productShow}</Row>
+              productShow.length === 0 && <Row>{productShow}</Row>
             }
             {
-              productShow.length === 0 && <Row>{gridData.slice(0, 30)}</Row>
+              productShow.length === 0 && <Row>{gridData.slice(0, 20)}</Row>
             }
-            <Pagination
-              style={{ float: 'right' }}
-              total={gridData.length}
-              pageSize={30}
-              defaultCurrent={1}
-              onChange={page => changdPage(page)}
-            />
+            {
+              productShow.length !== 0 &&
+              <Pagination
+                style={{ float: 'right' }}
+                total={gridData.length}
+                pageSize={20}
+                defaultCurrent={1}
+                onChange={page => changdPage(page)}
+              />
+            }
+
           </div>
         )}
     </div>

@@ -96,7 +96,7 @@ const DetailProduct = (props) => {
     createBillProductDefault({
       variables: {
         idUser: myAcc._id,
-        date: moment(new Date()).format('DD/MM/YYYY')
+        date: moment(new Date()).format('YYYY-MM-DD')
       }
     }).then((res) => {
       createOrderProduct({
@@ -105,7 +105,7 @@ const DetailProduct = (props) => {
             idUser: myAcc._id,
             idProduct: item._id,
             amount,
-            date: moment(new Date()).format('DD/MM/YYYY'),
+            date: moment(new Date()).format('YYYY-MM-DD'),
             idBillPro: res.data.createBillProductDefault._id
           }
         },
@@ -129,41 +129,44 @@ const DetailProduct = (props) => {
         })
     })
   }
-  const gridData = productSameType.map((item, index) => {
-    return (
-      <Col className="gutter-row" span={4} key={index}>
-        <div className="gutter-box">
-          <Card
-            style={{ textAlign: 'center' }}
-            cover={(
-              // eslint-disable-next-line no-underscore-dangle
-              <Link to={`/product/${item._id}`}>
-                <Avatar shape="square" size={150} src={item.urlImg} />
-              </Link>
-            )}
-            actions={
-              [
-                <Button
-                  style={{ width: '115px' }}
-                  disabled={item.amount === 0}
-                  onClick={() => addBag(item)}
-                >Chọn mua <Icon type="shopping-cart" key="shopping" />
-                </Button>
-              ]
-            }
-          >
-            <Meta
-              title={item.name}
-              description={
-                (item.amount === 0 && myAcc && myAcc.role.code === 'USER')
-                  ? 'Hết hàng'
-                  : `Giá: ${item.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}`
+  const gridData = []
+  productSameType.forEach((item, index) => {
+    if (item._id !== match.params.ID) {
+      gridData.push(
+        <Col className="gutter-row" span={4} key={index}>
+          <div className="gutter-box">
+            <Card
+              style={{ textAlign: 'center' }}
+              cover={(
+                // eslint-disable-next-line no-underscore-dangle
+                <Link to={`/product/${item._id}`}>
+                  <Avatar shape="square" size={150} src={item.urlImg} />
+                </Link>
+              )}
+              actions={
+                [
+                  <Button
+                    style={{ width: '115px' }}
+                    disabled={item.amount === 0}
+                    onClick={() => addBag(item)}
+                  >Chọn mua <Icon type="shopping-cart" key="shopping" />
+                  </Button>
+                ]
               }
-            />
-          </Card>
-        </div>
-      </Col>
-    )
+            >
+              <Meta
+                title={item.name}
+                description={
+                  (item.amount === 0 && myAcc && myAcc.role.code === 'USER')
+                    ? 'Hết hàng'
+                    : `Giá: ${item.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}`
+                }
+              />
+            </Card>
+          </div>
+        </Col>
+      )
+    }
   })
 
   const changdPage = page => {

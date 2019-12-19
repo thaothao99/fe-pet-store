@@ -9,12 +9,9 @@
   &:focus {color: black;}
   &:hover{border: solid 1px gray;}
 }  
-.ant-btn {
-  height: 35px;
-  width: 135px;
+.ant-select-selection{
   border: solid 1px gray !important;
-  background: grey !important;
-  color: cornsilk !important;
+  &:hover{border: solid 1px gray;}
 }
 .ant-pagination{
   .ant-pagination-item-link{
@@ -41,17 +38,5 @@
       color: grey !important;
       font-weight: 500;
     }
-  }
-}
-.bill-detail{
-  padding: 20px 10px;
-  .ant-descriptions-item-content {
-    float: right;
-  }
-}
-.ant-modal-content {
-  width: 450px;
-  .ant-btn{
-    width: 100px;
   }
 }

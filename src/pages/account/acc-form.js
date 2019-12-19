@@ -31,7 +31,7 @@ function NormalAccForm(props) {
           phone,
           address,
           // eslint-disable-next-line no-underscore-dangle
-          birthDay: birthDay.format('DD/MM/YYYY'),
+          birthDay: birthDay.format('YYYY-MM-DD'),
           gender
         }
         update({
@@ -152,9 +152,9 @@ function NormalAccForm(props) {
           <Col span={12}>
             <Form.Item label="Ngày sinh">
               {getFieldDecorator('birthDay', {
-                initialValue: myAcc && myAcc.birthDay ? moment(myAcc.birthDay, 'DD/MM/YYYY') : moment(new Date(), 'DD/MM/YYYY')
+                initialValue: myAcc && myAcc.birthDay ? moment(myAcc.birthDay, 'YYYY-MM-DD') : moment(new Date(), 'YYYY-MM-DD')
               })(
-                <DatePicker placeholder="Nhập ngày sinh" format="DD/MM/YYYY" />
+                <DatePicker placeholder="Nhập ngày sinh" format="YYYY-MM-DD" />
               )}
             </Form.Item>
           </Col>

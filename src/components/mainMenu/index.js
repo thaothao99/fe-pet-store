@@ -18,7 +18,7 @@ const USER_MENU = [
   },
   {
     name: 'DỊCH VỤ',
-    path: '/'
+    path: '/service'
   },
   {
     name: 'LIÊN HỆ',
@@ -44,11 +44,11 @@ const ADMIN_MENU = [
   },
   {
     name: 'DỊCH VỤ',
-    path: '/'
+    path: '/service'
   },
   {
     name: 'ĐƠN HÀNG',
-    path: '/'
+    path: '/manageBill'
   }
 ]
 const EMPLOYEE_MENU = [
@@ -66,11 +66,11 @@ const EMPLOYEE_MENU = [
   },
   {
     name: 'DỊCH VỤ',
-    path: '/'
+    path: '/service'
   },
   {
     name: 'ĐƠN HÀNG',
-    path: '/'
+    path: '/manageBill'
   }
 ]
 function MainMenu(props) {

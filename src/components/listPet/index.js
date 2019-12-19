@@ -67,20 +67,19 @@ function ListPet(props) {
 
   const arrData = data.map(i => {
     return (
-      <Descriptions column={5} title={`Tên thú cưng: ${i.name}`}>
-        <Descriptions.Item> {i.urlImg ? <Avatar shape="square" src={i.urlImg} size={200} /> : <Avatar size={200} icon="plus-square" />}</Descriptions.Item>
+      <Descriptions column={7} title={i.name}>
+        <Descriptions.Item> {i.urlImg ? <Avatar src={i.urlImg} size={100} /> : <Avatar size={100} icon="plus-square" />}</Descriptions.Item>
         <Descriptions.Item label="Tuổi (tháng)">{i.age}</Descriptions.Item>
         <Descriptions.Item label="Giới tính">{i.gender}</Descriptions.Item>
         <Descriptions.Item label="Loài">{i.species}</Descriptions.Item>
         <Descriptions.Item label="Giống">{i.breed}</Descriptions.Item>
         <Descriptions.Item label="Tình trạng sức khỏe">{i.health}</Descriptions.Item>
         <Descriptions.Item>
-          <div>
-            <Button type="default" size="small" style={{ width: '160px' }} onClick={() => handleClick(i)}>
+          <div style={{ textAlign: 'center' }}>
+            <Button type="default" size="small" style={{ width: '160px', marginBottom: '5px' }} onClick={() => handleClick(i)}>
               Chỉnh sửa thông tin
               <Icon type="edit" />
             </Button>
-            &nbsp;
             <Button type="default" size="small" style={{ width: '70px' }} onClick={() => delPet(i)}>
               Xóa
               <Icon type="delete" />
@@ -109,11 +108,8 @@ function ListPet(props) {
 
   return (
     <div className='list-pet'>
-      {/* <List
+      <List
         size="large"
-        pagination={{
-          pageSize: 5,
-        }}
         locale={{ emptyText: 'Chưa có thông tin thú cưng nào' }}
         header={(
           <div>
@@ -148,11 +144,11 @@ function ListPet(props) {
             {item}
           </List.Item>
         )}
-      /> */}
+      />
       <div>
-        <div className="title-pet-grid" style={{ padding: '20px' }}>
+        <div className="title-pet-grid" style={{ padding: '20px 0px 20px 45px' }}>
           <div>
-            <h2>DANH SÁCH SẢN PHẨM</h2>
+            <h2><b>THÚ CƯNG CỦA TÔI</b></h2>
           </div>
           <div className="search-pet">
             <Input

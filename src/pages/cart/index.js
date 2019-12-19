@@ -100,7 +100,7 @@ const Cart = (props) => {
         variables: {
           _id: i._id,
           amount: parseInt(e.target.value, 10),
-          date: moment(new Date()).format('DD/MM/YYYY')
+          date: moment(new Date()).format('YYYY-MM-DD')
         },
         refetchQueries: refetch
       })
@@ -173,7 +173,7 @@ const Cart = (props) => {
           address,
           note,
           phone,
-          date: moment(new Date()).format('DD/MM/YYYY'),
+          date: moment(new Date()).format('YYYY-MM-DD'),
           total: sumOrder > 500000 ? sumOrder : sumOrder + 25000
         }
       }

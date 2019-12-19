@@ -77,54 +77,15 @@ function NormalProductForm(props) {
       if (!product && myAcc && myAcc.role.code === 'ADMIN') {
         formData.append('image', img)
         axios.post('http://localhost:3000/',
-          formData, config).then(res => {
-          createProduct({
-            variables: {
-              input: {
-                name,
-                description,
-                price,
-                amount,
-                type,
-                urlImg: res.data.filename,
-              }
-            },
-            refetchQueries: refetch
-          })
-            .then(() => {
-              notification.open({
-                message: 'Cập nhật thành công',
-                placement: 'bottomRight',
-                icon: <Icon type="check-circle" style={{ color: 'grey' }} />
-              })
-              onHide()
-              setImg(null)
-              setImagePreviewUrl(null)
-            })
-            .catch((er) => {
-              console.log(er)
-              const errors = er.graphQLErrors.map(error => error.message)
-              notification.open({
-                message: errors,
-                placement: 'bottomRight',
-                icon: <Icon type="close-circle" style={{ color: 'grey' }} />
-              })
-            })
-        })
-      }
-      if (product && myAcc && myAcc.role.code === 'ADMIN') {
-        if (imagePreviewUrl !== product.urlImg) {
-          formData.append('image', img)
-          axios.post('http://localhost:3000/',
-            formData, config).then(res => {
-            updateProduct({
+          formData, config)
+          .then(res => {
+            createProduct({
               variables: {
-                _id: product._id,
                 input: {
                   name,
                   description,
-                  price,
-                  amount,
+                  price: parseInt(price, 10),
+                  amount: parseInt(amount, 10),
                   type,
                   urlImg: res.data.filename,
                 }
@@ -151,6 +112,47 @@ function NormalProductForm(props) {
                 })
               })
           })
+      }
+      if (product && myAcc && myAcc.role.code === 'ADMIN') {
+        if (imagePreviewUrl !== product.urlImg) {
+          formData.append('image', img)
+          axios.post('http://localhost:3000/',
+            formData, config)
+            .then(res => {
+              updateProduct({
+                variables: {
+                  _id: product._id,
+                  input: {
+                    name,
+                    description,
+                    price: parseInt(price, 10),
+                    amount: parseInt(amount, 10),
+                    type,
+                    urlImg: res.data.filename,
+                  }
+                },
+                refetchQueries: refetch
+              })
+                .then(() => {
+                  notification.open({
+                    message: 'Cập nhật thành công',
+                    placement: 'bottomRight',
+                    icon: <Icon type="check-circle" style={{ color: 'grey' }} />
+                  })
+                  onHide()
+                  setImg(null)
+                  setImagePreviewUrl(null)
+                })
+                .catch((er) => {
+                  console.log(er)
+                  const errors = er.graphQLErrors.map(error => error.message)
+                  notification.open({
+                    message: errors,
+                    placement: 'bottomRight',
+                    icon: <Icon type="close-circle" style={{ color: 'grey' }} />
+                  })
+                })
+            })
         } else {
           updateProduct({
             variables: {
@@ -158,8 +160,8 @@ function NormalProductForm(props) {
               input: {
                 name,
                 description,
-                price,
-                amount,
+                price: parseInt(price, 10),
+                amount: parseInt(amount, 10),
                 type
               }
             },
@@ -187,11 +189,11 @@ function NormalProductForm(props) {
         }
       }
       if (product && myAcc && myAcc.role.code === 'EMPLOYEE') {
-        console.log(amount, product._id)
+        console.log(typeof (parseInt(amount, 10)), product._id)
         updateAmount({
           variables: {
             _id: product._id,
-            amount
+            amount: parseInt(amount, 10)
           },
           refetchQueries: refetch
         })
