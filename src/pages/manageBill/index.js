@@ -121,9 +121,9 @@ const ManageBill = (props) => {
   return (
     <div>
       <Layout history={history} store={store} myAcc={myAcc} />
-      <div className="title-mange-bill" style={{ padding: '20px' }}>
+      <div className="title-mange-bill" style={{ padding: '40px 0px 10px 40px' }}>
         <div>
-          <h2>QUẢN LÝ ĐƠN HÀNG</h2>
+          <h2><b>QUẢN LÝ ĐƠN HÀNG</b></h2>
         </div>
         <Select
           onChange={val => setIdUser(val)}
@@ -149,7 +149,7 @@ const ManageBill = (props) => {
         <DatePicker placeholder="Nhập ngày đơn hàng" format="YYYY-MM-DD" onChange={(_, dateString) => setDate(dateString)} />
       </div>
       {!loading && (
-        <div>
+        <div style={{ padding: '0px 30px' }}>
           <Table
             columns={columns}
             dataSource={billArr}

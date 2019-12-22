@@ -44,7 +44,7 @@ const ADMIN_MENU = [
   },
   {
     name: 'DỊCH VỤ',
-    path: '/service'
+    path: '/manageservice'
   },
   {
     name: 'ĐƠN HÀNG',
@@ -66,7 +66,7 @@ const EMPLOYEE_MENU = [
   },
   {
     name: 'DỊCH VỤ',
-    path: '/service'
+    path: '/manageservice'
   },
   {
     name: 'ĐƠN HÀNG',

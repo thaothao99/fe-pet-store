@@ -1,0 +1,41 @@
+.ant-tabs-nav {
+  color: grey !important;
+  &:hover{
+    color: grey !important;
+  }
+  .ant-tabs-ink-bar-animated {
+    background-color: grey !important;
+
+  }
+}
+.ant-tabs-tab-active{
+  color: gray !important;
+  font-weight: 600 !important;
+  .ant-tabs-ink-bar-animated {
+    font-weight: 600 !important;
+
+  }
+}
+.ant-tabs-tabpane {
+  display: flex;
+}
+.ant-btn {
+  height: 35px;
+  width: 135px;
+  border: solid 1px gray !important;
+  background: grey !important;
+  color: cornsilk !important;
+}
+.ant-btn:hover  {
+  border: solid 1.25px gray !important;
+  color: cornsilk !important;
+  background: #595959 !important
+}
+.ant-btn::after {
+  color: cornsilk !important;
+  background: grey !important;
+}
+.ant-select-selection{
+  border: solid 1px gray !important;
+  &:hover{border: solid 1px gray;}
+}

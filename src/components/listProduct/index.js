@@ -1,7 +1,7 @@
-/* eslint-disable */
+/* eslint-disable no-underscore-dangle */
 import React, { useState } from 'react'
 import { Link } from "react-router-dom"
-import { Descriptions, List, Icon, Card, Col, Row, Avatar, Button, notification, Select, Pagination, Input } from 'antd'
+import { Icon, Card, Col, Row, Avatar, Button, notification, Select, Pagination, Input, Table } from 'antd'
 import gql from 'graphql-tag'
 import { useMutation } from '@apollo/react-hooks'
 import moment from 'moment'
@@ -78,8 +78,7 @@ function ListProduct(props) {
           refetchQueries: refetch
         }
       })
-        .then((res) => {
-          console.log(res)
+        .then(() => {
           notification.open({
             message: 'Thêm vào giỏ hàng thành công',
             placement: 'bottomRight',
@@ -96,7 +95,6 @@ function ListProduct(props) {
           })
         })
     })
-
   }
   const gridData = data.map((item, index) => {
     return (
@@ -156,41 +154,106 @@ function ListProduct(props) {
         })
       })
   }
+  const columns = [
+    {
+      title: 'Tên sản phẩm',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Loại sản phẩm',
+      dataIndex: 'type',
+      key: 'type',
+    },
+    {
+      title: 'Giá sản phẩm',
+      dataIndex: 'price',
+      key: 'price',
+    },
+    {
+      title: 'Số lượng',
+      dataIndex: 'amount',
+      key: 'amount',
+    },
+    {
+      title: '',
+      dataIndex: 'edit',
+      key: 'edit',
+      render: (_, i) => (
+        <div>
+          <Button
+            type="default"
+            size="small"
+            style={{ width: '160px' }}
+            onClick={() => { handleClick(i) }}
+          >
+            Chỉnh sửa thông tin
+            <Icon type="edit" />
+          </Button>
+          {
+            myAcc && myAcc.role.code === "ADMIN" && (
+              <Button
+                style={{ marginLeft: '5px', width: '70px' }}
+                type="default"
+                size="small"
+                onClick={() => delProduct(i)}
+              >
+                Xóa
+                <Icon type="delete" />
+              </Button>
+            )
+          }
+        </div>
+      )
+    },
+  ]
   const listData = data.map(i => {
-    return (
-      <Descriptions column={4} title={i.name}>
-        <Descriptions.Item>
-          <Avatar
-            shape="square"
-            size={150}
-            src={i.urlImg}
-          />
-        </Descriptions.Item>
-        <Descriptions.Item label="Giá">{i.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</Descriptions.Item>
-        <Descriptions.Item label="Số lượng còn lại">{i.amount === 0 ? 'Hết hàng' : i.amount.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</Descriptions.Item>
-        <Descriptions.Item>
-          <div>
-            <Button type="default" size="small" style={{ width: '160px' }} onClick={() => handleClick(i)}>
-              Chỉnh sửa thông tin
-              <Icon type="edit" />
-            </Button>
-            &nbsp;
-            {
-              (myAcc && myAcc.role.code === 'ADMIN')
-              && (
-                <Button type="default" size="small" style={{ width: '70px' }} onClick={() => delProduct(i)}>
-                  Xóa
-                  <Icon type="delete" />
-                </Button>
-              )
-            }
-          </div>
-        </Descriptions.Item>
-        <Descriptions.Item label="Mô tả">{i.description}</Descriptions.Item>
-
-      </Descriptions>
-    )
+    return {
+      _id: i._id,
+      key: i._id,
+      name: i.name,
+      price: i.price,
+      amount: i.amount,
+      description: i.description,
+      type: i.type,
+      urlImg: i.urlImg
+    }
   })
+  // const listData = data.map(i => {
+  //   return (
+  //     <Descriptions column={4} title={i.name}>
+  //       <Descriptions.Item>
+  //         <Avatar
+  //           shape="square"
+  //           size={150}
+  //           src={i.urlImg}
+  //         />
+  //       </Descriptions.Item>
+  //       <Descriptions.Item label="Giá">{i.price.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</Descriptions.Item>
+  //       <Descriptions.Item label="Số lượng còn lại">{i.amount === 0 ? 'Hết hàng' : i.amount.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}</Descriptions.Item>
+  //       <Descriptions.Item>
+  //         <div>
+  //           <Button type="default" size="small" style={{ width: '160px' }} onClick={() => handleClick(i)}>
+  //             Chỉnh sửa thông tin
+  //             <Icon type="edit" />
+  //           </Button>
+  //           &nbsp;
+  //           {
+  //             (myAcc && myAcc.role.code === 'ADMIN')
+  //             && (
+  //               <Button type="default" size="small" style={{ width: '70px' }} onClick={() => delProduct(i)}>
+  //                 Xóa
+  //                 <Icon type="delete" />
+  //               </Button>
+  //             )
+  //           }
+  //         </div>
+  //       </Descriptions.Item>
+  //       <Descriptions.Item label="Mô tả">{i.description}</Descriptions.Item>
+
+  //     </Descriptions>
+  //   )
+  // })
   const handleChange = (val) => {
     switch (val) {
       case 'Tất cả sản phẩm':
@@ -214,16 +277,64 @@ function ListProduct(props) {
         break
     }
   }
+  console.log(listData, view)
   return (
-    <div className='list-product'>
-      {(view === 'list')
+    <div className='list-product' style={{ padding: '25px 20px' }}>
+      {
+        view === "list"
         && (
-          <div style={{ padding: '20px 10px' }}>
+          <div>
+            <div className="title-mange-product">
+              <div>
+                <h2><b>DACH SÁCH SẢN PHẨM</b></h2>
+              </div>
+              <div>
+                {
+                  (myAcc && myAcc.role.code === 'ADMIN')
+                  && (
+                    <Button
+                      type="default"
+                      size="small"
+                      onClick={() => onShow()}
+                    >
+                      Thêm sản phẩm
+                      <Icon type="plus-circle" />
+                    </Button>
+                  )
+                }
+                <Input
+                  onChange={e => setTextSearch(e.target.value)}
+                  style={{ width: '250px', margin: ' 0 5px' }}
+                  placeholder="Nhập tên sản phẩm"
+                  allowClear
+                />
+                <Select onChange={val => handleChange(val)} style={{ width: '200px' }} defaultValue="Tất cả sản phẩm">
+                  <Option value="Tất cả sản phẩm">Tất cả sản phẩm</Option>
+                  <Option value="Thức ăn">Thức ăn</Option>
+                  <Option value="Đồ dùng">Đồ dùng</Option>
+                  <Option value="Đồ chơi">Đồ chơi</Option>
+                  <Option value="Phụ kiện">Phụ kiện</Option>
+                </Select>
+              </div>
+            </div>
+            <div style={{ padding: '0px 30px' }}>
+              <Table
+                columns={columns}
+                dataSource={listData}
+              />
+              )
+            </div>
+          </div>
+        )
+      }
+      {/* {(view === 'list')
+        && (
+          <div>
             <List
               size="large"
-
+              style={{ paddingLeft: '20px' }}
               header={(
-                <div style={{ paddingLeft: '30px' }}>
+                <div >
                   <h2><b>DANH SÁCH SẢN PHẨM</b></h2>
                   <div>
                     {
@@ -264,15 +375,15 @@ function ListProduct(props) {
               )}
             />
           </div>
-        )}
+        )} */}
       {(view === 'grid')
         && (
           <div>
-            <div className="title-product-grid" style={{ padding: '20px 0px 20px 45px' }}>
+            <div className="title-product-grid" style={{ padding: '0px 0px 20px 30px' }}>
               <div>
                 <h2><b>SẢN PHẨM CHO THÚ CƯNG</b></h2>
               </div>
-              <div className="search-product">
+              <div className="search-product" style={{ paddingTop: '10px' }}>
                 <Input
                   onChange={e => setTextSearch(e.target.value)}
                   style={{ width: '250px', marginRight: '5px' }}
@@ -298,16 +409,15 @@ function ListProduct(props) {
             {
               productShow.length === 0 && <Row>{gridData.slice(0, 20)}</Row>
             }
-            {
-              productShow.length !== 0 &&
-              <Pagination
-                style={{ float: 'right' }}
-                total={gridData.length}
-                pageSize={20}
-                defaultCurrent={1}
-                onChange={page => changdPage(page)}
-              />
-            }
+
+            <Pagination
+              style={{ float: 'right' }}
+              total={gridData.length}
+              pageSize={20}
+              defaultCurrent={1}
+              onChange={page => changdPage(page)}
+            />
+
 
           </div>
         )}

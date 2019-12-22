@@ -267,7 +267,7 @@ function NormalPetForm(props) {
               })(
                 <div>
                   {imagePreviewUrl ? <Avatar size={200} src={imagePreviewUrl} />
-                    : <Avatar size={200} icon="plus-square" />}
+                    : <Avatar size={200} icon="plus" />}
                   <input
                     style={{ height: '27px', lineHeight: 1.5 }}
                     id="myFile"

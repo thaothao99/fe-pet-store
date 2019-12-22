@@ -225,8 +225,8 @@ const DetailBillPro = (props) => {
                   pageSize: 5,
                 }}
                 header={(
-                  <div>
-                    <h2>DANH SÁCH SẢN PHẨM ({listData.length} sản phẩm)</h2>
+                  <div style={{ padding: "10px 0px 0px 20px" }}>
+                    <h2><b>DANH SÁCH SẢN PHẨM ({listData.length} sản phẩm)</b></h2>
                   </div>
                 )}
                 bordered

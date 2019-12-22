@@ -192,15 +192,15 @@ function ListUser(props) {
     <div className='list-user'>
       <List
         size='large'
-
+        style={{ padding: '20px 10px' }}
         // eslint-disable-next-line react/destructuring-assignment
         locale={{ emptyText: props.loading ? 'Đang tải thông tin' : 'Chưa có thông tin tài khoản nào' }}
         header={(
           <div>
-            <h2>DANH SÁCH TÀI KHOẢN {nameList}</h2>
+            <h2><b>DANH SÁCH TÀI KHOẢN {nameList}</b></h2>
             <Input
               onChange={e => setTextSearch(e.target.value)}
-              style={{ width: '250px', marginRight: '5px' }}
+              style={{ width: '250px', marginRight: '5px', paddingTop: '10px' }}
               placeholder="Nhập tên tài khoản"
               allowClear
             />

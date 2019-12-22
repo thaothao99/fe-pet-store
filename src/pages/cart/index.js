@@ -249,7 +249,7 @@ const Cart = (props) => {
                 </Col>
                 {
                   show === false && (
-                    <Col span={18} pull={6}>
+                    <Col span={18} pull={6} style={{ padding: '15px 40px' }}>
                       <List
                         size="large"
                         pagination={{
@@ -258,10 +258,10 @@ const Cart = (props) => {
                         }}
                         header={(
                           <div>
-                            <h2>GIỎ HÀNG ({listData.length} sản phẩm)</h2>
+                            <h2><b> GIỎ HÀNG ({listData.length} sản phẩm)</b></h2>
                           </div>
                         )}
-                        bordered
+
                         dataSource={listData}
                         renderItem={item => (
                           <List.Item>
@@ -275,9 +275,9 @@ const Cart = (props) => {
                 {
                   show && (
                     <Col span={18} pull={6}>
-                      <div style={{ padding: '20px 10px 10px 10px' }}>
+                      <div style={{ padding: '25px 10px 10px 40px' }}>
                         <div>
-                          <h2>THÔNG TIN ĐẶT HÀNG</h2>
+                          <h2><b>THÔNG TIN ĐẶT HÀNG</b></h2>
                         </div>
                         <Descriptions column={1} title="Thông tin giao hàng">
                           <Descriptions.Item label="Họ tên người nhận">{myAcc && `${myAcc.firstName} ${myAcc.lastName}`}</Descriptions.Item>
@@ -363,8 +363,8 @@ const Cart = (props) => {
             {
               listData.length === 0 && (
                 <div>
-                  <div style={{ padding: '20px' }}>
-                    <h2>GIỎ HÀNG ({listData.length} sản phẩm)</h2>
+                  <div style={{ padding: '25px 40px' }}>
+                    <h2><b>GIỎ HÀNG ({listData.length} sản phẩm)</b></h2>
                   </div>
                   <div style={{ textAlign: 'center', opacity: 0.75, padding: '20px 430px' }}>
                     <Avatar

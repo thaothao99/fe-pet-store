@@ -177,9 +177,9 @@ const DetailProduct = (props) => {
     <div>
       <Layout history={history} store={store} myAcc={myAcc} />
       {(!loading && data) && (
-        <div>
-          <div style={{ padding: '20px' }}>
-            <h2>THÔNG TIN SẢN PHẨM</h2>
+        <div style={{ padding: '10px 40px' }}>
+          <div style={{ padding: '20px 0px 10px 5px' }}>
+            <h2><b>THÔNG TIN SẢN PHẨM</b></h2>
           </div>
           <div style={{ display: "flex", padding: '20px' }}>
             <div>
@@ -230,7 +230,7 @@ const DetailProduct = (props) => {
           <div>
             <div style={{ padding: '20px' }}>
               <div>
-                <h2>CÁC SẢN PHẨM CÙNG LOẠI</h2>
+                <h2><b>CÁC SẢN PHẨM CÙNG LOẠI</b></h2>
               </div>
             </div>
             {

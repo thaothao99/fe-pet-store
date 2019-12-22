@@ -77,4 +77,19 @@ export const routersAuth = [
     path: '/service',
     component: 'service'
   },
+  {
+    exact: true,
+    path: '/cartservice/:name/:IDPet',
+    component: 'cartService'
+  },
+  {
+    exact: true,
+    path: '/billservice/:name',
+    component: 'cartService'
+  },
+  {
+    exact: true,
+    path: '/manageservice',
+    component: 'mangeService'
+  },
 ]
