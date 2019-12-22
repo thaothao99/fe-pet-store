@@ -26,7 +26,9 @@ query a($idPet: String!){
 `
 const CREATE_BILL_SER = gql`
 mutation createbillService($input: BillServiceInput!){
-  createbillService(input: $input)
+  createbillService(input: $input){
+    _id
+  }
 }
 `
 const CartSevice = (props) => {
@@ -116,7 +118,8 @@ const CartSevice = (props) => {
           total: total * (1 - promotion)
         }
       }
-    }).then(() => {
+    }).then((res) => {
+      history.push(`/billservice/${res.data.createbillService._id}/${idPet}`)
       notification.open({
         message: 'Đặt chỗ thành công',
         placement: 'bottomRight',
@@ -133,8 +136,8 @@ const CartSevice = (props) => {
             <Descriptions className="bill-detail" column={1} title="Thông tin đơn đặt chỗ">
               <Descriptions.Item label="Họ tên khách hàng">{myAcc && `${myAcc.firstName} ${myAcc.lastName}`}</Descriptions.Item>
               <Descriptions.Item label="Số điện thoại khách hàng">{(myAcc && myAcc.phone)}</Descriptions.Item>
-              <Descriptions.Item label="Tên thú cưng">Miu Miu</Descriptions.Item>
-              <Descriptions.Item label="Ngày đặt hàng">2019-12-22</Descriptions.Item>
+              <Descriptions.Item label="Tên thú cưng">{(data && data.pet && data.pet.name) || ''}</Descriptions.Item>
+              <Descriptions.Item label="Ngày đặt hàng">{moment(new Date()).format('YYYY-MM-DD')}</Descriptions.Item>
               <Descriptions.Item
                 label="Tổng tiền dịch vụ"
               >{total.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}

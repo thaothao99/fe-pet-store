@@ -58,7 +58,7 @@ const ServiceInf = (props) => {
               }
               </Descriptions.Item>
               <Descriptions.Item label="Số lượng chỗ còn lại:">{
-                data.service.amount.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+                data.service.amount !== 0 ? data.service.amount.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') : 'Hết chỗ'
               }
               </Descriptions.Item>
               <Descriptions.Item><Button onClick={() => setVisible(true)}>Đặt chỗ ngay</Button></Descriptions.Item>
@@ -69,7 +69,10 @@ const ServiceInf = (props) => {
               <Descriptions.Item label="Giá dịch vụ">
                 {`${data.totalCombo1.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')} (Tiết kiệm 10%)`}
               </Descriptions.Item>
-              <Descriptions.Item label="Số lượng chỗ còn lại">{data.minAmount}</Descriptions.Item>
+              <Descriptions.Item label="Số lượng chỗ còn lại">{
+                data.minAmount !== 0 ? data.minAmount.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') : "Hết chỗ"
+              }
+              </Descriptions.Item>
               <Descriptions.Item>
                 <Button
                   onClick={() => { setVisible(true); setName('Gói COMBO tiết kiệm') }}
@@ -85,7 +88,7 @@ const ServiceInf = (props) => {
               }
               </Descriptions.Item>
               <Descriptions.Item label="Số lượng chỗ còn lại:">{
-                data.minAmount.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+                data.minAmount !== 0 ? data.minAmount.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') : "Hết chỗ"
               }
               </Descriptions.Item>
 

@@ -84,12 +84,22 @@ export const routersAuth = [
   },
   {
     exact: true,
-    path: '/billservice/:name',
-    component: 'cartService'
+    path: '/billservice/:ID/:IDPet',
+    component: 'billService'
+  },
+  {
+    exact: true,
+    path: '/billservice',
+    component: 'myBillService'
   },
   {
     exact: true,
     path: '/manageservice',
     component: 'mangeService'
+  },
+  {
+    exact: true,
+    path: '/manageBillService',
+    component: 'manageBillService'
   },
 ]

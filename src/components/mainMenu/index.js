@@ -49,6 +49,10 @@ const ADMIN_MENU = [
   {
     name: 'ĐƠN HÀNG',
     path: '/manageBill'
+  },
+  {
+    name: 'ĐẶT CHỖ',
+    path: '/manageBillService'
   }
 ]
 const EMPLOYEE_MENU = [
@@ -71,6 +75,10 @@ const EMPLOYEE_MENU = [
   {
     name: 'ĐƠN HÀNG',
     path: '/manageBill'
+  },
+  {
+    name: 'ĐẶT CHỖ',
+    path: '/manageBillService'
   }
 ]
 function MainMenu(props) {

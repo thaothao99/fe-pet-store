@@ -57,12 +57,10 @@ function MenuProfile(props) {
             </span>
           )}
         >
-          <Menu.Item key="8">Tất cả</Menu.Item>
-          <Menu.Item key="9">Đang chờ duyệt</Menu.Item>
-          <Menu.Item key="1-">Duyệt thành công</Menu.Item>
-          <Menu.Item key="11">Chờ thanh toán</Menu.Item>
-          <Menu.Item key="12">Thanh toán thành công</Menu.Item>
-          <Menu.Item key="13">Đã hủy</Menu.Item>
+          <Menu.Item key="8">{subMenu !== "sub3" && <Link to="/billservice" />}Tất cả</Menu.Item>
+          <Menu.Item key="9"> {subMenu !== "sub3" && <Link to="/billservice" />}Đặt chỗ thành công</Menu.Item>
+          <Menu.Item key="10"> {subMenu !== "sub3" && <Link to="/billservice" />}Thanh toán thành công</Menu.Item>
+          <Menu.Item key="11"> {subMenu !== "sub3" && <Link to="/billservice" />}Đã hủy</Menu.Item>
         </SubMenu>
       )}
     </Menu>
