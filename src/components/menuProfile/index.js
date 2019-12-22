@@ -60,7 +60,6 @@ function MenuProfile(props) {
           <Menu.Item key="8">{subMenu !== "sub3" && <Link to="/billservice" />}Tất cả</Menu.Item>
           <Menu.Item key="9"> {subMenu !== "sub3" && <Link to="/billservice" />}Đặt chỗ thành công</Menu.Item>
           <Menu.Item key="10"> {subMenu !== "sub3" && <Link to="/billservice" />}Thanh toán thành công</Menu.Item>
-          <Menu.Item key="11"> {subMenu !== "sub3" && <Link to="/billservice" />}Đã hủy</Menu.Item>
         </SubMenu>
       )}
     </Menu>

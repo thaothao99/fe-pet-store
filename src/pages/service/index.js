@@ -95,7 +95,7 @@ const Service = (props) => {
               </li>
             </ul>
           </div>
-          <ServiceInf name={serviceName} history={history} />
+          <ServiceInf name={serviceName} history={history} myAcc={myAcc} />
         </TabPane>
         <TabPane tab="Dịch vụ spa tắm rửa" key="2">
           <div style={{ width: '900px', lineHeight: '2.5', padding: "10px 40px" }}>
@@ -141,7 +141,7 @@ const Service = (props) => {
               </li>
             </ul>
           </div>
-          <ServiceInf name={serviceName} history={history} />
+          <ServiceInf name={serviceName} history={history} myAcc={myAcc} />
         </TabPane>
         <TabPane tab="Dịch vụ khách sạn" key="3">
           <div style={{ width: '900px', lineHeight: '2.5', padding: "10px 40px" }}>
@@ -174,7 +174,7 @@ const Service = (props) => {
               </li>
             </ul>
           </div>
-          <ServiceInf name={serviceName} history={history} />
+          <ServiceInf name={serviceName} history={history} myAcc={myAcc} />
         </TabPane>
       </Tabs>
     </div>

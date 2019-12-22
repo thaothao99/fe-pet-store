@@ -1,4 +1,5 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable no-underscore-dangle */
 import React, { useEffect, useState } from 'react'
 import { Descriptions, Button, Modal, Icon, Select } from 'antd'
 import gql from 'graphql-tag'
@@ -6,7 +7,7 @@ import { useQuery } from '@apollo/react-hooks'
 
 const { Option } = Select
 const SERVICES = gql`
-query service($name: String!){
+query service($name: String!, $idUser:String!){
   service(name:$name){
     _id
     name
@@ -16,27 +17,29 @@ query service($name: String!){
   minAmount
   totalCombo1
   totalCombo2
-  pets{
+  petByOwner(owner:$idUser)
+  {
     _id
     name
   }
 }
 `
 const ServiceInf = (props) => {
-  const { name, history } = props
+  const { name, history, myAcc } = props
   const [visible, setVisible] = useState(false)
   const [petId, setPetId] = useState('')
   const [nameSer, setName] = useState(name)
   const [listPets, setListPets] = useState([])
   const { data, loading, refetch } = useQuery(SERVICES, {
     variables: {
-      name
+      name,
+      idUser: (myAcc && myAcc._id) || ''
     }
   })
   useEffect(() => {
     refetch()
-    if (!loading && data && data.pets) {
-      setListPets(data.pets)
+    if (!loading && data && data.petByOwner) {
+      setListPets(data.petByOwner)
       console.log(history, petId)
     }
   }, [data])
@@ -100,7 +103,7 @@ const ServiceInf = (props) => {
         )
       }
       {
-        !loading && data && data.pets
+        !loading && data && data.petByOwner
         && (
           <Modal
             title={(
